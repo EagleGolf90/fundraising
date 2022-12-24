@@ -1,0 +1,57 @@
+<?php
+include('../preload.php');
+
+include(CLASSES . 'squares.class.php');
+$squares = new Squares();
+$full_name = $squares->getNames($_GET['id']);
+$square_boxes = $squares->getSquares();
+$saved_squares = $squares->getSavedSquares();
+
+include(HTML . 'beginHTML.php');
+?>
+
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Edit Squares</h2>
+      <h3>Name: <?php echo $full_name; ?></h3>
+    </div>
+
+    <div class="row g-7 text-center">
+      <div class="col-md-7 col-lg-8">
+        <form class="areaForm" action="update_squares.php" method="post">
+          <input type="text" name="bus_unit" value="<?php echo BUS_UNIT; ?>" hidden>
+          <input type="text" name="id" value="<?php echo $_GET['id']; ?>" hidden>
+          <input type="text" name="yearPick" value="<?php echo $_GET['yr']; ?>" hidden>
+          <input type="text" name="eventType" value="<?php echo $_GET['event']; ?>" hidden>
+          <input type="text" name="poolNumber" value="<?php echo $_GET['pool']; ?>" hidden>
+          <input type="text" name="cost" value="<?php echo $squares->getCost(); ?>" hidden>
+          <input type="text" name="saved_squares" value="<?php echo $saved_squares; ?>" hidden>
+
+          <div class="row g-3">
+            <table class="table table-bordered table-striped">
+<?php $x = 0;
+      foreach ($square_boxes as $boxes) {
+?>
+            <tr>
+              <td class="edit_row">Square #<?php echo $x+1; ?></td>
+              <td><input type="text" name="squares[]" class="form-control" value="<?php echo $boxes['SquareNbr']; ?>"></td>
+            </tr>
+<?php   $x++;
+      } ?>
+            </table>
+
+            <div class="col-12">&nbsp;</div>
+
+            <div class="col-12">
+              <button class="w-100 btn btn-primary btn-lg" tabindex="20" id="submitBtn" type="submit">Submit</button>
+              <button class="w-100 btn btn-danger btn-lg" tabindex="21" id="cancelBtn" type="button">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+
+<?php include(HTML . 'endHTML.php'); ?>
