@@ -19,7 +19,6 @@ include('event_title.php');
     <h1>Register <?php echo $squares->getEventTitle(); ?></h1>
     <form action="sendSquare.php" method="POST">
       <input type="hidden" name="BoxNumber" value="<?php echo $_GET['box']; ?>" />
-      <input type="hidden" name="bu" value="<?php echo $_GET['m']; ?>" />
       <?php include('input_hidden.php'); ?>
       <div class="section"><span>1</span>Name</div>
       <div class="inner-wrap">
@@ -41,7 +40,10 @@ include('event_title.php');
     </form>
   </div>
   <div class="form-style-10 text-center">
-    <a href="main_squares.php" class="fcc-btn"><button type="button" class="btn btn-primary btn-log fcc-btn">Cancel and return to Squares</button></a>
+    <form action="main_squares.php" method="POST">
+      <input type="hidden" name="bu" value="<?php echo $_GET['bu']; ?>" />
+      <button type="submit" class="btn btn-primary btn-log fcc-btn">Cancel and return to Squares</button>
+    </form>
   </div>
 </div>
 
