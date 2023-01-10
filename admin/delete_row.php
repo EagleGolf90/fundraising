@@ -15,6 +15,7 @@ foreach ($rows as $row) {
 
   <div class="form-style-10">
     <form action="delete_squares.php" method="post">
+      <input type="hidden" name="bu" value="<?php echo $_GET['bu']; ?>" />
       <input type="hidden" name="yr" value="<?php echo $_GET['yr']; ?>" />
       <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" />
       <input type="hidden" name="event" value="<?php echo $_GET['event']; ?>" />
@@ -30,7 +31,7 @@ foreach ($rows as $row) {
     </form>
   </div>
 
-  <div class="text-center"><a href="payments.php">Go back to Payments</a></div>
+  <div class="text-center"><a href="payments.php?bu=<?php echo $_GET['bu']; ?>">Go back to Payments</a></div>
 </div>
 
 <?php include(HTML . 'endHTML.php'); ?>

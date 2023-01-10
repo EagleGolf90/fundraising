@@ -3,7 +3,7 @@ include('../preload.php');
 
 $sqlTable = new SQLTable();
 
-$busUnit = BUS_UNIT;
+$busUnit = strtoupper($_POST['bu']);
 $yearPick = $_POST['yearPick'];
 $eventType = $_POST['eventType'];
 $poolNumber = $_POST['poolNumber'];
@@ -35,9 +35,8 @@ if ($qty == 0) {
   $ret = $sqlTable->execute('updateSquaresPayment', $parm);
 }
 
-$main_url = 'https://kdga.org/' . strtolower(BUS_UNIT) . '/admin/';
-$location = "Location: " . $main_url . "payments.php";
+$main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($busUnit);
+$location = "Location: " . $main_url;
 header($location);
 exit;
 ?>
-

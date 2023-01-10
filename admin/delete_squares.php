@@ -3,7 +3,7 @@ include('../preload.php');
 
 $sqlTable = new SQLTable();
 
-$busUnit = BUS_UNIT;
+$busUnit = strtoupper($_POST['bu']);
 $yearPick = $_POST['yr'];
 $eventType = $_POST['event'];
 $poolNumber = $_POST['pool'];
@@ -23,8 +23,8 @@ if ($_POST['confirm'] == 'yes') {
   }
 }
 
-$main_url = 'https://kdga.org/' . strtolower(BUS_UNIT) . '/admin/';
-$location = "Location: " . $main_url . "payments.php";
+$main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($_POST['bu']);
+$location = "Location: " . $main_url;
 header($location);
 exit;
 ?>

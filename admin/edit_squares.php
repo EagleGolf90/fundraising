@@ -20,7 +20,7 @@ include(HTML . 'beginHTML.php');
     <div class="row g-7 text-center">
       <div class="col-md-7 col-lg-8">
         <form class="areaForm" action="update_squares.php" method="post">
-          <input type="text" name="bus_unit" value="<?php echo BUS_UNIT; ?>" hidden>
+          <input type="text" name="bu" value="<?php echo BUS_UNIT; ?>" hidden>
           <input type="text" name="id" value="<?php echo $_GET['id']; ?>" hidden>
           <input type="text" name="yearPick" value="<?php echo $_GET['yr']; ?>" hidden>
           <input type="text" name="eventType" value="<?php echo $_GET['event']; ?>" hidden>

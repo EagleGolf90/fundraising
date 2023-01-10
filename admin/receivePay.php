@@ -13,6 +13,7 @@ $payment->getInfo();
 
   <div class="form-style-10">
     <form action="update_payments.php" method="post">
+      <input type="hidden" name="bu" value="<?php echo $_GET['bu']; ?>" />
       <input type="hidden" name="PersonID" value="<?php echo $_GET['id']; ?>" />
       <input type="hidden" name="Event" value="<?php echo $_GET['event']; ?>" />
       <p><input type="checkbox" name="paid" class="paid" <?php if ($_GET['paid'] == 'Y') { echo 'checked'; }?>> Did you receive money?</p>
@@ -23,7 +24,7 @@ $payment->getInfo();
     </form>
   </div>
 
-  <div class="text-center"><a href="payments.php">Go back to Payments</a></div>
+  <div class="text-center"><a href="payments.php?bu=<?php echo $_GET['bu']; ?>">Go back to Payments</a></div>
 </div>
 
 <?php include(HTML . 'endHTML.php'); ?>

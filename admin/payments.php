@@ -32,8 +32,9 @@ foreach ($rows As $row) {
   $totalPeople += 1;
   $ownSquares = $payment->getOwnSquares($row['PersonID']);
   $totalDollars += $row['Total'];
-  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
-  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+  $bu_link = '&bu=' . $_GET['bu'];
+  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
+  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
   $delete_link .= '&sq=' . $ownSquares;
 ?>
     <tr>
@@ -50,7 +51,7 @@ foreach ($rows As $row) {
         $totalUnPaids += $row['Total'];
         $totalPeopleUnPaids += 1;
       }
-      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&event=' . $row['EventType'] . '&paid=' . $row['Paid']
+      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&event=' . $row['EventType'] . '&paid=' . $row['Paid'] . $bu_link;
 ?>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $receive_pay_link; ?>"><?php echo ($row['Paid'] == 'Y') ? 'Paid' : 'UnPaid'; ?></a></b></td>
     </tr>

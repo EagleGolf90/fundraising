@@ -3,13 +3,13 @@ include('../preload.php');
 
 $sqlTable = new SQLTable();
 $paid = ($_POST['paid'] == 'on') ? 'Y' : 'N';
-$parm = array(BUS_UNIT, $_POST['PersonID'], $paid);
+$parm = array(strtoupper($_POST['bu']), $_POST['PersonID'], $paid);
 $ret = $sqlTable->execute('updatePayments', $parm);
 
-$main_url = 'https://kdga.org/' . strtolower(BUS_UNIT) . '/admin/';
+$main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($_POST['bu']);
 
-/* https://kdga.org/pcdgc/admin/payments.php */
-$location = "Location: " . $main_url . "payments.php";
+/* https://kdga.org/fundraising/admin/payment.php?bu=scddgc */
+$location = "Location: " . $main_url;
 header($location);
 exit;
 ?>
