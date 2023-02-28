@@ -20,7 +20,7 @@ include(HTML . 'return_menu.php');
     <div class="row g-7 text-center">
       <div class="col-md-7 col-lg-8">
         <form class="areaForm">
-          <input type="text" name="bus_unit" id="bus_unit" value="<?php echo BUS_UNIT; ?>" hidden>
+          <input type="text" name="bu" id="bu" value="<?php echo BUS_UNIT; ?>" hidden>
           <input type="text" name="yearPick" id="yearPick" value="<?php echo $squares->getYearPick(); ?>" hidden>
           <input type="text" name="eventType" id="eventType" value="<?php echo $squares->getEventType(); ?>" hidden>
           <input type="text" name="poolNumber" id="poolNumber" value="<?php echo $squares->getPoolNumber(); ?>" hidden>

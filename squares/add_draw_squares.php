@@ -3,7 +3,7 @@ include('../preload.php');
 
 $sqlTable = new SQLTable();
 
-$busUnit = $_POST['bus_unit'];
+$busUnit = $_POST['bu'];
 $yearPick = $_POST['yearPick'];
 $eventType = $_POST['eventType'];
 $poolNumber = $_POST['poolNumber'];
@@ -18,4 +18,6 @@ for ($x = 0; $x < 10; $x++) {
   $parm = array($busUnit, $yearPick, $eventType, $poolNumber, 'TA', $quarter, $x, $topScore);
   $ret = $sqlTable->execute('updateSquaresGridDraw', $parm);
 }
+
+echo $ret;
 ?>

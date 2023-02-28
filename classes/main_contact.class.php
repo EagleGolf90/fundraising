@@ -32,10 +32,6 @@ class MainContact {
     $this->setup();
   }
 
-  public function setYearPick($yr) { $this->yearPick = $yr; }
-  public function setPoolNumber($nbr) { $this->poolNbr = $nbr; }
-  public function setEventType($type) { $this->eventType = $type; }
-
   public function getContactName() { return $this->contactName; }
   public function getContactAddress() { return $this->contactAddress; }
   public function getContactCity() { return $this->contactCity; }
@@ -55,6 +51,9 @@ class MainContact {
     $rows = $this->sqlTable->load('loadSetup', $parm);
     $this->mainContactFirstName = '';
     foreach ($rows as $row) {
+      $this->yearPick = $row['YearPicked'];
+      $this->eventType = $row['EventType'];
+      $this->poolNbr = $row['PoolNumber'];
       $this->mainContactFirstName = $row['MainFirstName'];
       $this->mainEmailAddress = $row['MainEmailAddress'];
       $this->mainCashApp = $row['MainCashApp'];
@@ -79,7 +78,7 @@ class MainContact {
   }
 
   public function getMainContact() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNbr);
+    $parm = array($this->yearPick, $this->poolNbr, $this->eventType);
     $rs = $this->sqlTable->load('getMainContacts', $parm);
 
     foreach ($rs as $r) {
@@ -93,7 +92,8 @@ class MainContact {
       $this->phoneTypeDesc = $r['PhoneDesc'];
       $this->cashApp = $r['CashApp'];
       $this->deadline = $r['Deadline'];
-      $this->replaceContents($r['EmailContent']);
+      $content = $r['EmailContent'];
+      $this->replaceContents($content);
     }
   }
 }

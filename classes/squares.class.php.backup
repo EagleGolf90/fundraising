@@ -37,7 +37,6 @@ class Squares {
   private $deadline;
   private $instructionCheck;
   private $text_instructions;
-  private $instructions_footer;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -75,7 +74,6 @@ class Squares {
       $this->teamSquares();
       $this->populatePicks();
       $this->getTexts();
-      $this->getFooterTexts();
     }
   }
 
@@ -129,10 +127,10 @@ class Squares {
   public function getBoxExcluded() { return $this->boxExcluded; }
   public function getBoxLabel() { return ($this->howManyBoxesExcluded() > 1) ? 'boxes' : 'box'; }
   public function countTotalExcluded() { return ($this->boxExcluded != ''); }
+  public function getPoolNumber() {	return $this->poolNumber; }
   public function getBusinessUnit() { return $this->businessUnit; }
   public function getYearPick() { return $this->yearPick; }
   public function getEventType() { return $this->eventType; }
-  public function getPoolNumber() {	return $this->poolNumber; }
   public function getFundDesc() { return $this->fundDescription; }
   public function getGiveAmount() { return $this->giveAmount; }
   public function getKeepAmount() { return $this->keepAmount; }
@@ -157,7 +155,7 @@ class Squares {
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
-    $parm = array($this->yearPick, $this->poolNumber, $this->eventType);
+    $parm = array($this->yearPick, $this->poolNumber);
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
 
@@ -203,22 +201,12 @@ class Squares {
   public function printNFLLeftBox() {
 ?>
     <tr>
-<?php
-    if ($this->eventType == 5) {
-?>
-      <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
-      <td class='blank' id='first'></td>
-<?php
-    } else {
-?>
       <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
       <td class='blank' id='fourth'>Final</td>
       <td class='blank' id='third'>3rd</td>
       <td class='blank' id='second'>2nd</td>
       <td class='blank' id='first'>1st</td>
 <?php
-    }
-
     // Top Squares
     for ($a = 0; $a < 10; $a++) {
       $id = 'ta' + ($a+1);
@@ -232,12 +220,6 @@ class Squares {
   private function printNFLTopBox() {
 ?>
     <tr><td></td><td colspan='14'><h2 class='title'><?php echo $this->showNames == 'Y' ? $this->topTeam : ''; ?></h2></td></tr>
-<?php
-  }
-
-  private function printWinningTop() {
-?>
-    <tr><td></td><td colspan='14'><h2 class='title'>Winning</h2></td></tr>
 <?php
   }
 
@@ -261,10 +243,6 @@ class Squares {
         $label = 'Final';
         $this->idLabel = 'fourth';
         break;
-      case 0:
-        $label = '';
-        $this->idLabel = 'first';
-        break;
     }
     return $label;
   }
@@ -280,8 +258,6 @@ class Squares {
         break;
       case 2:
         $label = 'Select';
-        break;
-      case 0:
         break;
     }
     return $label;
@@ -370,6 +346,19 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     }
   }
 
+  /*
+  $messages = $squares->getInstructions();
+  $useDiamondTouch = 'N';
+  foreach ($messages as $message) {
+    $useDiamondTouch = $message['UseDiamondTouch'];
+    $line = $message['Message'];
+    $line = str_replace(':a1', $message['SquareCost'], $line);
+    $line = str_replace(':b1', $message['DiamondTouchCost'], $line);
+    if ($message["QuarterInning"] > 4) {
+      echo '<li>&nbsp;</li>';
+    }
+  }*/
+
   private function new_printPrizesInfo() {
     $rows = $squares->getInstructions();
     $useDiamondTouch = 'N';
@@ -403,18 +392,6 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function printPrizesInfo() {
-?>
-    <tr>
-      <td class="ctr instruction" colspan="4">&nbsp;</td>
-      <td class="ctr instruction" colspan="6">
-        <?php echo $this->instructions_footer; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">&nbsp;</td>
-    </tr>
-<?php
-  }
-
-  private function latest_printPrizesInfo() {
     if (BUS_UNIT == 'PCDGC') {
       $first_cell = '1st Quarter = $150 / 4 x $40 (diamond)';
       $second_cell = '3rd Quarter = $450 / 4 x $40 (diamond)';
@@ -481,20 +458,16 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function printSquares() {
-    if ($this->eventType == 5) {
-      $this->printWinningTop();
-    } else {
-      $this->printNFLTopBox();   // Top Row
-      $this->printTopFourQuarters(); // Top Row Four Quarters
-    }
-
+    $this->printNFLTopBox();   // Top Row
+    $this->printTopFourQuarters(); // Top Row Four Quarters
     $this->printNFLLeftBox();  // Left Column
     $this->printGridSquares(); // 100 Box Cells
 
     if ($this->showNames == 'N') {
       $this->printInstructionButton();
+    } else {
+      $this->printPrizesInfo();
     }
-    $this->printPrizesInfo();
   }
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
@@ -612,14 +585,6 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $rs = $this->sqlTable->load('loadFullInstructions', $parm);
     foreach ($rs as $r) {
       $this->text_instructions = $r['Message_Text'];
-    }
-  }
-
-  private function getFooterTexts() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
-    $rs = $this->sqlTable->load('loadInstructionsFooter', $parm);
-    foreach ($rs as $r) {
-      $this->instructions_footer = $r['Message_Text'];
     }
   }
 }

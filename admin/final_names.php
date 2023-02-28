@@ -15,7 +15,8 @@ include(HTML . 'return_menu.php');
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover">
     <tr>
-      <td style="width:120px;" id="headerTitle"><b>Full Name</b></td>
+      <td style="width:200px;" id="headerTitle"><b>Full Name</b></td>
+      <td style="width:75px;" id="headerTitle"><b>Email</b></td>
       <td style="width:75px;" id="headerTitle"><b>Square#</b></td>
     </tr>
 <?php
@@ -24,6 +25,7 @@ foreach ($rows As $row) {
 ?>
     <tr>
       <td><b><?php echo $row['FirstName'] . " " . $row['LastName']; ?></b></td>
+      <td><b><?php echo $row['EmailAddress']; ?></b></td>
       <td><b><?php echo $row['SquareNbr']; ?></b></td>
     </tr>
 <?php
