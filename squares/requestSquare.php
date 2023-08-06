@@ -20,15 +20,14 @@ include('event_title.php');
     <form action="sendSquare.php" method="POST">
       <input type="hidden" name="BoxNumber" value="<?php echo $_GET['box']; ?>" />
       <?php include('input_hidden.php'); ?>
-      <div class="section"><span>1</span>Name</div>
+      <div class="section"><span>1</span>Full Name or NickName</div>
       <div class="inner-wrap">
-        <label>First Name <input type="text" name="firstName" id="firstName" required /></label>
-        <label>Last Name <input type="text" name="lastName" id="lastName" required /></label>
+        <label><input type="text" name="nickName" id="nickName" required /></label>
       </div>
 
       <div class="section"><span>2</span>Email</div>
       <div class="inner-wrap">
-        <label>Email Address <input type="email" name="email" id="email" required /></label>
+        <label><input type="email" name="email" id="email" required /></label>
       </div>
 
       <div class="button-section">

@@ -73,7 +73,7 @@ class MainContact {
   }
 
   private function replaceContents($content) {
-    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone);
+    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone, $_POST['nickName']);
     $this->emailContent = $this->sql->replaceParameters($content, $parm);
   }
 

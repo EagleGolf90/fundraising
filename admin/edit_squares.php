@@ -3,7 +3,10 @@ include('../preload.php');
 
 include(CLASSES . 'squares.class.php');
 $squares = new Squares();
-$full_name = $squares->getNames($_GET['id']);
+$squares->setNames($_GET['id']);
+$first_name = $squares->getFirstName();
+$last_name = $squares->getLastName();
+$nick_name = $squares->getNickName();
 $square_boxes = $squares->getSquares();
 $saved_squares = $squares->getSavedSquares();
 
@@ -14,7 +17,6 @@ include(HTML . 'beginHTML.php');
   <main>
     <div class="py-5 text-center">
       <h2>Edit Squares</h2>
-      <h3>Name: <?php echo $full_name; ?></h3>
     </div>
 
     <div class="row g-7 text-center">
@@ -30,12 +32,17 @@ include(HTML . 'beginHTML.php');
 
           <div class="row g-3">
             <table class="table table-bordered table-striped">
+            <tr>
+                <td class="edit_row">Name</td>
+                <td><input type="text" name="nickName" class="form-control" id="nickName" value="<?php echo $nick_name; ?>">
+            </tr>
 <?php $x = 0;
       foreach ($square_boxes as $boxes) {
 ?>
             <tr>
               <td class="edit_row">Square #<?php echo $x+1; ?></td>
               <td><input type="text" name="squares[]" class="form-control" value="<?php echo $boxes['SquareNbr']; ?>"></td>
+              <td class="edit_row">&nbsp;</td>
             </tr>
 <?php   $x++;
       } ?>

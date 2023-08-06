@@ -24,7 +24,7 @@ $rows = $payment->loadNames();
 foreach ($rows As $row) {
 ?>
     <tr>
-      <td><b><?php echo $row['FirstName'] . " " . $row['LastName']; ?></b></td>
+      <td><b><?php echo $row['NickName']; ?></b></td>
       <td><b><?php echo $row['EmailAddress']; ?></b></td>
       <td><b><?php echo $row['SquareNbr']; ?></b></td>
     </tr>

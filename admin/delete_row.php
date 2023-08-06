@@ -6,7 +6,8 @@ $fullName = '';
 $sqlTable = new SQLTable();
 $rows = $sqlTable->load('loadParticipants', array(BUS_UNIT, $_GET['id']));
 foreach ($rows as $row) {
-  $fullName = $row['FirstName'] . ' ' . $row['LastName'];
+  // $fullName = $row['FirstName'] . ' ' . $row['LastName'];
+  $fullName = $row['NickName'];
 }
 ?>
 
