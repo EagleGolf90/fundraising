@@ -458,10 +458,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
-  public function calculateAmounts($cashapp, $deadline) {
+  public function calculateAmounts($obj) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
-    return 'Since you buy ' . $howMany . ' square(s), you need to pay $' . $total . ' to CashApp ' . $cashapp . ' by ' . $deadline . '.';
+    $content = 'Since you buy ' . $howMany . ' square(s), you need to pay $' . $total . ' to CashApp ' . $obj->getContactCashApp();
+    $content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
+    return $content;
   }
 
   private function insertParticipant() {

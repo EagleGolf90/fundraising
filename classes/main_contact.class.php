@@ -21,6 +21,7 @@ class MainContact {
   private $mainContactLastName = '';
   private $mainEmailAddress = '';
   private $mainCashApp = '';
+  private $zelle = '';
   private $emailContent = '';
   private $sql;
   private $address_flag;
@@ -42,6 +43,7 @@ class MainContact {
   public function getContactCashApp() { return $this->cashApp; }
   public function getMainContactInfo() { return $this->mainContactFirstName . ' (' . $this->mainEmailAddress . ')'; }
   public function getMainCashApp() { return $this->mainCashApp; }
+  public function getMainZelle() { return $this->zelle; }
   public function getMainContactEmail() { return $this->mainEmailAddress; }
   public function getEmailContent() { return $this->emailContent; }
   public function getDeadline() { return $this->deadline; }
@@ -57,6 +59,7 @@ class MainContact {
       $this->mainContactFirstName = $row['MainFirstName'];
       $this->mainEmailAddress = $row['MainEmailAddress'];
       $this->mainCashApp = $row['MainCashApp'];
+      $this->zelle = $row['ZelleContact'];
     }
   }
 
@@ -69,11 +72,12 @@ class MainContact {
       $line = 'Contact this text number ' . $this->contactPhone . ' if you have any questions.';
     }
     if ($printCashApp == true) $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
+    $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
     return $line;
   }
 
   private function replaceContents($content) {
-    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone, $_POST['nickName']);
+    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone, $_POST['nickName'], $this->zelle);
     $this->emailContent = $this->sql->replaceParameters($content, $parm);
   }
 

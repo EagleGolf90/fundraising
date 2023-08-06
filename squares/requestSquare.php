@@ -13,7 +13,7 @@ include('event_title.php');
 
 <div class="container">
   <h2 id="ctr">You selected Square box # <?php echo $_GET['box']; ?></h2>
-  <h3 id="ctr"><?php echo $squares->calculateAmounts($main_contact->getContactCashApp(), $main_contact->getDeadline()); ?></h3>
+  <h3 id="ctr"><?php echo $squares->calculateAmounts($main_contact); ?></h3>
 
   <div class="form-style-10">
     <h1>Register <?php echo $squares->getEventTitle(); ?></h1>
