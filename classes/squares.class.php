@@ -461,8 +461,10 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   public function calculateAmounts($obj) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
-    $content = 'Since you buy ' . $howMany . ' square(s), you need to pay $' . $total . ' to CashApp ' . $obj->getContactCashApp();
-    $content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
+    $content = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
+    //$content .= ' to CashApp ' . $obj->getContactCashApp();
+    //$content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
+    $content .= '<br/>through Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
     return $content;
   }
 

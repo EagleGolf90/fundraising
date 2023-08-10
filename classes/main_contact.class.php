@@ -71,7 +71,7 @@ class MainContact {
     } else {
       $line = 'Contact this text number ' . $this->contactPhone . ' if you have any questions.';
     }
-    if ($printCashApp == true) $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
+    if ($printCashApp == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
     $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
     return $line;
   }
