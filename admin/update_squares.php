@@ -21,7 +21,15 @@ $qty = 0;
 $arr2 = comma_separated_to_array($_POST['saved_squares']);
 
 /* Update First and Last Names */
+<<<<<<< Updated upstream
 $parm = array($personID, $firstName, $lastName, $_POST['nickName']);
+=======
+<<<<<<< HEAD
+$parm = array($personID, $firstName, $lastName);
+=======
+$parm = array($personID, $firstName, $lastName, $_POST['nickName']);
+>>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
+>>>>>>> Stashed changes
 $ret = $sqlTable->execute('updateNames', $parm);
 
 /* Update or Delete Squares */
