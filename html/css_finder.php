@@ -5,6 +5,7 @@ $sub_folder = str_replace(DS . 'fundraising' . DS, "", $temp_script);
 switch ($sub_folder) {
   case 'squares/index.php':
   case 'squares/main_squares.php':
+  case 'squares/main_squares_new.php':
   case 'squares/requestSquare.php':
   case 'admin/payments.php':
   case 'admin/edit_squares.php':

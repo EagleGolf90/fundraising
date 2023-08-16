@@ -256,3 +256,4 @@ ul.subInstruction { list-style-type: disc; }
 .instruction { font-size: 20px; font-weight: bold; }
 .support { font-weight: bolder; color: red; }
 .return-menu { height: 50px; background-color: rgba(0, 0, 0, 0.13); }
+.footer_instruction { font-size: 14px; font-weight: bold; }

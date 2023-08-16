@@ -38,6 +38,10 @@ class Squares {
   private $instructionCheck;
   private $text_instructions;
   private $instructions_footer;
+  private $first_name = '';
+  private $last_name = '';
+  private $labels;
+  private $id_labels;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -53,6 +57,8 @@ class Squares {
     $this->leftTeam = null;
     $this->topSquares = null;
     $this->leftSquares = null;
+    $this->labels = null;
+    $this->id_levels = null;
     $this->poolNumber = null;
     unset($this->sqlTable);
   }
@@ -61,6 +67,8 @@ class Squares {
     $this->boxSelected = '';
     $this->topSquares = array();
     $this->leftSquares = array();
+    $this->labels = array();
+    $this->id_labels = array();
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -76,7 +84,24 @@ class Squares {
       $this->populatePicks();
       $this->getTexts();
       $this->getFooterTexts();
+      $this->loadLabels();
     }
+  }
+
+  private function saveToArray($sql, $fieldName) {
+    $rows = $this->sqlTable->load($sql, array($this->eventType));
+    $x = 0;
+    $obj = array();
+    foreach ($rows as $row) {
+      $obj[$x] = $row[$fieldName];
+      $x++;
+    }
+    return $obj;
+  }
+
+  private function loadLabels() {
+    $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
+    $this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
   }
 
   public function openForPublic() { return $this->openForPublic; }
@@ -144,6 +169,12 @@ class Squares {
   public function checkFullInstructions() { return $this->instructionCheck; }
   public function getFullInstructions() { return $this->text_instructions; }
 
+  public function getFirstName() { return $this->first_name; }
+  public function getLastName() { return $this->last_name; }
+
+  public function getTopTeam() { return $this->topTeam; }
+  public function getLeftTeam() { return $this->leftTeam; }
+
   public function getEventTitle() {
     $tempTitle = '';
     $tempTitle = str_replace(":1", $this->yearPick, $this->eventTitle);
@@ -157,7 +188,7 @@ class Squares {
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
-    $parm = array($this->yearPick, $this->poolNumber, $this->eventType);
+    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
 
@@ -204,19 +235,22 @@ class Squares {
 ?>
     <tr>
 <?php
-    if ($this->eventType == 5) {
+    switch ($this->eventType) {
+      case 5:
 ?>
       <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
       <td class='blank' id='first'></td>
 <?php
-    } else {
+        break;
+      default:
 ?>
       <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-      <td class='blank' id='fourth'>Final</td>
-      <td class='blank' id='third'>3rd</td>
-      <td class='blank' id='second'>2nd</td>
-      <td class='blank' id='first'>1st</td>
-<?php
+<?php   for ($x = 3; $x >= 0; $x--) { ?>
+      <td class='blank' id='fourth'>
+        <?php echo $this->labels[$x]; ?>
+      </td>
+<?php   }
+        break;
     }
 
     // Top Squares
@@ -241,34 +275,6 @@ class Squares {
 <?php
   }
 
-  private function quarterLabel($quarter) {
-    $label = '';
-    $this->idLabel = '';
-    switch ($quarter) {
-      case 1:
-        $label = '1st';
-        $this->idLabel = 'first';
-        break;
-      case 2:
-        $label = '2nd';
-        $this->idLabel = 'second';
-        break;
-      case 3:
-        $label = '3rd';
-        $this->idLabel = 'third';
-        break;
-      case 4:
-        $label = 'Final';
-        $this->idLabel = 'fourth';
-        break;
-      case 0:
-        $label = '';
-        $this->idLabel = 'first';
-        break;
-    }
-    return $label;
-  }
-
   private function sectionLabel($quarter) {
     $label = '';
     switch ($quarter) {
@@ -288,13 +294,14 @@ class Squares {
   }
 
   private function printEachQuarter($quarter) {
-    $quarterLabel = $this->quarterLabel($quarter);
     $sectionLabel = $this->sectionLabel($quarter);
 ?>
     <tr>
       <td></td>
       <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
-      <td class='blank' id='<?php echo $this->idLabel; ?>'><?php echo $quarterLabel; ?></td>
+      <td class='blank' id='<?php echo $this->id_labels[$quarter-1]; ?>'>
+        <?php echo $this->labels[$quarter-1]; ?>
+      </td>
 <?php
 for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   if ($quarter == $this->topSquares[$x][0]) {
@@ -370,101 +377,16 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     }
   }
 
-  private function new_printPrizesInfo() {
-    $rows = $squares->getInstructions();
-    $useDiamondTouch = 'N';
-    $firstRow = '';
-    $secondRow = '';
-    $a = 1;
-    foreach ($rows as $row) {
-      $useDiamondTouch = $message['UseDiamondTouch'];
-      if ($a % 2 == 0) {
-        $secondRow .= '<td class="ctr instruction" colspan="5">';
-        $secondRow .= $this->quarterLabel($a) . ($a == 2 ? ' Quarter' : ' Score') . ' = $' . $row['SquareCost'];
-        if ($useDiamondTouch == "Y") $secondRow .= ' / $' . $row['DiamondTouchCost'] . ' (diamond)';
-        $secondRow .= '</td>';
-      } else {
-        $firstRow .= '<td class="ctr instruction" colspan="5">';
-        $firstRow .= $this->quarterLabel($a) . ' Quarter = $' . $row['SquareCost'];
-        if ($useDiamondTouch == "Y") $firstRow .= ' / $' . $row['DiamondTouchCost'] . ' (diamond)';
-        $firstRow .= '</td>';
-      }
-    }
-
-    echo '<tr>' . $firstRow . '</tr>';
-    echo '<td class="ctr instruction" colspan="5">';
-    echo '25% ($500) to fundraising';
-    echo '</td></tr>';
-
-    echo '<tr>' . $firstRow . '</tr>';
-    echo '<td class="ctr instruction" colspan="5">';
-    echo '$1500 to 20 WINNERS! <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-    echo '</td></tr>';
-  }
-
-  private function printPrizesInfo() {
+  public function printPrizesInfo() {
 ?>
     <tr>
-      <td class="ctr instruction" colspan="4">&nbsp;</td>
-      <td class="ctr instruction" colspan="6">
+      <td class="ctr instruction" colspan="3">&nbsp;</td>
+      <td class="ctr instruction" colspan="8">
         <?php echo $this->instructions_footer; ?>
       </td>
-      <td class="ctr instruction" colspan="5">&nbsp;</td>
+      <td class="ctr instruction" colspan="4">&nbsp;</td>
     </tr>
 <?php
-  }
-
-  private function latest_printPrizesInfo() {
-    if (BUS_UNIT == 'PCDGC') {
-      $first_cell = '1st Quarter = $150 / 4 x $40 (diamond)';
-      $second_cell = '3rd Quarter = $450 / 4 x $40 (diamond)';
-      $third_cell = '10% ($250) Proceeds to PCDGC';
-      $fourth_cell = '2nd Quarter = $300 / 4 x $40 (diamond)';
-      $fifth_cell = 'Final Score = $600 / 4 x $40 (diamond)';
-      $sixth_cell = 'Reverse Box Winner $110 (Final only)';
-      $last_cell = '$2250 to Winners <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-    }
-    if (BUS_UNIT == 'SCDDGC' || BUS_UNIT == 'PCDWBA') {
-      $first_cell = '1st Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $second_cell = '3rd Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $third_cell = '20% ($500) Proceeds to ' . BUS_UNIT;
-      $fourth_cell = '2nd Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $fifth_cell = 'Final Score = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $sixth_cell = '$2000 to Winners <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-      $last_cell = '';
-    }
-?>
-    <tr>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $first_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $second_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $third_cell; ?>
-      </td>
-    </tr>
-    <tr>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $fourth_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $fifth_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $sixth_cell; ?>
-      </td>
-    </tr>
-<?php if ($last_cell != '') { ?>
-    <tr>
-      <td class="ctr instruction" colspan="5">&nbsp;</td>
-      <td class="ctr instruction" colspan="10">
-        <?php echo $last_cell; ?>
-      </td>
-    </tr>
-<?php
-      }
   }
 
   private function printInstructionButton() {
@@ -600,11 +522,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $rows;
   }
 
-  public function getNames($person_id) {
+  public function setNames($person_id) {
     $rows = $this->sqlTable->load('getParticipantName', array(BUS_UNIT, $person_id));
-    $full_name = '';
-    foreach ($rows as $row) $full_name = $row['FullName'];
-    return $full_name;
+    foreach ($rows as $row) {
+      $this->first_name = $row['FirstName'];
+      $this->last_name = $row['LastName'];
+    }
   }
 
   private function getTexts() {

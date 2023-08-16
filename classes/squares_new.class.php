@@ -37,6 +37,13 @@ class Squares {
   private $deadline;
   private $instructionCheck;
   private $text_instructions;
+  private $instructions_footer;
+  private $first_name = '';
+  private $last_name = '';
+  private $draw_numbers = 0;
+  private $sports;
+  private $labels;
+  private $id_labels;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -52,6 +59,8 @@ class Squares {
     $this->leftTeam = null;
     $this->topSquares = null;
     $this->leftSquares = null;
+    $this->labels = null;
+    $this->id_levels = null;
     $this->poolNumber = null;
     unset($this->sqlTable);
   }
@@ -60,6 +69,8 @@ class Squares {
     $this->boxSelected = '';
     $this->topSquares = array();
     $this->leftSquares = array();
+    $this->labels = array();
+    $this->id_labels = array();
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -74,22 +85,38 @@ class Squares {
       $this->teamSquares();
       $this->populatePicks();
       $this->getTexts();
+      $this->getFooterTexts();
+      $this->loadLabels();
     }
+  }
+
+  private function saveToArray($sql, $fieldName) {
+    $rows = $this->sqlTable->load($sql, array($this->eventType));
+    $x = 0;
+    $obj = array();
+    foreach ($rows as $row) {
+      $obj[$x] = $row[$fieldName];
+      $x++;
+    }
+    return $obj;
+  }
+
+  private function loadLabels() {
+    $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
+    $this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
   }
 
   public function openForPublic() { return $this->openForPublic; }
 
   private function getCurrentEvent() {
-    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
+    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
     $rows = $this->sqlTable->load('loadCurrentEvents', array());
 
     foreach ($rows As $row) {
       $this->openForPublic = true;
       $this->businessUnit = $row['BusinessUnit'];
       $this->yearPick = $row['YearPick'];
-      define('YEAR_PICK', $row['YearPick']);
       $this->poolNumber = $row['PoolNbr'];
-      define('POOL_NBR', $row['PoolNbr']);
       $this->eventType = $row['EventType'];
       $this->eventTitle = $row['Description'];
       $this->cost = $row['Cost'];
@@ -99,11 +126,14 @@ class Squares {
       $this->giveAmount = ($total * ($row['GivePercent']/100));
       $this->keepAmount = ($total * ($row['KeepPercent']/100));
       $this->formulaType = $row['Formula'];
-      define('FORMULA', $row['Formula']);
       $this->showNames = $row['ShowNames'];
       $this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
+      $this->draw_numbers = $row['draw_numbers'];
+      $this->sports = $row['Sports'];
     }
+
+    $this->determineWhichLabels();
   }
 
   public function setBoxes($boxes) {
@@ -127,10 +157,10 @@ class Squares {
   public function getBoxExcluded() { return $this->boxExcluded; }
   public function getBoxLabel() { return ($this->howManyBoxesExcluded() > 1) ? 'boxes' : 'box'; }
   public function countTotalExcluded() { return ($this->boxExcluded != ''); }
-  public function getPoolNumber() {	return $this->poolNumber; }
   public function getBusinessUnit() { return $this->businessUnit; }
   public function getYearPick() { return $this->yearPick; }
   public function getEventType() { return $this->eventType; }
+  public function getPoolNumber() {	return $this->poolNumber; }
   public function getFundDesc() { return $this->fundDescription; }
   public function getGiveAmount() { return $this->giveAmount; }
   public function getKeepAmount() { return $this->keepAmount; }
@@ -141,6 +171,14 @@ class Squares {
   public function getDeadline() { return $this->deadline; }
   public function checkFullInstructions() { return $this->instructionCheck; }
   public function getFullInstructions() { return $this->text_instructions; }
+
+  public function getFirstName() { return $this->first_name; }
+  public function getLastName() { return $this->last_name; }
+
+  public function getTopTeam() { return $this->topTeam; }
+  public function getLeftTeam() { return $this->leftTeam; }
+  public function getInstructionsFooter() { return $this->instructions_footer; }
+  public function getDrawNumbers() { return $this->draw_numbers; }
 
   public function getEventTitle() {
     $tempTitle = '';
@@ -155,7 +193,7 @@ class Squares {
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
-    $parm = array($this->yearPick, $this->poolNumber);
+    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
 
@@ -182,7 +220,7 @@ class Squares {
   }
 
   private function displayTeams() {
-    if (DEBUG_FLAG) echo 'In displayTeams()<br/>before SQLName: ' . DISPLAY . TEAMS . '<br/>';
+    if (DEBUG_FLAG) echo 'In displayTeams()<br/>before SQLName: displayTeams<br/>';
     $parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
     $rows = $this->sqlTable->load('displayTeams', $parm);
 
@@ -198,15 +236,28 @@ class Squares {
 <?php
   }
 
-  public function printNFLLeftBox() {
+  public function printLeftBox() {
 ?>
     <tr>
-      <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-      <td class='blank' id='fourth'>Final</td>
-      <td class='blank' id='third'>3rd</td>
-      <td class='blank' id='second'>2nd</td>
-      <td class='blank' id='first'>1st</td>
 <?php
+    switch ($this->eventType) {
+      case 5:
+?>
+      <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
+      <td class='blank' id='first'></td>
+<?php
+        break;
+      default:
+?>
+      <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
+<?php   for ($x = 3; $x >= 0; $x--) { ?>
+      <td class='blank' id='fourth'>
+        <?php echo $this->labels[$x]; ?>
+      </td>
+<?php   }
+        break;
+    }
+
     // Top Squares
     for ($a = 0; $a < 10; $a++) {
       $id = 'ta' + ($a+1);
@@ -217,60 +268,37 @@ class Squares {
 <?php
   }
 
-  private function printNFLTopBox() {
-?>
-    <tr><td></td><td colspan='14'><h2 class='title'><?php echo $this->showNames == 'Y' ? $this->topTeam : ''; ?></h2></td></tr>
-<?php
-  }
-
-  private function quarterLabel($quarter) {
-    $label = '';
-    $this->idLabel = '';
-    switch ($quarter) {
-      case 1:
-        $label = '1st';
-        $this->idLabel = 'first';
+  private function determineWhichLabels() {
+    switch ($this->sports) {
+      case 1: // Super Bowl
+      case 2: // NBA Championship
+      case 4: // PGA Masters
+        $this->id_label = array("first", "second", "third", "fourth");
+        $this->labels = array("1st", "2nd", "3rd", "Final");
         break;
-      case 2:
-        $label = '2nd';
-        $this->idLabel = 'second';
-        break;
-      case 3:
-        $label = '3rd';
-        $this->idLabel = 'third';
-        break;
-      case 4:
-        $label = 'Final';
-        $this->idLabel = 'fourth';
+      case 3: // MLB World Series
+        $this->id_label = array("first", "second", "third");
+        $this->labels = array("3rd", "6th", "Final");
         break;
     }
-    return $label;
   }
 
-  private function sectionLabel($quarter) {
-    $label = '';
-    switch ($quarter) {
-      case 4:
-        $label = 'Pending';
-        break;
-      case 3:
-        $label = 'Taken';
-        break;
-      case 2:
-        $label = 'Select';
-        break;
+  private function getIDLabel($quarter) { return $this->id_label[$quarter-1]; }
+  private function getQuarterLabel($quarter) { return $this->labels[$quarter-1]; }
+
+  public function printEachQuarter($quarter, $draw_numbers) {
+    $quarter_label = $this->getQuarterLabel($quarter);
+
+    if (!isset($this->draw_numbers)) {
+      $colspan = 2;
+    } else {
+      $colspan = $draw_numbers - 1;
     }
-    return $label;
-  }
-
-  private function printEachQuarter($quarter) {
-    $quarterLabel = $this->quarterLabel($quarter);
-    $sectionLabel = $this->sectionLabel($quarter);
 ?>
     <tr>
       <td></td>
-      <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
-      <td class='blank' id='<?php echo $this->idLabel; ?>'><?php echo $quarterLabel; ?></td>
+      <td colspan='<?php echo $colspan; ?>' class='blank'></td>
+      <td class='blank'><?php echo $quarter_label; ?></td>
 <?php
 for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   if ($quarter == $this->topSquares[$x][0]) {
@@ -285,10 +313,6 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 <?php
   }
 
-  private function printTopFourQuarters() {
-    for ($y = 4; $y > 1; $y--) $this->printEachQuarter($y);
-  }
-
   private function printBoxArea($id, $className, $value) {
 ?>
     <td class='<?php echo $className; ?>' id='<?php echo $id; ?>'><?php echo $value; ?></td>
@@ -296,7 +320,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function printLeftArea($rowNumber) {
-    for ($quarter = 4; $quarter > 0; $quarter--) {
+    for ($quarter = $this->draw_numbers; $quarter > 0; $quarter--) {
       for ($a = 0; $a < sizeof($this->leftSquares); $a++) {
         if ($this->leftSquares[$a][0] == $quarter && $this->leftSquares[$a][1] == $rowNumber) {
           $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$a][2] : '') . '</b>';
@@ -320,11 +344,9 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $class;
   }
 
-  private function getBoxNumber($index) {
-    return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>';
-  }
+  private function getBoxNumber($index) { return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>'; }
 
-  private function printGridSquares() {
+  public function printGridSquares() {
     $n = 0;
     $z = 0;
     for ($y = 0; $y < 10; $y++) {
@@ -343,130 +365,6 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 ?>
       </tr>
 <?php
-    }
-  }
-
-  /*
-  $messages = $squares->getInstructions();
-  $useDiamondTouch = 'N';
-  foreach ($messages as $message) {
-    $useDiamondTouch = $message['UseDiamondTouch'];
-    $line = $message['Message'];
-    $line = str_replace(':a1', $message['SquareCost'], $line);
-    $line = str_replace(':b1', $message['DiamondTouchCost'], $line);
-    if ($message["QuarterInning"] > 4) {
-      echo '<li>&nbsp;</li>';
-    }
-  }*/
-
-  private function new_printPrizesInfo() {
-    $rows = $squares->getInstructions();
-    $useDiamondTouch = 'N';
-    $firstRow = '';
-    $secondRow = '';
-    $a = 1;
-    foreach ($rows as $row) {
-      $useDiamondTouch = $message['UseDiamondTouch'];
-      if ($a % 2 == 0) {
-        $secondRow .= '<td class="ctr instruction" colspan="5">';
-        $secondRow .= $this->quarterLabel($a) . ($a == 2 ? ' Quarter' : ' Score') . ' = $' . $row['SquareCost'];
-        if ($useDiamondTouch == "Y") $secondRow .= ' / $' . $row['DiamondTouchCost'] . ' (diamond)';
-        $secondRow .= '</td>';
-      } else {
-        $firstRow .= '<td class="ctr instruction" colspan="5">';
-        $firstRow .= $this->quarterLabel($a) . ' Quarter = $' . $row['SquareCost'];
-        if ($useDiamondTouch == "Y") $firstRow .= ' / $' . $row['DiamondTouchCost'] . ' (diamond)';
-        $firstRow .= '</td>';
-      }
-    }
-
-    echo '<tr>' . $firstRow . '</tr>';
-    echo '<td class="ctr instruction" colspan="5">';
-    echo '25% ($500) to fundraising';
-    echo '</td></tr>';
-
-    echo '<tr>' . $firstRow . '</tr>';
-    echo '<td class="ctr instruction" colspan="5">';
-    echo '$1500 to 20 WINNERS! <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-    echo '</td></tr>';
-  }
-
-  private function printPrizesInfo() {
-    if (BUS_UNIT == 'PCDGC') {
-      $first_cell = '1st Quarter = $150 / 4 x $40 (diamond)';
-      $second_cell = '3rd Quarter = $450 / 4 x $40 (diamond)';
-      $third_cell = '10% ($250) Proceeds to PCDGC';
-      $fourth_cell = '2nd Quarter = $300 / 4 x $40 (diamond)';
-      $fifth_cell = 'Final Score = $600 / 4 x $40 (diamond)';
-      $sixth_cell = 'Reverse Box Winner $110 (Final only)';
-      $last_cell = '$2250 to Winners <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-    }
-    if (BUS_UNIT == 'SCDDGC' || BUS_UNIT == 'PCDWBA') {
-      $first_cell = '1st Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $second_cell = '3rd Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $third_cell = '20% ($500) Proceeds to ' . BUS_UNIT;
-      $fourth_cell = '2nd Quarter = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $fifth_cell = 'Final Score = $300<br/>Reverse Winner - $60<br/>4 x $35 (diamond)';
-      $sixth_cell = '$2000 to Winners <span class="support">THANK YOU FOR YOUR SUPPORT!</span>';
-      $last_cell = '';
-    }
-?>
-    <tr>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $first_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $second_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $third_cell; ?>
-      </td>
-    </tr>
-    <tr>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $fourth_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $fifth_cell; ?>
-      </td>
-      <td class="ctr instruction" colspan="5">
-        <?php echo $sixth_cell; ?>
-      </td>
-    </tr>
-<?php if ($last_cell != '') { ?>
-    <tr>
-      <td class="ctr instruction" colspan="5">&nbsp;</td>
-      <td class="ctr instruction" colspan="10">
-        <?php echo $last_cell; ?>
-      </td>
-    </tr>
-<?php
-      }
-  }
-
-  private function printInstructionButton() {
-?>
-    <tr>
-      <td class="ctr" colspan="15"><button id="submitForm" class="btn btn-primary btn-lg">Ready to buy Squares</button><br/></td>
-    </tr>
-    <tr>
-      <td class="ctr event" colspan="15">
-        <h4><a href="<?php echo SQUARES_URL . strtolower(SQUARES) . DS . '?bu=' . strtolower(BUS_UNIT); ?>">Back to Instructions</a></h4>
-      </td>
-    </tr>
-<?php
-  }
-
-  public function printSquares() {
-    $this->printNFLTopBox();   // Top Row
-    $this->printTopFourQuarters(); // Top Row Four Quarters
-    $this->printNFLLeftBox();  // Left Column
-    $this->printGridSquares(); // 100 Box Cells
-
-    if ($this->showNames == 'N') {
-      $this->printInstructionButton();
-    } else {
-      $this->printPrizesInfo();
     }
   }
 
@@ -573,11 +471,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $rows;
   }
 
-  public function getNames($person_id) {
+  public function setNames($person_id) {
     $rows = $this->sqlTable->load('getParticipantName', array(BUS_UNIT, $person_id));
-    $full_name = '';
-    foreach ($rows as $row) $full_name = $row['FullName'];
-    return $full_name;
+    foreach ($rows as $row) {
+      $this->first_name = $row['FirstName'];
+      $this->last_name = $row['LastName'];
+    }
   }
 
   private function getTexts() {
@@ -585,6 +484,14 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $rs = $this->sqlTable->load('loadFullInstructions', $parm);
     foreach ($rs as $r) {
       $this->text_instructions = $r['Message_Text'];
+    }
+  }
+
+  private function getFooterTexts() {
+    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $rs = $this->sqlTable->load('loadInstructionsFooter', $parm);
+    foreach ($rs as $r) {
+      $this->instructions_footer = $r['Message_Text'];
     }
   }
 }

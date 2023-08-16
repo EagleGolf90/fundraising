@@ -1,4 +1,9 @@
 <?php
+/*
+ * Program Name: update_squares.php
+ * Author......: Brian Timberlake
+ * Date Created: September 9, 2019
+ */
 include('../preload.php');
 
 $sqlTable = new SQLTable();
@@ -8,11 +13,18 @@ $yearPick = $_POST['yearPick'];
 $eventType = $_POST['eventType'];
 $poolNumber = $_POST['poolNumber'];
 $personID = $_POST['id'];
+$firstName = $_POST['firstName'];
+$lastName = $_POST['lastName'];
 $cost = $_POST['cost'];
 $arr = $_POST['squares'];
 $qty = 0;
 $arr2 = comma_separated_to_array($_POST['saved_squares']);
 
+/* Update First and Last Names */
+$parm = array($personID, $firstName, $lastName);
+$ret = $sqlTable->execute('updateNames', $parm);
+
+/* Update or Delete Squares */
 for ($y = 0; $y < sizeof($arr); $y++) {
   if ($arr[$y] == 0) {
     $dml_label = 'Delete';
@@ -26,6 +38,7 @@ for ($y = 0; $y < sizeof($arr); $y++) {
   }
 }
 
+/* Update or Delete Squares Payment */
 if ($qty == 0) {
   $parm = array($busUnit, $yearPick, $eventType, $poolNumber, $personID);
   $ret = $sqlTable->execute('deleteSquaresPayment', $parm);
@@ -35,6 +48,7 @@ if ($qty == 0) {
   $ret = $sqlTable->execute('updateSquaresPayment', $parm);
 }
 
+/* Redirect to Payments page */
 $main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($busUnit);
 $location = "Location: " . $main_url;
 header($location);
