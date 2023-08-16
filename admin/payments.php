@@ -40,7 +40,7 @@ foreach ($rows As $row) {
     <tr>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $edit_link; ?>">Edit</a></b></td>
       <td><b><a class="btn btn-danger btn-block active" role="button" href="<?php echo $delete_link; ?>">Delete</a></b></td>
-      <td><b><?php echo $row['FirstName'] . " " . $row['LastName']; ?></b></td>
+      <td><b><?php echo $row['NickName']; ?></b></td>
       <td><b><?php echo $ownSquares; ?></b></td>
       <td><b>$<?php echo $row['Total']; ?></b></td>
 <?php

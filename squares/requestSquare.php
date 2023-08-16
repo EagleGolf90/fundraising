@@ -13,22 +13,21 @@ include('event_title.php');
 
 <div class="container">
   <h2 id="ctr">You selected Square box # <?php echo $_GET['box']; ?></h2>
-  <h3 id="ctr"><?php echo $squares->calculateAmounts($main_contact->getContactCashApp(), $main_contact->getDeadline()); ?></h3>
+  <h3 id="ctr"><?php echo $squares->calculateAmounts($main_contact); ?></h3>
 
   <div class="form-style-10">
     <h1>Register <?php echo $squares->getEventTitle(); ?></h1>
     <form action="sendSquare.php" method="POST">
       <input type="hidden" name="BoxNumber" value="<?php echo $_GET['box']; ?>" />
       <?php include('input_hidden.php'); ?>
-      <div class="section"><span>1</span>Name</div>
+      <div class="section"><span>1</span>Full Name or NickName</div>
       <div class="inner-wrap">
-        <label>First Name <input type="text" name="firstName" id="firstName" required /></label>
-        <label>Last Name <input type="text" name="lastName" id="lastName" required /></label>
+        <label><input type="text" name="nickName" id="nickName" required /></label>
       </div>
 
       <div class="section"><span>2</span>Email</div>
       <div class="inner-wrap">
-        <label>Email Address <input type="email" name="email" id="email" required /></label>
+        <label><input type="email" name="email" id="email" required /></label>
       </div>
 
       <div class="button-section">

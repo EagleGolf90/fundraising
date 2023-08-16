@@ -12,27 +12,34 @@ if ($squares->getShowNames() == 'N') {
 	?>
 
 	<div class="container">
-		<div class="subContainer">
-			<?php
-			$fullInstruction = $squares->checkFullInstructions();
-
-			/* Begin: DO NOT TOUCH OR ARRANGE */
-			if ($fullInstruction == 'Y') {
-				include('full_instructions.php');
-			} else {
-				include('event_title.php');
-			  include('subheaders.php');
-				include('instructions.php');
-				include('contact_info.php');
-			}
-			/* End: DO NOT TOUCH OR ARRANGE */
-			?>
-			<div class="text-center">
-				<form action="main_squares.php" method="post">
-					<?php include('input_hidden.php'); ?>
-					<button type="submit" class="btn btn-primary btn-lg fcc-btn">Proceed to Squares</button>
-				</form>
-			</div>
+		<?php
+		/* Begin: DO NOT TOUCH OR ARRANGE */
+		if ($fullInstruction == 'Y') {
+			include('full_instructions.php');
+		} else {
+  ?>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="subContainer">
+      <?php
+			include('event_title.php');
+			include('subheaders.php');
+      ?>
+      </div>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+    <?php
+			include('instructions.php');
+			include('contact_info.php');
+		}
+		/* End: DO NOT TOUCH OR ARRANGE */
+		?>
+		<div class="text-center">
+			<form action="main_squares.php" method="post">
+				<?php include('input_hidden.php'); ?>
+				<button type="submit" class="btn btn-primary btn-lg fcc-btn">Proceed to Squares</button>
+			</form>
 		</div>
 	</div>
 

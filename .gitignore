@@ -1,3 +1,8 @@
 includes/config.php
 files/*
 admin/*.html
+specs/*
+squares/backup/*
+classes/*.backup
+testing/*
+admin/backup/*

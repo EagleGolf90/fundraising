@@ -1,4 +1,6 @@
-		<ul class="instruction">
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="instruction">
 <?php
 $messages = $squares->getInstructions();
 $useDiamondTouch = 'N';
@@ -33,13 +35,19 @@ foreach ($messages as $message) {
 
 	if ($subLine) echo '</ul>' . "\n";
   echo '</li>' . "\n";
-}
+} ?>
+      </ul>
+    </div>
+    <div class="col-md-4">
+<?php
 if ($useDiamondTouchImage == 'Y') {
 ?>
-      <br/>
-		  <li><strong>Example:</strong> Diamond Touch<br/><img src="<?php echo SQUARES_URL; ?>images/diamond_touch.png"></li>
+      <strong>Example:</strong> Diamond Touch<br/>
+      <img src="<?php echo SQUARES_URL; ?>images/diamond_touch.png">
 <?php
+} else {
+	echo '&nbsp;';
 }
 ?>
-		</ul>
-		<br/>
+		</div>
+	</div>

@@ -10,6 +10,7 @@ class SquaresPayments {
   private $eventType;
   private $poolNumber;
   private $eventTitle;
+  private $nickName;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -22,7 +23,7 @@ class SquaresPayments {
   public function getEventType() { return $this->eventType; }
   public function getPoolNumber() { return $this->poolNumber; }
   public function getEventTitle() { return $this->eventTitle; }
-  public function getName() { return $this->firstName . ' ' . $this->lastName; }
+  public function getName() { return $this->nickName; }
   public function getTotalSquares() { return $this->totalSquares; }
 
   private function setup() {
@@ -43,6 +44,7 @@ class SquaresPayments {
     foreach ($rows As $row) {
       $this->firstName = $row['FirstName'];
       $this->lastName = $row['LastName'];
+      $this->nickName = $row['NickName'];
     }
   }
 

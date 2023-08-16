@@ -22,7 +22,7 @@ include(INCLUDES . 'contacts.php');
 <?php
 if ($squares->howManyBoxesSelected() > 0) {
 ?>
-    <h2><?php echo $_POST['lastName'] . ', ' . $_POST['firstName'] . ' selects box number ' . $squares->getBoxSelected(); ?></h2>
+    <h2><?php echo $_POST['nickName'] . ' selects box number ' . $squares->getBoxSelected(); ?></h2>
 <?php
 }
 

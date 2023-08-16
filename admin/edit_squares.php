@@ -6,6 +6,7 @@ $squares = new Squares();
 $squares->setNames($_GET['id']);
 $first_name = $squares->getFirstName();
 $last_name = $squares->getLastName();
+$nick_name = $squares->getNickName();
 $square_boxes = $squares->getSquares();
 $saved_squares = $squares->getSavedSquares();
 
@@ -33,8 +34,7 @@ include(HTML . 'beginHTML.php');
             <table class="table table-bordered table-striped">
             <tr>
                 <td class="edit_row">Name</td>
-                <td><input type="text" name="firstName" class="form-control" id="firstName" value="<?php echo $first_name; ?>">
-                <td><input type="text" name="lastName" class="form-control" id="lastName" value="<?php echo $last_name; ?>">
+                <td><input type="text" name="nickName" class="form-control" id="nickName" value="<?php echo $nick_name; ?>">
             </tr>
 <?php $x = 0;
       foreach ($square_boxes as $boxes) {

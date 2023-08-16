@@ -13,4 +13,4 @@
 			<li>Total Prizes Giveaway is $<?php echo $squares->getGiveAmount(); ?>.</li>
 			<li><?php echo '$' . $squares->getKeepAmount() . ' ' . $squares->getFundDesc(); ?></li>
 		</ul>
-		<br/>
+		<!--<br/>-->

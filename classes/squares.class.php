@@ -42,6 +42,7 @@ class Squares {
   private $last_name = '';
   private $labels;
   private $id_labels;
+  private $nick_name = '';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -171,6 +172,7 @@ class Squares {
 
   public function getFirstName() { return $this->first_name; }
   public function getLastName() { return $this->last_name; }
+  public function getNickName() { return $this->nick_name; }
 
   public function getTopTeam() { return $this->topTeam; }
   public function getLeftTeam() { return $this->leftTeam; }
@@ -275,6 +277,34 @@ class Squares {
 <?php
   }
 
+  // private function quarterLabel($quarter) {
+  //   $label = '';
+  //   $this->idLabel = '';
+  //   switch ($quarter) {
+  //     case 1:
+  //       $label = '1st';
+  //       $this->idLabel = 'first';
+  //       break;
+  //     case 2:
+  //       $label = '2nd';
+  //       $this->idLabel = 'second';
+  //       break;
+  //     case 3:
+  //       $label = '3rd';
+  //       $this->idLabel = 'third';
+  //       break;
+  //     case 4:
+  //       $label = 'Final';
+  //       $this->idLabel = 'fourth';
+  //       break;
+  //     case 0:
+  //       $label = '';
+  //       $this->idLabel = 'first';
+  //       break;
+  //   }
+  //   return $label;
+  // }
+
   private function sectionLabel($quarter) {
     $label = '';
     switch ($quarter) {
@@ -294,13 +324,20 @@ class Squares {
   }
 
   private function printEachQuarter($quarter) {
+    // $quarterLabel = $this->quarterLabel($quarter);
     $sectionLabel = $this->sectionLabel($quarter);
 ?>
     <tr>
       <td></td>
       <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
-      <td class='blank' id='<?php echo $this->id_labels[$quarter-1]; ?>'>
-        <?php echo $this->labels[$quarter-1]; ?>
+      <td class='blank' id='<?php
+      //echo $this->idLabel;
+      echo $this->id_labels[$quarter-1];
+      ?>'>
+        <?php
+        //echo $quarterLabel;
+        echo $this->labels[$quarter-1];
+        ?>
       </td>
 <?php
 for ($x = 0; $x < sizeof($this->topSquares); $x++) {
@@ -421,14 +458,18 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
-  public function calculateAmounts($cashapp, $deadline) {
+  public function calculateAmounts($obj) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
-    return 'Since you buy ' . $howMany . ' square(s), you need to pay $' . $total . ' to CashApp ' . $cashapp . ' by ' . $deadline . '.';
+    $content = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
+    //$content .= ' to CashApp ' . $obj->getContactCashApp();
+    //$content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
+    $content .= '<br/>through Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
+    return $content;
   }
 
   private function insertParticipant() {
-    $parm = array(BUS_UNIT, $this->personID, $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR']);
+    $parm = array(BUS_UNIT, $this->personID, $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], $_POST['nickName']);
     $ret = $this->sqlTable->execute('insertParticipants', $parm);
   }
 
@@ -527,6 +568,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     foreach ($rows as $row) {
       $this->first_name = $row['FirstName'];
       $this->last_name = $row['LastName'];
+      $this->nick_name = $row['FullName'];
     }
   }
 
