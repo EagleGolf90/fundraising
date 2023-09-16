@@ -42,14 +42,7 @@ class Squares {
   private $last_name = '';
   private $labels;
   private $id_labels;
-<<<<<<< Updated upstream
   private $nick_name = '';
-=======
-<<<<<<< HEAD
-=======
-  private $nick_name = '';
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -179,14 +172,7 @@ class Squares {
 
   public function getFirstName() { return $this->first_name; }
   public function getLastName() { return $this->last_name; }
-<<<<<<< Updated upstream
   public function getNickName() { return $this->nick_name; }
-=======
-<<<<<<< HEAD
-=======
-  public function getNickName() { return $this->nick_name; }
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 
   public function getTopTeam() { return $this->topTeam; }
   public function getLeftTeam() { return $this->leftTeam; }
@@ -291,11 +277,6 @@ class Squares {
 <?php
   }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
   // private function quarterLabel($quarter) {
   //   $label = '';
   //   $this->idLabel = '';
@@ -324,10 +305,6 @@ class Squares {
   //   return $label;
   // }
 
-<<<<<<< Updated upstream
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
   private function sectionLabel($quarter) {
     $label = '';
     switch ($quarter) {
@@ -347,26 +324,12 @@ class Squares {
   }
 
   private function printEachQuarter($quarter) {
-<<<<<<< Updated upstream
     // $quarterLabel = $this->quarterLabel($quarter);
-=======
-<<<<<<< HEAD
-=======
-    // $quarterLabel = $this->quarterLabel($quarter);
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
     $sectionLabel = $this->sectionLabel($quarter);
 ?>
     <tr>
       <td></td>
       <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-      <td class='blank' id='<?php echo $this->id_labels[$quarter-1]; ?>'>
-        <?php echo $this->labels[$quarter-1]; ?>
-=======
->>>>>>> Stashed changes
       <td class='blank' id='<?php
       //echo $this->idLabel;
       echo $this->id_labels[$quarter-1];
@@ -375,10 +338,6 @@ class Squares {
         //echo $quarterLabel;
         echo $this->labels[$quarter-1];
         ?>
-<<<<<<< Updated upstream
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
       </td>
 <?php
 for ($x = 0; $x < sizeof($this->topSquares); $x++) {
@@ -609,14 +568,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     foreach ($rows as $row) {
       $this->first_name = $row['FirstName'];
       $this->last_name = $row['LastName'];
-<<<<<<< Updated upstream
       $this->nick_name = $row['FullName'];
-=======
-<<<<<<< HEAD
-=======
-      $this->nick_name = $row['FullName'];
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
     }
   }
 

@@ -14,6 +14,7 @@ if ($squares->getShowNames() == 'N') {
 	<div class="container">
 		<?php
 		/* Begin: DO NOT TOUCH OR ARRANGE */
+		$fullInstruction = $squares->checkFullInstructions();
 		if ($fullInstruction == 'Y') {
 			include('full_instructions.php');
 		} else {
