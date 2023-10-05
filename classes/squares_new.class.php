@@ -34,7 +34,6 @@ class Squares {
   private $showNames;
   private $idLabel;
   private $id_label;
-  private $id_label;
   private $saved;
   private $deadline;
   private $instructionCheck;
@@ -44,8 +43,6 @@ class Squares {
   private $last_name = '';
   private $draw_numbers = 0;
   private $sports;
-  private $labels;
-  private $id_labels;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -61,8 +58,6 @@ class Squares {
     $this->leftTeam = null;
     $this->topSquares = null;
     $this->leftSquares = null;
-    $this->labels = null;
-    $this->id_levels = null;
     $this->poolNumber = null;
     unset($this->sqlTable);
   }
@@ -71,8 +66,6 @@ class Squares {
     $this->boxSelected = '';
     $this->topSquares = array();
     $this->leftSquares = array();
-    $this->labels = array();
-    $this->id_labels = array();
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -88,24 +81,7 @@ class Squares {
       $this->populatePicks();
       $this->getTexts();
       $this->getFooterTexts();
-      $this->loadLabels();
     }
-  }
-
-  private function saveToArray($sql, $fieldName) {
-    $rows = $this->sqlTable->load($sql, array($this->eventType));
-    $x = 0;
-    $obj = array();
-    foreach ($rows as $row) {
-      $obj[$x] = $row[$fieldName];
-      $x++;
-    }
-    return $obj;
-  }
-
-  private function loadLabels() {
-    $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
-    $this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
   }
 
   public function openForPublic() { return $this->openForPublic; }
@@ -234,7 +210,7 @@ class Squares {
 
   private function printCellTopBox($id, $value) {
 ?>
-    <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
+      <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
 <?php
   }
 
@@ -242,22 +218,12 @@ class Squares {
 ?>
     <tr>
 <?php
-    switch ($this->eventType) {
-      case 5:
+    if ($this->eventType == 5) {
 ?>
       <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
       <td class='blank' id='first'></td>
 <?php
-        break;
-      default:
-?>
-      <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-<?php   for ($x = 3; $x >= 0; $x--) { ?>
-      <td class='blank' id='fourth'>
-        <?php echo $this->labels[$x]; ?>
-      </td>
-<?php   }
-        break;
+    } else {
 ?>
       <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
 <?php for ($quarter = $this->draw_numbers; $quarter > 0; $quarter--) {
@@ -355,7 +321,9 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $class;
   }
 
-  private function getBoxNumber($index) { return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>'; }
+  private function getBoxNumber($index) {
+    return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>';
+  }
 
   public function printGridSquares() {
     $n = 0;

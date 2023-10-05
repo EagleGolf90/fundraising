@@ -90,6 +90,7 @@ class Squares {
   }
 
   private function saveToArray($sql, $fieldName) {
+    if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
     $rows = $this->sqlTable->load($sql, array($this->eventType));
     $x = 0;
     $obj = array();
