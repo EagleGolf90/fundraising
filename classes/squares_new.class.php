@@ -33,14 +33,8 @@ class Squares {
   private $openForPublic;
   private $showNames;
   private $idLabel;
-<<<<<<< Updated upstream
   private $id_label;
-=======
-<<<<<<< HEAD
-=======
   private $id_label;
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
   private $saved;
   private $deadline;
   private $instructionCheck;
@@ -50,14 +44,8 @@ class Squares {
   private $last_name = '';
   private $draw_numbers = 0;
   private $sports;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
   private $labels;
   private $id_labels;
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -73,14 +61,8 @@ class Squares {
     $this->leftTeam = null;
     $this->topSquares = null;
     $this->leftSquares = null;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
     $this->labels = null;
     $this->id_levels = null;
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
     $this->poolNumber = null;
     unset($this->sqlTable);
   }
@@ -89,14 +71,8 @@ class Squares {
     $this->boxSelected = '';
     $this->topSquares = array();
     $this->leftSquares = array();
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
     $this->labels = array();
     $this->id_labels = array();
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -112,12 +88,6 @@ class Squares {
       $this->populatePicks();
       $this->getTexts();
       $this->getFooterTexts();
-<<<<<<< Updated upstream
-    }
-  }
-
-=======
-<<<<<<< HEAD
       $this->loadLabels();
     }
   }
@@ -138,12 +108,6 @@ class Squares {
     $this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
   }
 
-=======
-    }
-  }
-
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
   public function openForPublic() { return $this->openForPublic; }
 
   private function getCurrentEvent() {
@@ -270,15 +234,7 @@ class Squares {
 
   private function printCellTopBox($id, $value) {
 ?>
-<<<<<<< Updated upstream
-      <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
-=======
-<<<<<<< HEAD
     <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
-=======
-      <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 <?php
   }
 
@@ -286,26 +242,12 @@ class Squares {
 ?>
     <tr>
 <?php
-<<<<<<< Updated upstream
-    if ($this->eventType == 5) {
-=======
-<<<<<<< HEAD
     switch ($this->eventType) {
       case 5:
-=======
-    if ($this->eventType == 5) {
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 ?>
       <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
       <td class='blank' id='first'></td>
 <?php
-<<<<<<< Updated upstream
-    } else {
-?>
-      <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-=======
-<<<<<<< HEAD
         break;
       default:
 ?>
@@ -316,11 +258,8 @@ class Squares {
       </td>
 <?php   }
         break;
-=======
-    } else {
 ?>
       <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
->>>>>>> Stashed changes
 <?php for ($quarter = $this->draw_numbers; $quarter > 0; $quarter--) {
         $id_label = $this->getIDLabel($quarter);
         $quarter_label = $this->getQuarterLabel($quarter);
@@ -328,10 +267,6 @@ class Squares {
         <td class='blank' id='<?php echo $id_label; ?>'><?php echo $quarter_label; ?></td>
 <?php
       }
-<<<<<<< Updated upstream
-=======
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
     }
 
     // Top Squares
@@ -420,19 +355,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $class;
   }
 
-<<<<<<< Updated upstream
-  private function getBoxNumber($index) {
-    return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>';
-  }
-=======
-<<<<<<< HEAD
   private function getBoxNumber($index) { return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>'; }
-=======
-  private function getBoxNumber($index) {
-    return $this->showNames == 'Y' ? $this->listPick[$index][1] : '<a href="#">' . strval($index) . '</a>';
-  }
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 
   public function printGridSquares() {
     $n = 0;
