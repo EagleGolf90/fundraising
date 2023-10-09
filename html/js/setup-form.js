@@ -20,6 +20,7 @@ $(document).ready(function() {
     show_hide_element('target2', true, 'Second Quarter');
     show_hide_element('target3', true, 'Third Quarter');
     show_hide_element('target4', true, 'Final Score');
+    show_hide_element('target5', true, 'Reverse Winner');
   }
 
   function ncaa() {
@@ -27,6 +28,7 @@ $(document).ready(function() {
     show_hide_element('target2', true, 'Second Half');
     show_hide_element('target3', true, 'Final Score');
     show_hide_element('target4', false, '');
+    show_hide_element('target5', false, '');
   }
 
   function mlb() {
@@ -34,6 +36,7 @@ $(document).ready(function() {
     show_hide_element('target2', true, 'Third Inning');
     show_hide_element('target3', true, 'Sixth Inning');
     show_hide_element('target4', true, 'Final Score');
+    show_hide_element('target5', false, '');
   }
 
   function display_events(value_selected) {
@@ -90,6 +93,7 @@ $(document).ready(function() {
 
     $('#diamond_winner').prop('checked', false);
     $('#reverse_winner').prop('checked', false);
+    $('#final_reverse_winner').val("");
     $('#prize_square').val("");
     $('#fundraising_percentage').val("");
     $('#giveaway_percentage').val("");
@@ -115,6 +119,27 @@ $(document).ready(function() {
     if ((fund_percent + give_percent) != 100) {
       alert('Giveaway and Fundraising percentages must total to 100%. Please try again.');
     }
+  }
+
+  function getValues(tag_name) { return document.getElementById(tag_name).value; }
+
+  function calc_grand_total() {
+    var diamond_winner_flag = document.getElementById("diamond_winner").checked;
+    var reverse_winner_flag = document.getElementById("reverse_winner").checked;
+
+    var total = 0;
+    var diamond_total = 0;
+    var reverse_total = 0;
+    var grand_total = 0;
+
+    for (var x = 1; x <= 4; x++) {
+      total += Number(getValues("square_winner" + x));
+      if (diamond_winner_flag == true) diamond_total += (4 * Number(getValues("diamond_winner" + x)));
+      if (reverse_winner_flag == true) reverse_total += Number(getValues("reverse_winner" + x));
+    }
+
+    grand_total = total + diamond_total + reverse_total + Number(getValues("final_reverse_winner"));
+    document.getElementById("grand_total").value = grand_total;
   }
 
   $("#select_event").change(function() {
@@ -146,6 +171,14 @@ $(document).ready(function() {
 
   $("#clearAll").click(function() {
     clear_all();
+  });
+
+  $("#calculate").click(function() {
+    calc_grand_total();
+  });
+
+  $("#submitForm").click(function() {
+    alert("Are you sure you want to submit?");
   });
 
   initialize();
