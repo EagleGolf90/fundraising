@@ -43,6 +43,8 @@ class Squares {
   private $labels;
   private $id_labels;
   private $nick_name = '';
+  private $label_name = '';
+  private $square_winners;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -70,6 +72,7 @@ class Squares {
     $this->leftSquares = array();
     $this->labels = array();
     $this->id_labels = array();
+    $this->square_winners = array();
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -86,6 +89,14 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
+      $this->loadSquareWinners();
+    }
+  }
+
+  private function loadSquareWinners() {
+    $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
+    foreach ($rows as $row) {
+      $this->square_winners[] = array();
     }
   }
 
@@ -107,6 +118,7 @@ class Squares {
   }
 
   public function openForPublic() { return $this->openForPublic; }
+  public function getLabelName() { return $this->label_name; }
 
   private function getCurrentEvent() {
     if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
@@ -132,6 +144,7 @@ class Squares {
       $this->showNames = $row['ShowNames'];
       $this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
+      $this->label_name = $row['label_name'];
     }
   }
 
@@ -188,6 +201,8 @@ class Squares {
     $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
     return $this->sqlTable->load('loadInstructions', $parm);
   }
+
+  public function getDropDownLists() { return $this->sqlTable->load('loadDropDownLists', array($this->eventType)); }
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
