@@ -7,7 +7,9 @@
   <?php include('css_finder.php'); ?>
 </head>
 
-<?php if ($sub_folder == 'admin/draw_squares.php' || $sub_folder == 'admin/teams_final.php') { ?>
+<?php if ($sub_folder == 'admin/draw_squares.php'
+             || $sub_folder == 'admin/teams_final.php'
+             || $sub_folder == 'admin/setup_squares.php') { ?>
 <body class="bg-light">
 <?php } else { ?>
 <body>

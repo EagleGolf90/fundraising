@@ -5,43 +5,38 @@
  * Description...: To execute the handles and behaviors attached for Setup Form.
  */
 $(document).ready(function() {
-  function show_hide_element(element_name, show_flag, show_label) {
-    if (show_flag == true) {
-      $('.' + element_name).show();
+  function show_hide_element(element_name, show_label) {
+    if (show_label != '') {
+      $(element_name).show();
     } else {
-      $('.' + element_name).hide();
+      $(element_name).hide();
     }
-    $('.' + element_name + '_label').text(show_label);
+    $(element_name + '_label').text(show_label);
   }
 
   /* NFL and NBA use same labels */
   function nfl_nba() {
-    show_hide_element('target1', true, 'First Quarter');
-    show_hide_element('target2', true, 'Second Quarter');
-    show_hide_element('target3', true, 'Third Quarter');
-    show_hide_element('target4', true, 'Final Score');
-    show_hide_element('target5', true, 'Reverse Winner');
+    var labels = [ 'First Quarter', 'Second Quarter', 'Third Quarter', 'Final Score', 'Reverse Winner' ];
+
+    for (var a = 0; a < labels.length; a++) show_hide_element('.target' + a, labels[a]);
   }
 
   function ncaa() {
-    show_hide_element('target1', true, 'First Half');
-    show_hide_element('target2', true, 'Second Half');
-    show_hide_element('target3', true, 'Final Score');
-    show_hide_element('target4', false, '');
-    show_hide_element('target5', false, '');
+    var labels = [ 'First Half', 'Second Half', 'Final Score', '', '' ];
+
+    for (var b = 0; b < labels.length; b++) show_hide_element('.target' + b, labels[b]);
   }
 
   function mlb() {
-    show_hide_element('target1', true, 'First Inning');
-    show_hide_element('target2', true, 'Third Inning');
-    show_hide_element('target3', true, 'Sixth Inning');
-    show_hide_element('target4', true, 'Final Score');
-    show_hide_element('target5', false, '');
+    var labels = [ 'First Inning', 'Third Inning', 'Sixth Inning', 'Final Score', '' ];
+
+    for (var c = 0; c < labels.length; c++) show_hide_element('.target' + c, labels[c]);
   }
 
   function display_events(value_selected) {
     switch (value_selected) {
       case '1': // NFL
+      case '4': // NBA
         nfl_nba();
         break;
       case '2': // NCAA
@@ -50,14 +45,11 @@ $(document).ready(function() {
       case '3': // MLB
         mlb();
         break;
-      case '4': // NBA
-        nfl_nba();
-        break;
     }
   }
 
   function enabled_disabled(element_name, enabled_flag) { $('input#' + element_name).prop('disabled', !enabled_flag); }
-  function blank_field(element_name, flag) { if (flag == false) $('#' + element_name).val(""); }
+  function blank_field(element_name, flag) { if (flag == false) field_blank('#' + element_name); }
 
   function diamond_winner(flag) {
     for (var i = 1; i <= 4; i++) {
@@ -88,21 +80,29 @@ $(document).ready(function() {
     return percent;
   }
 
+  function check_uncheck(field_name, checkbox_flag) { $(field_name).prop('checked', checkbox_flag); }
+  function field_blank(field_name) { $(field_name).val(""); }
+  function set_field_zeros(field_name) { $(field_name).text('$0.00'); }
+
   function clear_all() {
     initialize();
 
-    $('#diamond_winner').prop('checked', false);
-    $('#reverse_winner').prop('checked', false);
-    $('#final_reverse_winner').val("");
-    $('#prize_square').val("");
-    $('#fundraising_percentage').val("");
-    $('#giveaway_percentage').val("");
+    check_uncheck('#diamond_winner', false);
+    check_uncheck('#reverse_winner', false);
 
-    $('#total_prizes').text('$0.00');
-    $('#prize_giveaway').text('$0.00');
-    $('#prize_fundraising').text('$0.00');
+    field_blank('#final_reverse_winner');
+    field_blank('#prize_square');
+    field_blank('#fundraising_percentage');
+    field_blank('#giveaway_percentage');
+    field_blank('#grand_total');
+    field_blank('#date_from');
+    field_blank('#date_to');
 
-    for (var i = 1; i <= 4; i++) $('#square_winner' + i).val("");
+    set_field_zeros('#total_prizes');
+    set_field_zeros('#prize_giveaway');
+    set_field_zeros('#prize_fundraising');
+
+    for (var i = 1; i <= 4; i++) field_blank('#square_winner' + i);
   }
 
   function calc_giveaway() {
@@ -142,9 +142,7 @@ $(document).ready(function() {
     document.getElementById("grand_total").value = grand_total;
   }
 
-  $("#select_event").change(function() {
-    display_events($('select#select_event option:selected').val());
-  });
+  $("#select_event").change(function() { display_events($('select#select_event option:selected').val()); });
 
   $("input#prize_square").change(function() {
     var prize_totals = total_prizes();
@@ -153,32 +151,26 @@ $(document).ready(function() {
     if ($('#fundraising_percentage').val() != 0) calc_fundraising();
   });
 
-  $("input#giveaway_percentage").change(function() {
-    calc_giveaway();
-  });
+  $("input#giveaway_percentage").change(function() { calc_giveaway(); });
 
-  $("input#fundraising_percentage").change(function() {
-    calc_fundraising();
-  });
+  $("input#fundraising_percentage").change(function() { calc_fundraising(); });
 
-  $("#diamond_winner").change(function() {
-    diamond_winner($('#diamond_winner').prop('checked'));
-  });
+  $("#diamond_winner").change(function() { diamond_winner($('#diamond_winner').prop('checked')); });
 
-  $("#reverse_winner").change(function() {
-    reverse_winner($('#reverse_winner').prop('checked'));
-  });
+  $("#reverse_winner").change(function() { reverse_winner($('#reverse_winner').prop('checked')); });
 
-  $("#clearAll").click(function() {
-    clear_all();
-  });
+  $("#clearAll").click(function() { clear_all(); });
 
-  $("#calculate").click(function() {
-    calc_grand_total();
-  });
+  $("#calculate").click(function() { calc_grand_total(); });
 
   $("#submitForm").click(function() {
-    alert("Are you sure you want to submit?");
+    let result = confirm("Are you sure you want to submit?");
+    if (result) {
+      e.preventDefault();
+      $("#areaForm").submit();
+    } else {
+      alert('Cancel')
+    }
   });
 
   initialize();

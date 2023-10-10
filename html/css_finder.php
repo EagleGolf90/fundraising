@@ -21,5 +21,8 @@ switch ($sub_folder) {
   case 'admin/draw_squares.php':
     include(HTML . 'head_teams_final.php');
     break;
+  case 'admin/setup_squares.php':
+    include(HTML . 'head_setup.php');
+    break;
 }
 ?>
