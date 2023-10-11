@@ -45,6 +45,7 @@ class Squares {
   private $nick_name = '';
   private $label_name = '';
   private $square_winners;
+  private $square_text;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -73,6 +74,7 @@ class Squares {
     $this->labels = array();
     $this->id_labels = array();
     $this->square_winners = array();
+    $this->square_text = array();
     $this->topTeam = '';
     $this->leftTeam = '';
     $this->boxExcluded = '';
@@ -112,9 +114,13 @@ class Squares {
     return $obj;
   }
 
+  public function getSquareTexts() { return $this->square_text; }
+
   private function loadLabels() {
     $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
-    $this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
+    //$this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
+    $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
+    $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
   }
 
   public function openForPublic() { return $this->openForPublic; }

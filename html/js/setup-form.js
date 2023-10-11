@@ -17,19 +17,16 @@ $(document).ready(function() {
   /* NFL and NBA use same labels */
   function nfl_nba() {
     var labels = [ 'First Quarter', 'Second Quarter', 'Third Quarter', 'Final Score', 'Reverse Winner' ];
-
     for (var a = 0; a < labels.length; a++) show_hide_element('.target' + a, labels[a]);
   }
 
   function ncaa() {
     var labels = [ 'First Half', 'Second Half', 'Final Score', '', '' ];
-
     for (var b = 0; b < labels.length; b++) show_hide_element('.target' + b, labels[b]);
   }
 
   function mlb() {
     var labels = [ 'First Inning', 'Third Inning', 'Sixth Inning', 'Final Score', '' ];
-
     for (var c = 0; c < labels.length; c++) show_hide_element('.target' + c, labels[c]);
   }
 
@@ -163,15 +160,15 @@ $(document).ready(function() {
 
   $("#calculate").click(function() { calc_grand_total(); });
 
-  $("#submitForm").click(function() {
-    let result = confirm("Are you sure you want to submit?");
-    if (result) {
-      e.preventDefault();
-      $("#areaForm").submit();
-    } else {
-      alert('Cancel')
-    }
-  });
+  // $("#submitForm").click(function() {
+  //   let result = confirm("Are you sure you want to submit?");
+  //   if (result) {
+  //     e.preventDefault();
+  //     $("#areaForm").submit();
+  //   } else {
+  //     alert('Cancel')
+  //   }
+  // });
 
   initialize();
 });
