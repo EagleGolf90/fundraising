@@ -1,4 +1,6 @@
 <?php
+if (!isset($_GET['bu'])) die('Must have bu parameter. Please try again.');
+
 include('../preload.php');
 include(HTML . 'beginHTML.php');
 include(HTML . 'return_menu.php');
@@ -13,7 +15,7 @@ include(HTML . 'return_menu.php');
 
       <div class="col-md-7 col-lg-8">
         <form class="areaForm" action="update_setup.php" method="post">
-          <input type="text" name="bus_unit" id="bus_unit" value="KDGA" hidden>
+          <input type="text" name="bu" id="bu" value="<?php echo strtoupper($_GET['bu']); ?>" hidden>
           <div class="row g-2">
             <?php include('setup_header.php'); ?>
             <hr>

@@ -91,43 +91,54 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
-      $this->loadSquareWinners();
+      //$this->loadSquareWinners();
     }
   }
 
-  private function loadSquareWinners() {
-    $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
-    foreach ($rows as $row) {
-      $this->square_winners[] = array();
-    }
-  }
+  // private function loadSquareWinners() {
+  //   $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
+  //   foreach ($rows as $row) {
+  //     $this->square_winners[] = array();
+  //   }
+  // }
 
-  private function saveToArray($sql, $fieldName) {
-    if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
-    $rows = $this->sqlTable->load($sql, array($this->eventType));
-    $x = 0;
-    $obj = array();
-    foreach ($rows as $row) {
-      $obj[$x] = $row[$fieldName];
-      $x++;
-    }
-    return $obj;
-  }
+  // private function saveToArray($sql, $fieldName) {
+  //   if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
+  //   $rows = $this->sqlTable->load($sql, array($this->eventType));
+  //   $x = 0;
+  //   $obj = array();
+  //   foreach ($rows as $row) {
+  //     $obj[$x] = $row[$fieldName];
+  //     $x++;
+  //   }
+  //   return $obj;
+  // }
+
+  // private function loadLabels() {
+  //   $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
+  //   $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
+  //   $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
+  // }
 
   public function getSquareTexts() { return $this->square_text; }
 
   private function loadLabels() {
-    $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
-    //$this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
-    $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
-    $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
+    $rows = $this->sqlTable->load('loadLabelsForTopLeftArea', array($this->eventType));
+
+    $x = 0;
+    foreach ($rows as $row) {
+      $this->labels[$x] = $row('SquareLabel');
+      $this->id_labels[$x] = $row('id_label');
+      $this->square_text[$x] = $row('SquareText');
+      $x++;
+    }
   }
 
   public function openForPublic() { return $this->openForPublic; }
   public function getLabelName() { return $this->label_name; }
 
   private function getCurrentEvent() {
-    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
+    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
     $rows = $this->sqlTable->load('loadCurrentEvents', array());
 
     foreach ($rows As $row) {
@@ -148,7 +159,7 @@ class Squares {
       $this->formulaType = $row['Formula'];
       define('FORMULA', $row['Formula']);
       $this->showNames = $row['ShowNames'];
-      $this->deadline = $row['Deadline'];
+      //$this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
       $this->label_name = $row['label_name'];
     }
