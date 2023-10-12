@@ -6,14 +6,7 @@ $squares = new Squares();
 $squares->setNames($_GET['id']);
 $first_name = $squares->getFirstName();
 $last_name = $squares->getLastName();
-<<<<<<< Updated upstream
 $nick_name = $squares->getNickName();
-=======
-<<<<<<< HEAD
-=======
-$nick_name = $squares->getNickName();
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
 $square_boxes = $squares->getSquares();
 $saved_squares = $squares->getSavedSquares();
 
@@ -41,16 +34,7 @@ include(HTML . 'beginHTML.php');
             <table class="table table-bordered table-striped">
             <tr>
                 <td class="edit_row">Name</td>
-<<<<<<< Updated upstream
                 <td><input type="text" name="nickName" class="form-control" id="nickName" value="<?php echo $nick_name; ?>">
-=======
-<<<<<<< HEAD
-                <td><input type="text" name="firstName" class="form-control" id="firstName" value="<?php echo $first_name; ?>">
-                <td><input type="text" name="lastName" class="form-control" id="lastName" value="<?php echo $last_name; ?>">
-=======
-                <td><input type="text" name="nickName" class="form-control" id="nickName" value="<?php echo $nick_name; ?>">
->>>>>>> fffd1b4094110f53ba2bc0a72f04ab376d5c18de
->>>>>>> Stashed changes
             </tr>
 <?php $x = 0;
       foreach ($square_boxes as $boxes) {

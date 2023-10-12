@@ -46,6 +46,7 @@ class Squares {
   private $label_name = '';
   private $square_winners;
   private $square_text;
+  private $personID;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -91,16 +92,16 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
-      $this->loadSquareWinners();
+      // $this->loadSquareWinners();
     }
   }
 
-  private function loadSquareWinners() {
-    $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
-    foreach ($rows as $row) {
-      $this->square_winners[] = array();
-    }
-  }
+  // private function loadSquareWinners() {
+  //   $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
+  //   foreach ($rows as $row) {
+  //     $this->square_winners[] = array();
+  //   }
+  // }
 
   private function saveToArray($sql, $fieldName) {
     if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
@@ -116,11 +117,21 @@ class Squares {
 
   public function getSquareTexts() { return $this->square_text; }
 
+  // private function loadLabels() {
+  //   $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
+  //   $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
+  //   $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
+  // }
+
   private function loadLabels() {
-    $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
-    //$this->id_labels = $this->saveToArray('loadIDForLeftArea', 'id_label');
-    $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
-    $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
+    $rows = $this->sqlTable->load('loadLabelsForLeftArea', array($this->eventType));
+    $x = 0;
+    foreach ($rows as $row) {
+      $this->labels[$x] = $row['SquareLabel'];
+      $this->id_labels[$x] = $row['id_label'];
+      $this->square_text[$x] = $row['SquareText'];
+      $x++;
+    }
   }
 
   public function openForPublic() { return $this->openForPublic; }
@@ -480,14 +491,13 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
-  public function calculateAmounts($obj) {
+  public function calculateAmounts($zelle, $deadline) {
     $howMany = $this->countTotalBoxes();
+    //$howMany = 1;
     $total = $this->cost * $howMany;
-    $content = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
-    //$content .= ' to CashApp ' . $obj->getContactCashApp();
-    //$content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
-    $content .= '<br/>through Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
-    return $content;
+    $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
+    $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
+    return $message;
   }
 
   private function insertParticipant() {
