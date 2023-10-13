@@ -103,17 +103,17 @@ class Squares {
   //   }
   // }
 
-  private function saveToArray($sql, $fieldName) {
-    if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
-    $rows = $this->sqlTable->load($sql, array($this->eventType));
-    $x = 0;
-    $obj = array();
-    foreach ($rows as $row) {
-      $obj[$x] = $row[$fieldName];
-      $x++;
-    }
-    return $obj;
-  }
+  // private function saveToArray($sql, $fieldName) {
+  //   if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
+  //   $rows = $this->sqlTable->load($sql, array($this->eventType));
+  //   $x = 0;
+  //   $obj = array();
+  //   foreach ($rows as $row) {
+  //     $obj[$x] = $row[$fieldName];
+  //     $x++;
+  //   }
+  //   return $obj;
+  // }
 
   public function getSquareTexts() { return $this->square_text; }
 
