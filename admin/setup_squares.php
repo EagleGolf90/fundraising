@@ -1,7 +1,7 @@
 <?php
-include('../preload.php');
-include(HTML . 'beginHTML.php');
-include(HTML . 'return_menu.php');
+// include('../preload.php');
+// include(HTML . 'beginHTML.php');
+// include(HTML . 'return_menu.php');
 ?>
 
 <div class="container-xl">
@@ -13,7 +13,7 @@ include(HTML . 'return_menu.php');
 
       <div class="col-md-7 col-lg-8">
         <form class="areaForm" action="update_setup.php" method="post">
-          <input type="text" name="bus_unit" id="bus_unit" value="KDGA" hidden>
+          <input type="text" name="bu" id="bu" value="KDGA" hidden>
           <div class="row g-2">
             <?php include('setup_header.php'); ?>
             <hr>
@@ -37,4 +37,4 @@ include(HTML . 'return_menu.php');
   </main>
 </div>
 
-<?php include(HTML . 'endHTML.php'); ?>
+<?php //include(HTML . 'endHTML.php'); ?>
