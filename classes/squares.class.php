@@ -46,6 +46,7 @@ class Squares {
   private $label_name = '';
   private $square_winners;
   private $square_text;
+  private $personID;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -91,7 +92,7 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
-      //$this->loadSquareWinners();
+      // $this->loadSquareWinners();
     }
   }
 
@@ -114,22 +115,21 @@ class Squares {
   //   return $obj;
   // }
 
+  public function getSquareTexts() { return $this->square_text; }
+
   // private function loadLabels() {
   //   $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
   //   $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
   //   $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
   // }
 
-  public function getSquareTexts() { return $this->square_text; }
-
   private function loadLabels() {
-    $rows = $this->sqlTable->load('loadLabelsForTopLeftArea', array($this->eventType));
-
+    $rows = $this->sqlTable->load('loadLabelsForLeftArea', array($this->eventType));
     $x = 0;
     foreach ($rows as $row) {
-      $this->labels[$x] = $row('SquareLabel');
-      $this->id_labels[$x] = $row('id_label');
-      $this->square_text[$x] = $row('SquareText');
+      $this->labels[$x] = $row['SquareLabel'];
+      $this->id_labels[$x] = $row['id_label'];
+      $this->square_text[$x] = $row['SquareText'];
       $x++;
     }
   }
@@ -138,7 +138,7 @@ class Squares {
   public function getLabelName() { return $this->label_name; }
 
   private function getCurrentEvent() {
-    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
+    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
     $rows = $this->sqlTable->load('loadCurrentEvents', array());
 
     foreach ($rows As $row) {
@@ -159,7 +159,7 @@ class Squares {
       $this->formulaType = $row['Formula'];
       define('FORMULA', $row['Formula']);
       $this->showNames = $row['ShowNames'];
-      //$this->deadline = $row['Deadline'];
+      $this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
       $this->label_name = $row['label_name'];
     }
@@ -491,14 +491,13 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
-  public function calculateAmounts($obj) {
+  public function calculateAmounts($zelle, $deadline) {
     $howMany = $this->countTotalBoxes();
+    //$howMany = 1;
     $total = $this->cost * $howMany;
-    $content = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
-    //$content .= ' to CashApp ' . $obj->getContactCashApp();
-    //$content .= '<br/><strong>OR</strong> Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
-    $content .= '<br/>through Zelle ' . $obj->getMainZelle() . ' by ' . $obj->getDeadline() . '.';
-    return $content;
+    $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
+    $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
+    return $message;
   }
 
   private function insertParticipant() {

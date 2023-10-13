@@ -49,8 +49,7 @@ class MainContact {
   public function getDeadline() { return $this->deadline; }
 
   private function setup() {
-    $parm = array(BUS_UNIT);
-    $rows = $this->sqlTable->load('loadSetup', $parm);
+    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT));
     $this->mainContactFirstName = '';
     foreach ($rows as $row) {
       $this->yearPick = $row['YearPicked'];

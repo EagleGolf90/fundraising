@@ -1,14 +1,11 @@
 <?php
 include('../preload.php');
 
-$sqlTable = new SQLTable();
+//$sqlTable = new SQLTable();
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
-die('ends here');
-$texts = $squares->getSquareTexts();
-
-$bus_unit = $_POST['bu'];
+// include(CLASSES . 'squares.class.php');
+// $squares = new Squares();
+// $texts = $squares->getSquareTexts();
 
 $diamond_winner = $_POST['diamond_winner'];
 $reverse_winner = $_POST['reverse_winner'];
@@ -31,7 +28,7 @@ foreach ($_POST as $post) {
   $total += $square_winner_amount;
 
   if ($x <= 4) {
-    echo 'Total for ' . $texts[$x-1] . ' = ' . $square_winner_amount . ', Diamond Winner: ' . $diamond_winner_amount . ', Reverse Winner: ' . $reverse_winner_amount . '<br/>';
+    echo 'Total for ' . $x . ' = ' . $square_winner_amount . ', Diamond Winner: ' . $diamond_winner_amount . ', Reverse Winner: ' . $reverse_winner_amount . '<br/>';
     // $parm = array();
     // $ret = $sqlTable->execute('', $parm);
   }

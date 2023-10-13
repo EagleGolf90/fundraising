@@ -42,4 +42,4 @@ include(HTML . 'return_menu.php');
   </main>
 </div>
 
-<?php include(HTML . 'endHTML.php'); ?>
+<?php //include(HTML . 'endHTML.php'); ?>
