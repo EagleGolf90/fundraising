@@ -1,5 +1,5 @@
 <?php
-switch (1) {
+switch ($eventType) {
   case 1: // NFL
   case 4: // NBA
     $labels = array('First Quarter', 'Second Quarter', 'Third Quarter', 'Final Score', 'Reverse Winner');

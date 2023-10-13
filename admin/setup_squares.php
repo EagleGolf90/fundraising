@@ -1,7 +1,8 @@
 <?php
-if (!isset($_GET['bu'])) die('Must have bu parameter. Please try again.');
-
 include('../preload.php');
+
+$eventType = 1;
+
 include(HTML . 'beginHTML.php');
 include(HTML . 'return_menu.php');
 ?>
@@ -15,7 +16,7 @@ include(HTML . 'return_menu.php');
 
       <div class="col-md-7 col-lg-8">
         <form class="areaForm" action="update_setup.php" method="post">
-          <input type="text" name="bu" id="bu" value="<?php echo strtoupper($_GET['bu']); ?>" hidden>
+          <input type="text" name="bu" id="bu" value="KDGA" hidden>
           <div class="row g-2">
             <?php include('setup_header.php'); ?>
             <hr>
@@ -28,6 +29,8 @@ include(HTML . 'return_menu.php');
             }
 
             include('reverse_winner_section.php');
+            echo '<hr>';
+            include('instructions.php');
             ?>
 
             <div class="col-6"><button class="w-100 btn btn-primary btn-lg" tabindex="20" id="submitForm" type="submit">Submit</button></div>
