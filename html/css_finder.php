@@ -12,6 +12,7 @@ switch ($sub_folder) {
   case 'admin/delete_row.php':
   case 'admin/final_names.php':
   case 'admin/receivePay.php':
+  case 'admin/emails.php':
     include(HTML . 'head_squares.php');
     break;
   case 'menus/index.php':

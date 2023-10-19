@@ -238,7 +238,10 @@ h1, h2, .ctr {
   cursor: pointer;
 }
 
-.table { font-size: 10px; }
+.table {
+  /*font-size: 10px;*/
+  font-size: 14px;
+}
 ul.instruction { list-style-type: none; }
 ul.subInstruction { list-style-type: disc; }
 .subContainer { font-size: 24px; font-family: 'Times New Roman', Times, serif, Arial, Helvetica, sans-serif; }

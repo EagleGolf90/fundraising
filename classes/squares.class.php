@@ -124,7 +124,7 @@ class Squares {
   // }
 
   private function loadLabels() {
-    $rows = $this->sqlTable->load('loadLabelsForLeftArea', array($this->eventType));
+    $rows = $this->sqlTable->load('loadLabelsForTopLeftArea', array($this->eventType));
     $x = 0;
     foreach ($rows as $row) {
       $this->labels[$x] = $row['SquareLabel'];
@@ -489,11 +489,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $this->printPrizesInfo();
   }
 
+  public function loadAllEmails() { return $this->sqlTable->load('loadAllEmails', array(BUS_UNIT)); }
+
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
   public function calculateAmounts($zelle, $deadline) {
     $howMany = $this->countTotalBoxes();
-    //$howMany = 1;
     $total = $this->cost * $howMany;
     $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
     $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
