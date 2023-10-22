@@ -26,6 +26,8 @@ class MainContact {
   private $sql;
   private $address_flag;
   private $deadline = '';
+  private $cashApp_flag = 'N';
+  private $zelle_flag = 'N';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -59,6 +61,8 @@ class MainContact {
       $this->mainEmailAddress = $row['MainEmailAddress'];
       $this->mainCashApp = $row['MainCashApp'];
       $this->zelle = $row['ZelleContact'];
+      $this->cashApp_flag = $row['CashApp'];
+      $this->zelle_flag = $row['Zelle'];
     }
   }
 
@@ -70,8 +74,8 @@ class MainContact {
     } else {
       $line = 'Contact this text number ' . $this->contactPhone . ' if you have any questions.';
     }
-    if ($printCashApp == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
-    $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
+    if ($this->cashApp_flag == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
+    if ($this->zelle_flag == 'Y') $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
     return $line;
   }
 
