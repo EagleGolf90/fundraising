@@ -5,3 +5,6 @@
   <script src="../html/js/kdga-register.js"></script>
   <script src="../html/js/kdga-custom.js"></script>
   <link rel="stylesheet" href="../html/css/custom.css">
+  <style>
+  .picture_logo { width: 150px; height: 150px; }
+  </style>

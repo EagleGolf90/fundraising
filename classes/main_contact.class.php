@@ -28,6 +28,7 @@ class MainContact {
   private $deadline = '';
   private $cashApp_flag = 'N';
   private $zelle_flag = 'N';
+  private $cashApp_picture = '';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -74,7 +75,7 @@ class MainContact {
     } else {
       $line = 'Contact this text number ' . $this->contactPhone . ' if you have any questions.';
     }
-    if ($this->cashApp_flag == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
+    if ($this->cashApp_flag == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp . ', Picture: <img src="' . SQUARES_URL . 'images/' . $this->cashApp_picture . '" class="picture_logo">';
     if ($this->zelle_flag == 'Y') $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
     return $line;
   }
@@ -99,6 +100,7 @@ class MainContact {
       $this->phoneTypeDesc = $r['PhoneDesc'];
       $this->cashApp = $r['CashApp'];
       $this->deadline = $r['Deadline'];
+      $this->cashApp_picture = $r['CashAppPicture'];
       $content = $r['EmailContent'];
       $this->replaceContents($content);
     }
