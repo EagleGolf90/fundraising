@@ -31,9 +31,10 @@ th, td {
   vertical-align: middle;
 }
 
-td {
+th, td {
   width: 30px;
   height: 30px;
+  font-size: 16px;
 }
 
 .edit_row {
@@ -54,18 +55,18 @@ h1, h2, .ctr {
 .taken, .takenTitle {
   background-color: #996699;
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .available, .availableTitle {
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .pending, .pendingTitle {
   background-color: #33FF00;
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 #ctr {
@@ -85,7 +86,8 @@ h1, h2, .ctr {
   color: white;
   width: 30px;
   height: 30px;
-  border-radius: 5px;
+  border-radius: 10px;
+  /*border-radius: 5px;*/
 }
 
 /*****************************************************************************************/

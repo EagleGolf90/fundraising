@@ -8,11 +8,11 @@
 <?php
         for ($t = 1; $t <= 4; $t++) {
 ?>
-    <td>&nbsp;</td>
+    <td><?php echo ($b == 1 ? $box_area[$b] : ""); ?></td>
 <?php
         }
         for ($a = 1; $a <= 10; $a++) { ?>
-    <td><?php echo $b; ?></td>
+    <td class="sblock"><?php echo $b; ?></td>
 <?php
       }
 ?>
@@ -26,7 +26,7 @@ for ($x = 1; $x <= 10; $x++) {
   <tr>
     <td>&nbsp;</td>
 <?php for ($z = 4; $z >= 1; $z--) { ?>
-    <td><?php echo $z; ?></td>
+    <td class="tblock"><?php echo $z; ?></td>
 <?php
   }
   for ($y = 1; $y <= 10; $y++) {
