@@ -464,6 +464,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     foreach ($rs as $r) {
       $this->text_instructions = $r['Message_Text'];
     }
+    $this->text_instructions = str_replace(":1", $this->yearPick, $this->text_instructions);
   }
 
   private function getFooterTexts() {

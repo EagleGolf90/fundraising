@@ -5,6 +5,10 @@
  * Description...: This is to execute the handles and behaviors attached to the couple of elements.
  */
 $(document).ready(function() {
+    $("#hide_top_area").click(function() {
+      alert('Hide Top Area function');
+    });
+
     $(".available").click(function() {
         if ($(this).hasClass("selected")) {
           $(this).removeClass("selected");
