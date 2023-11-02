@@ -9,7 +9,6 @@
 <?php
         for ($t = 1; $t <= 4; $t++) {
 ?>
-<<<<<<< HEAD
     <td>
       <?php 
       if ($b == 1)
@@ -18,9 +17,6 @@
         echo ($t == 4 ? $box_area[$b-1] : "");
       ?>
     </td>
-=======
-    <td><?php echo ($b == 1 ? $box_area[$b] : ""); ?></td>
->>>>>>> 8e5f73d28ab2d9a14d1e4deec9d33b4127ada405
 <?php
         }
         for ($a = 1; $a <= 10; $a++) { ?>
@@ -36,15 +32,10 @@ $box = 1;
 for ($x = 1; $x <= 10; $x++) {
 ?>
   <tr>
-<<<<<<< HEAD
 <?php if ($x == 1) { ?>
     <td rowspan="11">&nbsp;</td>
 <?php }
       for ($z = 4; $z >= 1; $z--) { ?>
-=======
-    <td>&nbsp;</td>
-<?php for ($z = 4; $z >= 1; $z--) { ?>
->>>>>>> 8e5f73d28ab2d9a14d1e4deec9d33b4127ada405
     <td class="tblock"><?php echo $z; ?></td>
 <?php
   }
