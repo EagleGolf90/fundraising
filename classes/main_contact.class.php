@@ -30,9 +30,12 @@ class MainContact {
   private $zelle_flag = 'N';
   private $cashApp_picture = '';
 
-  public function __construct() {
+  public function __construct($yearPick, $eventType, $poolNumber) {
     $this->sqlTable = new SQLTable();
     $this->sql = new SQL();
+    $this->yearPick = $yearPick;
+    $this->eventType = $eventType;
+    $this->poolNumber = $poolNumber;
     $this->setup();
   }
 
@@ -52,7 +55,7 @@ class MainContact {
   public function getDeadline() { return $this->deadline; }
 
   private function setup() {
-    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT));
+    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNbr));
     $this->mainContactFirstName = '';
     foreach ($rows as $row) {
       $this->yearPick = $row['YearPicked'];

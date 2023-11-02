@@ -47,6 +47,7 @@ class Squares {
   private $square_winners;
   private $square_text;
   private $personID;
+  private $mainEmailAddress;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -92,36 +93,10 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
-      // $this->loadSquareWinners();
     }
   }
 
-  // private function loadSquareWinners() {
-  //   $rows = $this->sqlTable->load('', array($this->yearPick, $this->eventType));
-  //   foreach ($rows as $row) {
-  //     $this->square_winners[] = array();
-  //   }
-  // }
-
-  // private function saveToArray($sql, $fieldName) {
-  //   if (DEBUG_FLAG) echo 'EventType: ' . $this->eventType . ', $sql: ' . $sql . '<br/>';
-  //   $rows = $this->sqlTable->load($sql, array($this->eventType));
-  //   $x = 0;
-  //   $obj = array();
-  //   foreach ($rows as $row) {
-  //     $obj[$x] = $row[$fieldName];
-  //     $x++;
-  //   }
-  //   return $obj;
-  // }
-
   public function getSquareTexts() { return $this->square_text; }
-
-  // private function loadLabels() {
-  //   $this->labels = $this->saveToArray('loadLabelsForLeftArea', 'SquareLabel');
-  //   $this->id_labels = $this->saveToArray('loadLabelsForLeftArea', 'id_label');
-  //   $this->square_text = $this->saveToArray('loadLabelsForLeftArea', 'SquareText');
-  // }
 
   private function loadLabels() {
     $rows = $this->sqlTable->load('loadLabelsForTopLeftArea', array($this->eventType));
@@ -132,6 +107,15 @@ class Squares {
       $this->square_text[$x] = $row['SquareText'];
       $x++;
     }
+  }
+
+  public function getMainEmailAddress() {
+    $parm = $this->returnArguments();
+    $rows = $this->sqlTable->load('loadMainEmail', $parm);
+    foreach ($rows as $row) {
+      $this->mainEmailAddress = $row['MainEmailAddress'];
+    }
+    return $this->mainEmailAddress;
   }
 
   public function openForPublic() { return $this->openForPublic; }
@@ -310,34 +294,6 @@ class Squares {
 <?php
   }
 
-  // private function quarterLabel($quarter) {
-  //   $label = '';
-  //   $this->idLabel = '';
-  //   switch ($quarter) {
-  //     case 1:
-  //       $label = '1st';
-  //       $this->idLabel = 'first';
-  //       break;
-  //     case 2:
-  //       $label = '2nd';
-  //       $this->idLabel = 'second';
-  //       break;
-  //     case 3:
-  //       $label = '3rd';
-  //       $this->idLabel = 'third';
-  //       break;
-  //     case 4:
-  //       $label = 'Final';
-  //       $this->idLabel = 'fourth';
-  //       break;
-  //     case 0:
-  //       $label = '';
-  //       $this->idLabel = 'first';
-  //       break;
-  //   }
-  //   return $label;
-  // }
-
   private function sectionLabel($quarter) {
     $label = '';
     switch ($quarter) {
@@ -357,20 +313,15 @@ class Squares {
   }
 
   private function printEachQuarter($quarter) {
-    // $quarterLabel = $this->quarterLabel($quarter);
     $sectionLabel = $this->sectionLabel($quarter);
 ?>
     <tr>
       <td></td>
       <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
       <td class='blank' id='<?php
-      //echo $this->idLabel;
       echo $this->id_labels[$quarter-1];
       ?>'>
-        <?php
-        //echo $quarterLabel;
-        echo $this->labels[$quarter-1];
-        ?>
+        <?php echo $this->labels[$quarter-1]; ?>
       </td>
 <?php
 for ($x = 0; $x < sizeof($this->topSquares); $x++) {
@@ -489,7 +440,14 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $this->printPrizesInfo();
   }
 
-  public function loadAllEmails() { return $this->sqlTable->load('loadAllEmails', array(BUS_UNIT)); }
+  private function returnArguments() { return array($this->yearPick, $this->eventType, $this->poolNumber); }
+
+  public function loadAllEmails() { return $this->sqlTable->load('loadAllEmails', array()); }
+
+  public function loadCurrentEmails() {
+    $parm = $this->returnArguments();
+    return $this->sqlTable->load('loadCurrentEmails', $parm);
+  }
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
 
@@ -581,7 +539,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function loadPopulatePicks() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = $this->returnArguments();
     return $this->sqlTable->load('loadFinalSquares', $parm);
   }
 
@@ -606,7 +564,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function getTexts() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = $this->returnArguments();
     $rs = $this->sqlTable->load('loadFullInstructions', $parm);
     foreach ($rs as $r) {
       $this->text_instructions = $r['Message_Text'];
@@ -614,7 +572,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function getFooterTexts() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = $this->returnArguments();
     $rs = $this->sqlTable->load('loadInstructionsFooter', $parm);
     foreach ($rs as $r) {
       $this->instructions_footer = $r['Message_Text'];
