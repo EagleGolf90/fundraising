@@ -48,6 +48,7 @@ class Squares {
   private $square_text;
   private $personID;
   private $mainEmailAddress;
+  private $mass_emails = '';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -114,12 +115,14 @@ class Squares {
     $rows = $this->sqlTable->load('loadMainEmail', $parm);
     foreach ($rows as $row) {
       $this->mainEmailAddress = $row['MainEmailAddress'];
+      $this->mass_emails = $row['EmailSent'];
     }
     return $this->mainEmailAddress;
   }
 
   public function openForPublic() { return $this->openForPublic; }
   public function getLabelName() { return $this->label_name; }
+  public function getMassEmails() { return $this->mass_emails; }
 
   private function getCurrentEvent() {
     if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
@@ -147,6 +150,7 @@ class Squares {
       $this->instructionCheck = $row['full_instruction'];
       $this->label_name = $row['label_name'];
     }
+    $this->getMainEmailAddress();
   }
 
   public function setBoxes($boxes) {
@@ -199,15 +203,20 @@ class Squares {
   }
 
   public function getInstructions() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = $this->returnArguments();
     return $this->sqlTable->load('loadInstructions', $parm);
+  }
+
+  public function endEmails() {
+    $parm = $this->returnArguments();
+    $this->sqlTable->execute('updateEndEmails', $parm);
   }
 
   public function getDropDownLists() { return $this->sqlTable->load('loadDropDownLists', array($this->eventType)); }
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = $this->returnArguments();
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
 

@@ -20,7 +20,13 @@ class Email {
   }
 
   public function setName($name) { $this->fromName = $name; }
-  public function setFromEmailAddress($fromEmailAddress) { $this->fromEmailAddress = $fromEmailAddress; }
+  public function setFromEmailAddress($fromEmailAddress) {
+    if (empty($fromEmailAddress)) {
+      $this->fromEmailAddress = 'admin@kdga.org';
+    } else {
+      $this->fromEmailAddress = $fromEmailAddress;
+    }
+  }
   public function setToEmailAddress($toEmailAddress) { $this->toEmailAddress = $toEmailAddress; }
   public function setContent($content) { $this->content = $content; }
   public function setSubject($subject) { $this->subject = $subject; }
@@ -83,9 +89,9 @@ class Email {
 
     //send email
     if (mail($to, $subject, $message, $headers, $returnpath)) {
-      echo "<h3 style='color: green;'>Thank you for contacting us!</h3>";
+      return true;
     } else {
-      echo "<h3 style='color: red;'>Oops, something went wrong. Please try again later</h3>";
+      return false;
     }
   }
 }
