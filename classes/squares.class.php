@@ -120,6 +120,11 @@ class Squares {
     return $this->mainEmailAddress;
   }
 
+  public function getPaymentYears() {
+    $parm = $this->returnArguments();
+    return $this->sqlTable->load('getPaymentYears', $parm);
+  }
+
   public function openForPublic() { return $this->openForPublic; }
   public function getLabelName() { return $this->label_name; }
   public function getMassEmails() { return $this->mass_emails; }
