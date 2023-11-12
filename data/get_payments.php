@@ -1,26 +1,34 @@
 <?php
 include('../preload.php');
 
+$table_data = '<tr><td class="mainTitle" colspan="5"><h2>Payments</h2></td></tr>' . "\n";
+
 $sqlTable = new SQLTable();
 $parm = array($_POST['yearPicked'], $_POST['eventType'], $_POST['poolNumber']);
 $rows = $sqlTable->load('getSquarePayments', $parm);
-$table_data = '<tr><td class="text-center">Name</td><td class="text-center">Qty</td>';
-$table_data .= '<td class="text-center">Cost</td><td class="text-center">Total</td></tr>';
+
+$fields = array('Name', 'Qty', 'Cost', 'Total');
+
+$table_data .= '<tr>';
+for ($i = 0; $i < count($fields); $i++) {
+  $table_data .= '<td class="table-header text-center">' . $fields[$i] . '</td>';
+}
+$table_data .= '<td class="table-header text-center">&nbsp;</td>';
 $grand_total = 0;
 
 foreach ($rows as $row) {
-    $fullName = empty($row['NickName']) ? $row['FirstName'] . ' ' . $row['LastName'] : $row['NickName'];
+    $table_data .= '<tr>';
+    for ($i = 0; $i < count($fields); $i++) {
+        $table_data .= '<td class="text-center">' . $row[$fields[$i]] . '</td>';
+    }
+    //?id=216&event=1&paid=Y&bu=kdga
+    $table_data .= '<td class="text-center"><a href="../admin/receivePay.php?bu=' . BUS_UNIT . '&id=' . $row['PersonID'] . '&event=' . $row['EventType'] . '">Delete</a></td>';
+    $table_data .= '</tr>' . "\n";
 
-    $full_name = '<td>' . $fullName .'</td>';
-    $qty = '<td class="text-center">' . $row['Qty'] . '</td>';
-    $cost = '<td class="text-center">' . $row['Cost'] . '</td>';
-    $total = '<td class="text-center">' . $row['Total'] . '</td>';
-
-    $table_data .= '<tr>' . $full_name . $qty . $cost . $total . "</tr>\n";
     $grand_total += $row['Total'];
 }
 
-$table_data .= '<tr><td colspan="3" class="text-right">Grand Total</td><td class="text-center">' . $grand_total . "</td></tr>\n";
+$table_data .= '<tr><td colspan="4" class="text-end">Grand Total</td><td class="text-center">' . $grand_total . "</td></tr>\n";
 
 echo $table_data;
 ?>

@@ -31,7 +31,7 @@ switch ($sub_folder) {
   case 'admin/setup_squares_new.php':
     include(HTML . 'head_tabs.php');
     break;  
-  case 'admin/display_payments.php':
+  case 'admin/display.php':
     include(HTML . 'head_payments.php');
     break;
 }

@@ -207,6 +207,9 @@ class Squares {
     return $tempTitle;
   }
 
+  public function getEventNames() { return $this->sqlTable->load('loadEventNames', array()); }
+  public function loadPoolNumbers() { return $this->sqlTable->load('loadPoolNumbers', array()); }
+
   public function getInstructions() {
     $parm = $this->returnArguments();
     return $this->sqlTable->load('loadInstructions', $parm);

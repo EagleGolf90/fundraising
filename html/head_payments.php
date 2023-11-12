@@ -3,4 +3,6 @@
   <script src="../html/js/payment-form.js"></script>
   <style>
     .container { margin: 50px; }
+    .mainTitle { font-weight: bold; text-align: center; }
+    .table-header { background-color: crimson !important; color: white !important; font-weight: bold; font-size: 14px; }
   </style>
