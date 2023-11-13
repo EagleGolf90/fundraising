@@ -12,19 +12,35 @@ $(document).ready(function() {
     });
   }
 
+  function IsFieldNotBlank(fieldName) { return $('#' + fieldName).val() != ''; }
+
+  function IsAllSelectionSet() {
+    var all_flag = false;
+    alert('starts here');
+    if (IsFieldNotBlank('yearPicked') && 
+         IsFieldNotBlank('eventType') &&
+         IsFieldNotBlank('poolNumber')) all_flag = true;
+    alert('ends here');
+    return all_flag;
+  }
+
   $("button").on("click", function() {
-    var url_link = '';
-    switch (this.id) { 
-      case 'btnPayments': 
-        url_link = '../data/get_payments.php';
-        break;
-      case 'btnParticipants':
-        url_link = '../data/get_participants.php';
-        break;
-      case 'btnPicks':
-        url_link = '../data/get_squares_pick.php';
-        break;
+    if (IsAllSelectionSet()) {
+      var url_link = '';
+      switch (this.id) { 
+        case 'btnPayments': 
+          url_link = '../data/get_payments.php';
+          break;
+        case 'btnParticipants':
+          url_link = '../data/get_participants.php';
+          break;
+        case 'btnPicks':
+          url_link = '../data/get_squares_pick.php';
+          break;
+      }
+      getEvents(url_link);
+    } else {
+      alert('Any or all dropdown list must be selected before submit. Please try again.');
     }
-    getEvents(url_link);
   });
 });
