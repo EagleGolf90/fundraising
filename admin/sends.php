@@ -34,25 +34,22 @@ include(HTML . 'beginHTML.php');
 <div class="container">
   <h2><?php echo $_POST['email_subject']; ?></h2>
   <h4><?php echo $_POST['fromAddress']; ?></h4>
-  <p>
-    <?php echo $_POST['body_message']; ?>
-  </p><br/>
+  <p><?php echo $_POST['body_message']; ?></p><br/>
 
   <table class="table table-bordered table-hover">
   <tr><td>Name</td><td>Email</td><td>Status</td></tr>
   <?php
+  $counts = 0;
   foreach ($rows as $row) {
     $name = $row['NickName'] != '' ? $row['NickName'] : $row['FirstName'] . ' ' . $row['LastName'];
   
-    $send_email->setContent($body_message . '<br/>To: ' . $name . ' (' . $row['EmailAddress'] . ')');
-    // $send_email->setToEmailAddress($row['EmailAddress']);
-    $send_email->setToEmailAddress('kdgaweb@outlook.com');
-    $return_flag = $send_email->send();
+    $send_email->setContent($body_message);
+    $send_email->setToEmailAddress($row['EmailAddress']);
   ?>
   <tr>
     <td><?php echo $name; ?></td>
     <td><?php echo $row['EmailAddress']; ?></td>
-    <td><?php echo $return_flag ? 'Sent' : 'Failed'; ?></td>
+    <td><?php echo $return_flag ? 'Sent' : 'Not able to send'; ?></td>
   </tr>
   <?php
   }

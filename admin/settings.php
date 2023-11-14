@@ -27,7 +27,7 @@ include(HTML . 'return_menu.php');
             <div class="col-12">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="massEmails" name="massEmails" value="Y" <?php echo $mass_emails == 'Y' ? ' checked="checked"' : ''; ?>>
-                <label for="massEmails" class="form-check-label">Mass Emails?</label>
+                <label for="massEmails" class="form-check-label">Emails Sent?</label>
               </div>
             </div>
           </div>
