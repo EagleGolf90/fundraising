@@ -45,13 +45,16 @@ include(HTML . 'beginHTML.php');
   
     $send_email->setContent($body_message);
     $send_email->setToEmailAddress($row['EmailAddress']);
+    $return_flag = $send_email->send();
+    $status = $return_flag ? 'Sent' : 'Not able to send';
   ?>
   <tr>
     <td><?php echo $name; ?></td>
     <td><?php echo $row['EmailAddress']; ?></td>
-    <td><?php echo $return_flag ? 'Sent' : 'Not able to send'; ?></td>
+    <td><?php echo $status; ?></td>
   </tr>
   <?php
+    $squares->addEmailSent(array(strtolower($row['EmailAddress']), $status));
   }
   ?>
   </table>

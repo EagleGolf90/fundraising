@@ -460,6 +460,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   private function returnArguments() { return array($this->yearPick, $this->eventType, $this->poolNumber); }
 
   public function loadAllEmails() { return $this->sqlTable->load('loadAllEmails', array()); }
+  public function addEmailSent($parm) { $ret = $this->sqlTable->load('addEmailSent', $parm); }
 
   public function loadCurrentEmails() {
     $parm = $this->returnArguments();
