@@ -7,3 +7,4 @@ testing/*
 admin/backup/*
 squares_v2/backup/*
 data/backup/*
+logs/*

@@ -18,9 +18,11 @@ define('FUNDRAISING', 'Fundraising');
 
 define('BASE_URL', 'https://kdga.org/');
 define('SQUARES_URL', BASE_URL . strtolower(FUNDRAISING) . DS);
+
 define('CLASSES', ROOT_PATH . 'classes' . DS);
 define('HTML', ROOT_PATH . 'html' . DS);
 define('MENUS', ROOT_PATH . 'menus' . DS);
+define('LOGS_DIR', ROOT_PATH . 'logs'. DS);
 
 define('INCLUDES', ROOT_PATH . 'includes' . DS);
 include(INCLUDES . 'load.php');
