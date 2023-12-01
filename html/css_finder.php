@@ -3,7 +3,6 @@ $temp_script = $_SERVER['PHP_SELF'];
 $sub_folder = str_replace(DS . 'fundraising' . DS, "", $temp_script);
 
 switch ($sub_folder) {
-  case 'squares/index.php':
   case 'squares/main_squares.php':
   case 'squares/main_squares_new.php':
   case 'squares/requestSquare.php':
@@ -33,6 +32,9 @@ switch ($sub_folder) {
     break;  
   case 'admin/display.php':
     include(HTML . 'head_payments.php');
+    break;
+  case 'squares/index.php':
+    include(HTML . 'head_front_page.php');
     break;
 }
 ?>

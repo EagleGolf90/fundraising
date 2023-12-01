@@ -1,8 +1,7 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+include(INCLUDES . 'squares.php');
 
 include(INCLUDES . 'contacts.php');
 

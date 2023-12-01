@@ -49,6 +49,10 @@ class Squares {
   private $personID;
   private $mainEmailAddress;
   private $mass_emails = '';
+  private $sub_instructions = '';
+  private $diamond_touch = '';
+  private $four_corners = '';
+  private $FAB = '';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -87,6 +91,7 @@ class Squares {
     if (DEBUG_FLAG) echo 'In loadSquares before getCurrentEvent()<br/>';
 
     $this->getCurrentEvent();
+    $this->getData();
     if ($this->openForPublic == true) {
       $this->displayTeams();
       $this->teamSquares();
@@ -95,6 +100,17 @@ class Squares {
       $this->getFooterTexts();
       $this->loadLabels();
     }
+  }
+
+  private function getData() {
+    $rows = $this->sqlTable->load('checkFourCorners', $this->returnArguments());
+    foreach ($rows as $row) $this->four_corners = $row['UseCorners'];
+
+    $rows = $this->sqlTable->load('checkDiamondTouch', $this->returnArguments());
+    foreach ($rows as $row) $this->diamond_touch = $row['UseDiamondTouch'];
+
+    $rows = $this->sqlTable->load('checkFAB5', $this->returnArguments());
+    foreach ($rows as $row) $this->FAB = $row['UseFAB'];
   }
 
   public function getSquareTexts() { return $this->square_text; }
@@ -193,6 +209,11 @@ class Squares {
   public function getDeadline() { return $this->deadline; }
   public function checkFullInstructions() { return $this->instructionCheck; }
   public function getFullInstructions() { return $this->text_instructions; }
+  public function getSubInstructions() { return $this->sqlTable->load('loadInstructions', $this->returnArguments()); }
+  public function getDiamondTouch() { return $this->diamond_touch; }
+  public function getFourCorners() { return $this->four_corners; }
+  public function getFAB5() { return $this->FAB; }
+  public function getAllCosts() { return $this->sqlTable->load('loadCosts', $this->returnArguments()); }
 
   public function getFirstName() { return $this->first_name; }
   public function getLastName() { return $this->last_name; }
