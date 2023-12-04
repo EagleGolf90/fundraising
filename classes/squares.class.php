@@ -53,6 +53,7 @@ class Squares {
   private $diamond_touch = '';
   private $four_corners = '';
   private $FAB = '';
+  private $reverse_winner = '';
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -111,6 +112,9 @@ class Squares {
 
     $rows = $this->sqlTable->load('checkFAB5', $this->returnArguments());
     foreach ($rows as $row) $this->FAB = $row['UseFAB'];
+
+    $rows = $this->sqlTable->load('checkReverseWinners', $this->returnArguments());
+    foreach ($rows as $row) $this->reverse_winner = $row['UseReverseWinner'];
   }
 
   public function getSquareTexts() { return $this->square_text; }
@@ -213,6 +217,7 @@ class Squares {
   public function getDiamondTouch() { return $this->diamond_touch; }
   public function getFourCorners() { return $this->four_corners; }
   public function getFAB5() { return $this->FAB; }
+  public function getReverseWinners() { return $this->reverse_winner; }
   public function getAllCosts() { return $this->sqlTable->load('loadCosts', $this->returnArguments()); }
 
   public function getFirstName() { return $this->first_name; }

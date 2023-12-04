@@ -7,6 +7,7 @@ if ($squares->getShowNames() == 'N') {
 	if ($squares->openForPublic() == true) {
     $diamond_touch = $squares->getDiamondTouch();
     $four_corners = $squares->getFourCorners();
+    $reverse = $squares->getReverseWinners();
     $FAB = $squares->getFAB5();
 
     include(INCLUDES . 'contacts.php');
