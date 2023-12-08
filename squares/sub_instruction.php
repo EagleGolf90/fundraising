@@ -5,7 +5,7 @@ foreach ($subs as $sub) {
 ?>
   <div class="row">
     <div class="col-md-12">
-      <span class="size18"><?php echo $sub['Message']; ?></span>
+      <span class="size18 bold_text"><?php echo $sub['Message']; ?></span>
     </div>
   </div>
 <?php
