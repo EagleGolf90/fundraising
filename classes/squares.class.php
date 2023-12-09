@@ -499,10 +499,10 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
     $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
-    if ($zelle != '') {
-      $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
-    } else {
+    if (trim($cashApp) != '') {
       $message .= '<br/>through CashApp ' . $cashApp . ' by ' . $deadline . '.';
+    } else {
+      $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
     }
     return $message;
   }

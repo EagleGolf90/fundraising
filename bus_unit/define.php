@@ -7,6 +7,7 @@
  */
 define('TEST_FLAG', false);
 define('DEBUG_FLAG', false);
+define('DISPLAY_FLAG', false);
 define('ADMIN', 'True');
 define('PROGRAM_TYPE', 'MVC');
 ?>
