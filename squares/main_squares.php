@@ -7,22 +7,21 @@
  */
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
-$yearPick = $squares->getYearPick();
-$eventType = $squares->getEventType();
-$poolNumber = $squares->getPoolNumber();
+include(INCLUDES . 'squares.php');
 
 include(HTML . 'beginHTML.php');
 
-include('event_title.php');
+include('full_title.php');
 ?>
 
 <div class="container-fluid">
+  <form method="get" name="submitForm" action="requestSquare.php">
+  <?php include('input_hidden.php'); ?>
   <table class="table table-bordered table-hover" cellspacing="1" cellpadding="1">
   <?php $squares->printSquares(); /* Print 100 Squares */ ?>
   </table>
-  <div id="boxSelected"></div>
+  <input type="hidden" name="boxSelected" id="boxSelected">
+  </form>
 </div>
 
 <?php include(HTML . 'endHTML.php'); ?>

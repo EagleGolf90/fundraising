@@ -11,19 +11,20 @@ include('event_title.php');
 ?>
 
 <div class="container">
-  <h2 id="ctr">You selected Square box # <?php echo $_GET['box']; ?></h2>
+  <h2 id="ctr">You selected Square box # <?php echo $_GET['boxSelected']; ?></h2>
   <h3 id="ctr">
     <?php
     $zelle = $main_contact->getMainZelle();
+    $cashApp = $main_contact->getMainCashApp();
     $deadline = $main_contact->getDeadline();
-    echo $squares->calculateAmounts($zelle, $deadline);
+    echo $squares->calculateAmounts($zelle, $cashApp, $deadline);
     ?>
   </h3>
 
   <div class="form-style-10">
     <h1>Register <?php echo $squares->getEventTitle(); ?></h1>
-    <form action="sendSquare.php" method="POST">
-      <input type="hidden" name="BoxNumber" value="<?php echo $_GET['box']; ?>" />
+    <form action="sendSquare.php" method="POST" name="submitForm">
+      <input type="hidden" name="BoxNumber" value="<?php echo $_GET['boxSelected']; ?>" />
       <?php include('input_hidden.php'); ?>
       <div class="section"><span>1</span>Full Name or NickName</div>
       <div class="inner-wrap">

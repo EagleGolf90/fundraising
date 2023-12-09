@@ -456,7 +456,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   private function printInstructionButton() {
 ?>
     <tr>
-      <td class="ctr" colspan="15"><button id="submitForm" class="btn btn-primary btn-lg">Ready to buy Squares</button><br/></td>
+      <td class="ctr" colspan="15"><button type="submit" id="submitForm" class="btn btn-primary btn-lg">Ready to buy Squares</button><br/></td>
     </tr>
     <tr>
       <td class="ctr event" colspan="15">
@@ -493,13 +493,17 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     return $this->sqlTable->load('loadCurrentEmails', $parm);
   }
 
-  private function countTotalBoxes() { return count(comma_separated_to_array($_GET['box'])); }
+  private function countTotalBoxes() { return count(comma_separated_to_array($_GET['boxSelected'])); }
 
-  public function calculateAmounts($zelle, $deadline) {
+  public function calculateAmounts($zelle, $cashApp, $deadline) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
     $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
-    $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
+    if ($zelle != '') {
+      $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
+    } else {
+      $message .= '<br/>through CashApp ' . $cashApp . ' by ' . $deadline . '.';
+    }
     return $message;
   }
 

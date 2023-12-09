@@ -21,16 +21,6 @@ $(document).ready(function() {
           if (boxSelected !== "") boxSelected = boxSelected + ",";
           boxSelected = boxSelected + $(this).text();
         });
-        $("#boxSelected").html(boxSelected);
-    });
-
-    $("#submitForm").click(function() {
-      var str = $("#boxSelected").text();
-      var bu = $('#bu').text().toLowerCase();
-      if ($.trim(str) === "") {
-        alert("You have not select any squares. Please try again.");
-      } else {
-        document.location.href = "requestSquare.php?box=" + $.trim(str) + "&bu=" + bu;
-      }
+        $("#boxSelected").val(boxSelected);
     });
 });
