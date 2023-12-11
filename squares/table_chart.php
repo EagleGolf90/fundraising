@@ -46,14 +46,15 @@ foreach ($costs as $cost) {
         <td class="column-100">$<?php echo $cost['FABCost']; ?></td>
 <?php
   }
+  $total = $cost['DiamondTouchQty'] * $cost['DiamondTouchCost'];
   if ($four_corners == 'Y') {
 ?>
-        <td class="column-120">$<?php echo $cost['DiamondTouchCost']; ?> each</td>
+        <td class="column-120"><?php echo $cost['DiamondTouchQty']; ?> x $<?php echo $cost['DiamondTouchCost']; ?> = $<?php echo $total; ?></td>
 <?php
   }
   if ($diamond_touch == 'Y') {
 ?>
-        <td class="column-120">$<?php echo $cost['DiamondTouchCost']; ?> each</td>
+        <td class="column-120"><?php echo $cost['DiamondTouchQty']; ?> x $<?php echo $cost['DiamondTouchCost']; ?> = $<?php echo $total; ?></td>
 <?php
   }
 ?>
