@@ -495,15 +495,11 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function countTotalBoxes() { return count(comma_separated_to_array($_GET['boxSelected'])); }
 
-  public function calculateAmounts($zelle, $cashApp, $deadline) {
+  public function calculateAmounts($payment_app, $payment_label, $deadline) {
     $howMany = $this->countTotalBoxes();
     $total = $this->cost * $howMany;
     $message = 'Since you buy ' . $howMany . ' square(s), you need to send $' . $total;
-    if (trim($cashApp) != '') {
-      $message .= '<br/>through CashApp ' . $cashApp . ' by ' . $deadline . '.';
-    } else {
-      $message .= '<br/>through Zelle ' . $zelle . ' by ' . $deadline . '.';
-    }
+    $message .= '<br/>through ' . $payment_label . ' ' . $payment_app . ' by ' . $deadline . '.';
     return $message;
   }
 

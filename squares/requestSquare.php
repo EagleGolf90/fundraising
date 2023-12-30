@@ -14,10 +14,20 @@ include('event_title.php');
   <h2 id="ctr">You selected Square box # <?php echo $_GET['boxSelected']; ?></h2>
   <h3 id="ctr">
     <?php
-    $zelle = $main_contact->getMainZelle();
-    $cashApp = $main_contact->getMainCashApp();
+    $zelle_flag = $main_contact->getZelleFlag();
+    $cashApp_flag = $main_contact->getCashAppFlag();
+    $payment_app = '';
+    $payment_label = '';
+    if ($cashApp_flag == 'Y') {
+      $payment_app = $main_contact->getMainCashApp();
+      $payment_label = 'CashApp';
+    }
+    if ($zelle_flag == 'Y') {
+      $payment_app = $main_contact->getMainZelle();
+      $payment_label = 'Zelle';
+    }
     $deadline = $main_contact->getDeadline();
-    echo $squares->calculateAmounts($zelle, $cashApp, $deadline);
+    echo $squares->calculateAmounts($payment_app, $payment_label, $deadline);
     ?>
   </h3>
 

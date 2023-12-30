@@ -50,6 +50,8 @@ class MainContact {
   public function getMainContactInfo() { return $this->mainContactFirstName . ' (' . $this->mainEmailAddress . ')'; }
   public function getMainCashApp() { return $this->mainCashApp; }
   public function getMainZelle() { return $this->zelle; }
+  public function getCashAppFlag() { return $this->cashApp_flag; }
+  public function getZelleFlag() { return $this->zelle_flag; }
   public function getMainContactEmail() { return $this->mainEmailAddress; }
   public function getEmailContent() { return $this->emailContent; }
   public function getDeadline() { return $this->deadline; }
