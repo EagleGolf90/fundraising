@@ -249,10 +249,10 @@ class Squares {
   public function getDropDownLists() { return $this->sqlTable->load('loadDropDownLists', array($this->eventType)); }
 
   private function populatePicks() {
-    if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
+    if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: loadPopulatePicks<br/>';
     $parm = $this->returnArguments();
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
-    if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: ' . LOAD . POPULATE_PICKS . '<br/>';
+    if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: loadPopulatePicks<br/>';
 
     $this->listPick = array('');
     foreach ($picks As $pick) $this->listPick[$pick['SquareNbr']] = array($pick['Initials'], $pick['FullName'], $pick['Paid']);

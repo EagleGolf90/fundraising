@@ -37,8 +37,8 @@ include(HTML . 'return_menu.php');
               </select>
             </div>
 
-            <div class="col-sm-6"><h4 class="mb-3 text-center">Left Area</h4></div>
-            <div class="col-sm-6"><h4 class="mb-3 text-center">Top Area</h4></div>
+            <div class="col-sm-6"><h4 class="mb-3 text-center">Left Area (Red)</h4></div>
+            <div class="col-sm-6"><h4 class="mb-3 text-center">Top Area (Blue)</h4></div>
 
 <?php
 $leftTabIndex = 1;
