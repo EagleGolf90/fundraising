@@ -1,6 +1,6 @@
   <table class="table table-bordered table-striped">
   <tr><td>&nbsp;</td><td colspan="14"></td></tr>
-<?php $index_arr = array(3, 2, 1, 0); // to have each Label reverse
+<?php $aindex = array(3, 2, 1, 0); // to have each Label reverse
       // Top Area
       for ($b = 4; $b >= 1; $b--) {
 ?>
@@ -9,10 +9,10 @@
 <?php
         for ($t = 1; $t <= 4; $t++) {
 ?>
-    <td>
+    <td class="blank">
       <?php 
       if ($b == 1)
-        echo $box_area[$index_arr[$t-1]];
+        echo $box_area[$aindex[$t-1]];
       else
         echo ($t == 4 ? $box_area[$b-1] : "");
       ?>
