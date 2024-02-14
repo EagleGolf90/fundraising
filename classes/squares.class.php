@@ -308,6 +308,8 @@ class Squares {
 <?php
     switch ($this->eventType) {
       case 5:
+      case 6:
+      case 7:
 ?>
       <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
       <td class='blank' id='first'></td>
@@ -476,7 +478,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function printSquares() {
-    if ($this->eventType == 5) {
+    if ($this->eventType >= 5 && $this->eventType <= 7) {
       $this->printWinningTop();
     } else {
       $this->printNFLTopBox();   // Top Row
