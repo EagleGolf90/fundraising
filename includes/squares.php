@@ -5,4 +5,5 @@ $bu = BUS_UNIT;
 $yearPlayed = $squares->getYearPick();
 $eventType = $squares->getEventType();
 $poolNumber = $squares->getPoolNumber();
+$fullInstructionFlag = $squares->checkFullInstructions();
 ?>

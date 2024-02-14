@@ -54,6 +54,7 @@ class Squares {
   private $four_corners = '';
   private $FAB = '';
   private $reverse_winner = '';
+  private $page_title;
 
   public function __construct() {
     $this->sqlTable = new SQLTable();
@@ -100,7 +101,13 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
+      $this->loadPageTitle();
     }
+  }
+
+  private function loadPageTitle() {
+    $trows = $this->sqlTable->load('loadPageTitle', $this->returnArguments());
+    foreach ($trows as $trow) $this->page_title = $trow['EventDescription'];
   }
 
   private function getData() {
@@ -148,6 +155,8 @@ class Squares {
   public function openForPublic() { return $this->openForPublic; }
   public function getLabelName() { return $this->label_name; }
   public function getMassEmails() { return $this->mass_emails; }
+
+  public function getPageTitle() { return $this->page_title; }
 
   private function getCurrentEvent() {
     if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';

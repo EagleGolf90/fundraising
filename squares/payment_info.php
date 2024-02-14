@@ -19,5 +19,7 @@ if ($zelle_flag == 'Y') {
       <span class="size25">>>>></span> 
       <b>Deadline: <?php echo $squares->getDeadline(); ?>.</b> Pay through "<?php echo $payment_label; ?>" at 
       <b><?php echo $payment_app; ?></b> <span class="size25"><<<<</span>
+      <br/><br/>
+      <b>Thank you for helping us to achieve our goal with this fundraising.</b>
     </div>
   </div>
