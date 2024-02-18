@@ -19,7 +19,7 @@ class Squares {
   private $leftSquares;
   private $listPick;
   private $businessUnit;
-  private $cost;
+  private $cost = 0;
   private $maxSeqNo;
   private $fundDescription;
   private $amount;
@@ -55,13 +55,24 @@ class Squares {
   private $FAB = '';
   private $reverse_winner = '';
   private $page_title;
+  private $list_flag;
 
+  private function checkPage() {
+    switch (PAGE_NAME) {
+      case 'index_form.php':
+      case 'main_squares.php':
+      case 'requestSquare.php':
+          return false;
+      case 'index.php': return true;
+    }
+  }
   public function __construct() {
+    $this->list_flag = $this->checkPage();
     $this->sqlTable = new SQLTable();
     $this->openForPublic = false;
     if (DEBUG_FLAG) echo 'In Squares constructor<br/>';
     $this->resetVariables();
-    $this->loadSquares();
+    //$this->loadSquares();
   }
 
   public function __destruct() {
@@ -89,11 +100,12 @@ class Squares {
     $this->boxExcluded = '';
   }
 
-  private function loadSquares() {
+  public function loadSquares() {
     if (DEBUG_FLAG) echo 'In loadSquares before getCurrentEvent()<br/>';
 
     $this->getCurrentEvent();
     $this->getData();
+    $this->loadPageTitle();
     if ($this->openForPublic == true) {
       $this->displayTeams();
       $this->teamSquares();
@@ -101,7 +113,6 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
-      $this->loadPageTitle();
     }
   }
 
@@ -125,6 +136,7 @@ class Squares {
   }
 
   public function getSquareTexts() { return $this->square_text; }
+  public function listSquares() { return $this->sqlTable->load('listEvents', array()); }
 
   private function loadLabels() {
     $rows = $this->sqlTable->load('loadLabelsForTopLeftArea', array($this->eventType));
@@ -159,17 +171,19 @@ class Squares {
   public function getPageTitle() { return $this->page_title; }
 
   private function getCurrentEvent() {
-    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: ' . LOAD . CURRENT . EVENTS . '<br/>';
-    $rows = $this->sqlTable->load('loadCurrentEvents', array());
+    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
+    if ($this->list_flag == true) {
+      $rows = $this->sqlTable->load('loadCurrentEvents', array());
+    } else  {
+      $rows = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
+    }
 
     foreach ($rows As $row) {
       $this->openForPublic = true;
       $this->businessUnit = $row['BusinessUnit'];
       $this->yearPick = $row['YearPick'];
-      define('YEAR_PICK', $row['YearPick']);
-      $this->poolNumber = $row['PoolNbr'];
-      define('POOL_NBR', $row['PoolNbr']);
       $this->eventType = $row['EventType'];
+      $this->poolNumber = $row['PoolNbr'];
       $this->eventTitle = $row['Description'];
       $this->cost = $row['Cost'];
       $this->fundDescription = $row['FundDesc'];
@@ -178,7 +192,6 @@ class Squares {
       $this->giveAmount = ($total * ($row['GivePercent']/100));
       $this->keepAmount = ($total * ($row['KeepPercent']/100));
       $this->formulaType = $row['Formula'];
-      define('FORMULA', $row['Formula']);
       $this->showNames = $row['ShowNames'];
       $this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
@@ -541,7 +554,8 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function insertPayments() {
-    $qty = count($this->boxesSelected);
+    $this->getCurrentEvent();
+    $qty = sizeof($this->boxesSelected);
     $total = ($qty * $this->cost);
     $parm = array(BUS_UNIT, $this->yearPick, $this->personID, $this->eventType, $this->poolNumber, $qty, $this->cost, $total, 'N', date('Y-m-d'));
     $ret = $this->sqlTable->execute('insertPayments', $parm);

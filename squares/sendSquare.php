@@ -45,7 +45,7 @@ $send_email->setFileAttached('');
 ?>
     <div class="text-center">
 <?php $send_email->send(); ?>
-      <h3><a href="main_squares.php?bu=<?php echo strtolower(BUS_UNIT); ?>"><button type="button" class="btn btn-primary btn-lg">Back to Squares</button></a></h3>
+      <h3><a href="index.php?bu=<?php echo strtolower(BUS_UNIT); ?>"><button type="button" class="btn btn-primary btn-lg">Back to Squares</button></a></h3>
     </div>
   </div>
 </div>

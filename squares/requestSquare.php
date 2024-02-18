@@ -1,13 +1,18 @@
 <?php
 include('../preload.php');
 
+$current_flag = false;
+$yearPlayed = $_GET['YearPick'];
+$eventType = $_GET['EventType'];
+$poolNumber = $_GET['PoolNumber'];
+
 include(INCLUDES . 'squares.php');
 
 include(INCLUDES . 'contacts.php');
 
 include(HTML . 'beginHTML.php');
 
-include('event_title.php');
+include('full_title.php');
 ?>
 
 <div class="container">

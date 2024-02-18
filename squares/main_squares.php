@@ -7,6 +7,10 @@
  */
 include('../preload.php');
 
+$current_flag = false;
+$yearPlayed = $_POST['YearPick'];
+$eventType = $_POST['EventType'];
+$poolNumber = $_POST['PoolNumber'];
 include(INCLUDES . 'squares.php');
 
 include(HTML . 'beginHTML.php');

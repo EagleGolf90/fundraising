@@ -9,4 +9,15 @@
   <link rel="stylesheet" href="../html/css/custom.css">
   <style>
   .picture_logo { width: 150px; height: 150px; }
+  tr, ul { font-size: 18px; }
+  .header { font-weight: bold; text-align: center; }
+  .label { width: 200px; }
+  .column-100 { width: 100px; }
+  .column-120 { width: 120px; }
+  .column-50 { width: 50px; }
+  .tab-25 { padding: 25px; }
+  .image_size { width: 100px; height: 100px; }
+  .size25 { font-size: 25px; }
+  .size18 { font-size: 18px; }
+  .bold_text { font-weight: bold; }
   </style>
