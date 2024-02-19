@@ -608,6 +608,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function loadPopulatePicks() {
+    if (DEBUG_FLAG) echo 'In loadPopulatePicks()<br/>before SQLName: loadFinalSquares<br/>';
     $parm = $this->returnArguments();
     return $this->sqlTable->load('loadFinalSquares', $parm);
   }

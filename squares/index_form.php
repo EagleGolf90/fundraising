@@ -14,8 +14,6 @@ if ($squares->getShowNames() == 'N') {
     $reverse = $squares->getReverseWinners();
     $FAB = $squares->getFAB5();
 
-    if (DISPLAY_FLAG) include('display_message.php');
-
     include(INCLUDES . 'contacts.php');
 
     include(HTML . 'beginHTML.php');
