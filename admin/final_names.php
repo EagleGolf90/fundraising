@@ -1,8 +1,7 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares_payments.class.php');
-$payment = new SquaresPayments();
+include(INCLUDES. 'squares_payments.php');
 
 include(HTML . 'beginHTML.php');
 include(HTML . 'return_menu.php');

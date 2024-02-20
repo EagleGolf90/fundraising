@@ -1,11 +1,10 @@
 <?php
 include('../preload.php');
 
+if (!isset($_GET['name'])) die('Parameter name must be provided. Please try again.');
 $program_name = $_GET['name'];
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+include(INCLUDES . 'squares.php');
 $bu = BUS_UNIT;
-$squares->loadSquares();
 
 $rows = $squares->listSquares();
 

@@ -59,13 +59,14 @@ class Squares {
 
   private function checkPage() {
     switch (PAGE_NAME) {
-      case 'index_form.php':
-      case 'main_squares.php':
-      case 'requestSquare.php':
+      case 'index.php':
+      case 'lists.php':
+          return true;
+      default:
           return false;
-      case 'index.php': return true;
     }
   }
+
   public function __construct() {
     $this->list_flag = $this->checkPage();
     $this->sqlTable = new SQLTable();

@@ -11,10 +11,22 @@ class SquaresPayments {
   private $poolNumber;
   private $eventTitle;
   private $nickName;
+  private $list_flag;
+
+  private function checkPage() {
+    switch (PAGE_NAME) {
+      case 'index.php':
+      case 'lists.php':
+          return true;
+      default:
+          return false;
+    }
+  }
 
   public function __construct() {
+    $this->list_flag = $this->checkPage();
     $this->sqlTable = new SQLTable();
-    $this->setup();
+    if ($this->list_flag == true) $this->setup();
   }
 
   public function __destruct() { unset($this->sqlTable); }
@@ -22,12 +34,24 @@ class SquaresPayments {
   public function getYearPick() { return $this->yearPick; }
   public function getEventType() { return $this->eventType; }
   public function getPoolNumber() { return $this->poolNumber; }
+  public function setYearPick($yearPick) { $this->yearPick = $yearPick; }
+  public function setEventType($eventType) { $this->eventType = $eventType; }
+  public function setPoolNumber($poolNumber) { $this->poolNumber = $poolNumber; }
+
   public function getEventTitle() { return $this->eventTitle; }
   public function getName() { return $this->nickName; }
   public function getTotalSquares() { return $this->totalSquares; }
 
-  private function setup() {
-    $rs = $this->sqlTable->load(LOAD . PAYMENT_TITLE, array());
+  private function returnArguments() { return array($this->yearPick, $this->eventType, $this->poolNumber); }
+
+  public function setup() {
+    //$rs = $this->sqlTable->load(LOAD . PAYMENT_TITLE, array());
+    if ($this->list_flag == true) {
+      $rs = $this->sqlTable->load('loadCurrentEvents', array());
+    } else {
+      $rs = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
+    }
+
     $this->eventTitle = "Payments";
     foreach ($rs As $r) {
       $this->yearPick = $r['YearPick'];

@@ -9,7 +9,12 @@ $sqlTable = new SQLTable();
 <?php
 $rows = $sqlTable->load('loadMenus', array());
 foreach ($rows As $row) {
-  $url_menu = SQUARES_URL . $row['URL'] . '?bu=' . strtolower(BUS_UNIT);
+  if(strpos($row['URL'], '?') !== false) {
+    $symbol = '&';
+  } else {
+    $symbol = '?';
+  }
+  $url_menu = SQUARES_URL . $row['URL'] . $symbol . 'bu=' . strtolower(BUS_UNIT);
 ?>
   <div class="row">
     <div class="col-12">
