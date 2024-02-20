@@ -51,7 +51,7 @@ foreach ($rows As $row) {
         $totalUnPaids += $row['Total'];
         $totalPeopleUnPaids += 1;
       }
-      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&event=' . $row['EventType'] . '&paid=' . $row['Paid'] . $bu_link;
+      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '&paid=' . $row['Paid'] . $bu_link;
 ?>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $receive_pay_link; ?>"><?php echo ($row['Paid'] == 'Y') ? 'Paid' : 'UnPaid'; ?></a></b></td>
     </tr>
