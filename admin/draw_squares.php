@@ -1,8 +1,10 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+$yearPlayed = $_GET['yr'];
+$eventType = $_GET['event'];
+$poolNumber = $_GET['pool'];
+include(INCLUDES . 'squares.php');
 
 include(HTML . 'beginHTML.php');
 include(HTML . 'return_menu.php');
@@ -20,10 +22,7 @@ include(HTML . 'return_menu.php');
     <div class="row g-7 text-center">
       <div class="col-md-7 col-lg-8">
         <form class="areaForm">
-          <input type="text" name="bu" value="<?php echo BUS_UNIT; ?>" hidden>
-          <input type="text" name="yearPick" value="<?php echo $squares->getYearPick(); ?>" hidden>
-          <input type="text" name="eventType" value="<?php echo $squares->getEventType(); ?>" hidden>
-          <input type="text" name="poolNumber" value="<?php echo $squares->getPoolNumber(); ?>" hidden>
+          <?php include(INCLUDES . 'input_hidden.php'); ?>
 
           <div class="row g-3">
             <div class="col-3"><label for="quarter" class="form-label"><?php echo $squares->getLabelName(); ?></label></div>

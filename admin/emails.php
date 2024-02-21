@@ -1,8 +1,11 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+$yearPlayed = $_GET['yr'];
+$eventType = $_GET['event'];
+$poolNumber = $_GET['pool'];
+include(INCLUDES . 'squares.php');
+
 $rows = $squares->loadAllEmails();
 
 include(HTML . 'beginHTML.php');

@@ -1,8 +1,11 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+$yearPlayed = $_GET['yr'];
+$eventType = $_GET['event'];
+$poolNumber = $_GET['pool'];
+include(INCLUDES . 'squares.php');
+
 $emailAddress = $squares->getMainEmailAddress();
 $eventTitle = $squares->getEventTitle();
 
@@ -19,7 +22,8 @@ include(HTML . 'return_menu.php');
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Send Email</h4>
         <form class="needs-validation" method="post" action="sends.php">
-          <input type="hidden" name="bu" value="<?php echo $_GET['bu']; ?>">
+          <?php include(INCLUDES . 'input_hidden.php'); ?>
+
           <input type="hidden" class="form-control" id="fromAddress" name="fromAddress" value="<?php echo $emailAddress; ?>">
           <div class="row g-3">
             <div class="col-sm-4">

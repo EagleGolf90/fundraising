@@ -26,7 +26,7 @@ if ($squares->getShowNames() == 'N') {
   <div class="row">
     <div class="col-md-12">
 			<form action="main_squares.php" method="post">
-				<?php include('input_hidden.php'); ?>
+				<?php include(INCLUDES . 'input_hidden.php'); ?>
 				<button type="submit" class="btn btn-primary btn-lg fcc-btn">Proceed to Squares</button>
 			</form>
     </div>

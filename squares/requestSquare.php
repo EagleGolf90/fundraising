@@ -40,7 +40,7 @@ include('full_title.php');
     <h1>Register <?php echo $squares->getEventTitle(); ?></h1>
     <form action="sendSquare.php" method="POST" name="submitForm">
       <input type="hidden" name="BoxNumber" value="<?php echo $_GET['boxSelected']; ?>" />
-      <?php include('input_hidden.php'); ?>
+      <?php include(INCLUDES . 'input_hidden.php'); ?>
       <div class="section"><span>1</span>Full Name or NickName</div>
       <div class="inner-wrap">
         <label><input type="text" name="nickName" id="nickName" required /></label>
