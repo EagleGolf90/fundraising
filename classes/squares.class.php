@@ -57,6 +57,8 @@ class Squares {
   private $page_title;
   private $list_flag;
   private $bu_title = '';
+  private $front_picture = 'N';
+  private $picture_file = '';
 
   private function checkPage() {
     switch (PAGE_NAME) {
@@ -143,6 +145,8 @@ class Squares {
     foreach ($rows as $row) $this->reverse_winner = $row['UseReverseWinner'];
   }
 
+  public function getFrontPicture() { return $this->front_picture; }
+  public function getPictures() { return $this->picture_file; }
   public function getSquareTexts() { return $this->square_text; }
   public function listSquares() { return $this->sqlTable->load('listEvents', array()); }
 
@@ -204,6 +208,8 @@ class Squares {
       $this->deadline = $row['Deadline'];
       $this->instructionCheck = $row['full_instruction'];
       $this->label_name = $row['label_name'];
+      $this->front_picture = $row['front_picture'];
+      $this->picture_file = $row['picture_file'];
     }
     $this->getMainEmailAddress();
   }

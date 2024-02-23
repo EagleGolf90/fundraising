@@ -18,7 +18,7 @@ include(HTML . 'beginHTML.php');
   </tr>
 <?php foreach ($rows as $row) {
   $link = '<h2><a href="' . $program_name . '.php?bu=' . strtolower(BUS_UNIT) . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '">';
-  $link .= $row['EventDescription'] . '</a></h2>';
+  $link .= $row['EventDescription'] . ' (' . strtoupper($row['BusinessUnit']) . ')</a></h2>';
 ?>
     <tr>
       <td class="text-center"><?php echo $link; ?></td>
