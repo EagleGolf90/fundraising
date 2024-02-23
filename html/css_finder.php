@@ -35,6 +35,7 @@ switch ($sub_folder) {
     include(HTML . 'head_payments.php');
     break;
   case 'squares/index.php':
+  case 'admin/lists.php':
     include(HTML . 'head_front_page.php');
     break;
 }

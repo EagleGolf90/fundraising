@@ -56,6 +56,7 @@ class Squares {
   private $reverse_winner = '';
   private $page_title;
   private $list_flag;
+  private $bu_title = '';
 
   private function checkPage() {
     switch (PAGE_NAME) {
@@ -114,7 +115,13 @@ class Squares {
       $this->getTexts();
       $this->getFooterTexts();
       $this->loadLabels();
+      $this->loadBusinessUnitTitle();
     }
+  }
+
+  private function loadBusinessUnitTitle() {
+    $rows = $this->sqlTable->load('loadBusinessUnitTitle', array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber));
+    foreach ($rows as $row) $this->bu_title = $row['BusinessUnit_Title'];
   }
 
   private function loadPageTitle() {
@@ -249,6 +256,8 @@ class Squares {
 
   public function getTopTeam() { return $this->topTeam; }
   public function getLeftTeam() { return $this->leftTeam; }
+
+  public function getBusinessUnitTitle() { return $this->bu_title; }
 
   public function getEventTitle() {
     $tempTitle = '';

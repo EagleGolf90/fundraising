@@ -12,24 +12,19 @@ include(HTML . 'beginHTML.php');
 ?>
 
 <div class="container">
-  <?php
-  $current_flag = true;
-  include('list_squares.php');
-  ?>
-</div>
-
-<table class="table">
-<?php
-foreach ($rows as $row) {
+  <table class="table">
+  <tr>
+    <td class="text-center"><h1><?php echo $squares->getBusinessUnitTitle(); ?></h1></td>
+  </tr>
+<?php foreach ($rows as $row) {
   $link = '<h2><a href="' . $program_name . '.php?bu=' . strtolower(BUS_UNIT) . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '">';
   $link .= $row['EventDescription'] . '</a></h2>';
 ?>
-  <tr>
-    <td class="text-center"><?php echo $link; ?></td>
-  </tr>
-<?php
-}
-?>
-</table>
+    <tr>
+      <td class="text-center"><?php echo $link; ?></td>
+    </tr>
+<?php } ?>
+  </table>
+</div>
 
 <?php include(HTML . 'endHTML.php'); ?>

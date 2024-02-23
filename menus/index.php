@@ -2,10 +2,12 @@
 include('../preload.php');
 include(HTML . 'beginHTML.php');
 
+include(INCLUDES . 'squares.php');
+
 $sqlTable = new SQLTable();
 ?>
 <div class="container">
-  <h2><?php echo BUS_UNIT; ?> Fundraising Main Menu</h2>
+  <h2><?php echo $squares->getBusinessUnitTitle(); ?><br/>Main Menu</h2>
 <?php
 $rows = $sqlTable->load('loadMenus', array());
 foreach ($rows As $row) {
