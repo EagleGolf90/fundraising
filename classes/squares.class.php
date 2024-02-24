@@ -59,6 +59,7 @@ class Squares {
   private $bu_title = '';
   private $front_picture = 'N';
   private $picture_file = '';
+  private $bus_unit = '';
 
   private function checkPage() {
     switch (PAGE_NAME) {
@@ -122,7 +123,7 @@ class Squares {
   }
 
   private function loadBusinessUnitTitle() {
-    $rows = $this->sqlTable->load('loadBusinessUnitTitle', array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber));
+    $rows = $this->sqlTable->load('loadBusinessUnitTitle', array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber));
     foreach ($rows as $row) $this->bu_title = $row['BusinessUnit_Title'];
   }
 
@@ -219,6 +220,7 @@ class Squares {
     $this->extractBoxesSelected();
   }
 
+  public function setBusinessUnit($bu) { $this->bus_unit = $bu; }
   public function setYearPick($yr) { $this->yearPick = $yr; }
   public function setEventType($type) { $this->eventType = $type; }
   public function setPoolNumber($pool) { $this->poolNumber = $pool; }
@@ -288,7 +290,8 @@ class Squares {
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: loadPopulatePicks<br/>';
-    $parm = $this->returnArguments();
+    //$parm = $this->returnArguments();
+    $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: loadPopulatePicks<br/>';
 
@@ -298,7 +301,7 @@ class Squares {
 
   private function teamSquares() {
     if (DEBUG_FLAG) echo 'In teamSquares()<br/>before SQLName: ' . LOAD . TEAMS . SQUARES . '<br/>';
-    $parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     $rows = $this->sqlTable->load('loadTeamsSquares', $parm);
     $y = 0;
     $z = 0;
@@ -316,7 +319,7 @@ class Squares {
 
   private function displayTeams() {
     if (DEBUG_FLAG) echo 'In displayTeams()<br/>before SQLName: ' . DISPLAY . TEAMS . '<br/>';
-    $parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     $rows = $this->sqlTable->load('displayTeams', $parm);
 
     foreach ($rows As $row) {
@@ -500,7 +503,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     </tr>
     <tr>
       <td class="ctr event" colspan="15">
-        <h4><a href="<?php echo SQUARES_URL . strtolower(SQUARES) . DS . '?bu=' . strtolower(BUS_UNIT); ?>">Back to Instructions</a></h4>
+        <h4><a href="<?php echo SQUARES_URL . strtolower(SQUARES) . DS . '?bu=' . strtolower($this->bus_unit); ?>">Back to Instructions</a></h4>
       </td>
     </tr>
 <?php
@@ -544,26 +547,26 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function insertParticipant() {
-    $parm = array(BUS_UNIT, $this->personID, $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], $_POST['nickName']);
+    $parm = array($this->bus_unit, $this->personID, $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], $_POST['nickName']);
     $ret = $this->sqlTable->execute('insertParticipants', $parm);
   }
 
   private function getUniqueID($uniqueFieldName) {
-    $parm = array(BUS_UNIT, $uniqueFieldName);
+    $parm = array($this->bus_unit, $uniqueFieldName);
     $rows = $this->sqlTable->load('getUniqueID', $parm);
 
     $this->personID = 1;
     foreach ($rows As $row) $this->personID = $row['UniqueID'];
     $this->personID = $this->personID + 1;
 
-    $parm = array(BUS_UNIT, $uniqueFieldName, $this->personID);
+    $parm = array($this->bus_unit, $uniqueFieldName, $this->personID);
     $ret = $this->sqlTable->execute('updateUniqueID', $parm);
   }
 
   private function insertPeoplePicks() {
     for ($a = 1; $a <= sizeof($this->boxesSelected); $a++) {
       if ($this->boxesSelected[$a-1] > 0) {
-        $parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber, $this->personID, $a, $this->boxesSelected[$a-1], date("Y-m-d"));
+        $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber, $this->personID, $a, $this->boxesSelected[$a-1], date("Y-m-d"));
         $ret = $this->sqlTable->execute('insertPeoplePicks', $parm);
       }
     }
@@ -573,12 +576,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $this->getCurrentEvent();
     $qty = sizeof($this->boxesSelected);
     $total = ($qty * $this->cost);
-    $parm = array(BUS_UNIT, $this->yearPick, $this->personID, $this->eventType, $this->poolNumber, $qty, $this->cost, $total, 'N', date('Y-m-d'));
+    $parm = array($this->bus_unit, $this->yearPick, $this->personID, $this->eventType, $this->poolNumber, $qty, $this->cost, $total, 'N', date('Y-m-d'));
     $ret = $this->sqlTable->execute('insertPayments', $parm);
   }
 
   private function excludedSquares() {
-    $parm = array(BUS_UNIT, $this->yearPick, $this->poolNumber, $this->eventType, $this->boxSelected);
+    $parm = array($this->bus_unit, $this->yearPick, $this->poolNumber, $this->eventType, $this->boxSelected);
     $rs = $this->sqlTable->load('loadSquaresByBoxNumber', $parm);
 
     foreach ($rs As $r) {
@@ -630,7 +633,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function getSquares() {
-    $parm = array(BUS_UNIT, $_GET['id'], $_GET['yr'], $_GET['event'], $_GET['pool']);
+    $parm = array($_GET['bu'], $_GET['id'], $_GET['yr'], $_GET['event'], $_GET['pool']);
     $rows = $this->sqlTable->load('getSquares', $parm);
     $this->saved = '';
     foreach ($rows as $row) {
@@ -641,7 +644,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function setNames($person_id) {
-    $rows = $this->sqlTable->load('getParticipantName', array(BUS_UNIT, $person_id));
+    $rows = $this->sqlTable->load('getParticipantName', array($this->bus_unit, $person_id));
     foreach ($rows as $row) {
       $this->first_name = $row['FirstName'];
       $this->last_name = $row['LastName'];

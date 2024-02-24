@@ -5,12 +5,18 @@ include(HTML . 'beginHTML.php');
 
 $boxes = comma_separated_to_array($_POST['BoxNumber']);
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+// include(CLASSES . 'squares.class.php');
+// $squares = new Squares();
+// $squares->setBusinessUnit($_POST['bu']);
+// $squares->setYearPick($_POST['YearPick']);
+// $squares->setEventType($_POST['EventType']);
+// $squares->setPoolNumber($_POST['PoolNumber']);
+$bus_unit = $_POST['bu'];
+$yearPlayed = $_POST['YearPick'];
+$eventType = $_POST['EventType'];
+$poolNumber = $_POST['PoolNumber'];
+include(INCLUDES . 'squares.php');
 $squares->setBoxes($boxes);
-$squares->setYearPick($_POST['YearPick']);
-$squares->setEventType($_POST['EventType']);
-$squares->setPoolNumber($_POST['PoolNumber']);
 $squares->addParticipants();
 
 include(INCLUDES . 'contacts.php');
@@ -45,7 +51,7 @@ $send_email->setFileAttached('');
 ?>
     <div class="text-center">
 <?php $send_email->send(); ?>
-      <h3><a href="index.php?bu=<?php echo strtolower(BUS_UNIT); ?>"><button type="button" class="btn btn-primary btn-lg">Back to Squares</button></a></h3>
+      <h3><a href="index.php?bu=<?php echo strtolower($_POST['bu']); ?>"><button type="button" class="btn btn-primary btn-lg">Back to Squares</button></a></h3>
     </div>
   </div>
 </div>

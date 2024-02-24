@@ -8,6 +8,7 @@
 include('../preload.php');
 
 $current_flag = false;
+$bus_unit = $_POST['bu'];
 $yearPlayed = $_POST['YearPick'];
 $eventType = $_POST['EventType'];
 $poolNumber = $_POST['PoolNumber'];

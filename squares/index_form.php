@@ -2,6 +2,7 @@
 include('../preload.php');
 
 $current_flag = false;
+$bus_unit = $_GET['bu'];
 $yearPlayed = $_GET['yr'];
 $eventType = $_GET['event'];
 $poolNumber = $_GET['pool'];
@@ -36,7 +37,7 @@ if ($squares->getShowNames() == 'N') {
 <?php
 	} else {
 ?>
-      <h2><?php echo BUS_UNIT; ?> Squares is not open yet. Please come back again.</h2>
+      <h2><?php echo $bus_unit; ?> Squares is not open yet. Please come back again.</h2>
 <?php
   }
   

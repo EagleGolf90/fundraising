@@ -61,7 +61,7 @@ include('full_title.php');
   </div>
   <div class="form-style-10 text-center">
     <form action="main_squares.php" method="POST">
-      <input type="hidden" name="bu" value="<?php echo $_GET['bu']; ?>" />
+      <?php include(INCLUDES . 'input_hidden.php'); ?>
       <button type="submit" class="btn btn-primary btn-log fcc-btn">Cancel and return to Squares</button>
     </form>
   </div>
