@@ -1,6 +1,7 @@
 <?php
 if ($fullInstructionFlag == 'Y') {
   include('full_instructions.php');
+  include('payment_info.php');
 } else {
   // if ($squares->getFrontPicture() == 'Y') {
     include('front_picture.php');
@@ -10,5 +11,4 @@ if ($fullInstructionFlag == 'Y') {
   //   include('table_chart.php');
   // }
 }
-include('payment_info.php');
 ?>
