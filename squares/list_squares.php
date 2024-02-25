@@ -1,7 +1,6 @@
 <?php
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
 $bus_unit = BUS_UNIT;
+include(INCLUDES . 'squares.php');
 $squares->loadSquares();
 
 $rows = $squares->listSquares();
@@ -10,8 +9,9 @@ $rows = $squares->listSquares();
 <table class="table">
 <?php
 foreach ($rows as $row) {
-  $link = '<h2><a href="index_form.php?bu=' . strtolower($row['BusinessUnit']) . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '">';
-  $link .= $row['EventDescription'] . ' (' . strtoupper($row['BusinessUnit']) . ')</a></h2>';
+  $queryString = '?bu=' . strtolower($row['BusinessUnit']) . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+  $link = '<h2><a href="index_form.php' . $queryString . '">';
+  $link .= $row['BusinessUnit_Title'] . '</a></h2>';
 ?>
   <tr>
     <td class="text-center"><?php echo $link; ?></td>

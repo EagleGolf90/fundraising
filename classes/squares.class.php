@@ -290,7 +290,6 @@ class Squares {
 
   private function populatePicks() {
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>before SQLName: loadPopulatePicks<br/>';
-    //$parm = $this->returnArguments();
     $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     $picks = $this->sqlTable->load('loadPopulatePicks', $parm);
     if (DEBUG_FLAG) echo 'In populatePicks()<br/>after SQLName: loadPopulatePicks<br/>';
@@ -318,7 +317,7 @@ class Squares {
   }
 
   private function displayTeams() {
-    if (DEBUG_FLAG) echo 'In displayTeams()<br/>before SQLName: ' . DISPLAY . TEAMS . '<br/>';
+    if (DEBUG_FLAG) echo 'In displayTeams()<br/>before SQLName: displayTeams<br/>';
     $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     $rows = $this->sqlTable->load('displayTeams', $parm);
 

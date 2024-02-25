@@ -20,4 +20,22 @@
   .size25 { font-size: 25px; }
   .size18 { font-size: 18px; }
   .bold_text { font-weight: bold; }
+
+  @media screen and (max-width: 500px) {
+    img {
+      height: 350px !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    img {
+      height: 400px !important;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    img {
+      height: 500px !important;
+    }
+  }
   </style>
