@@ -45,7 +45,6 @@ class SquaresPayments {
   private function returnArguments() { return array($this->yearPick, $this->eventType, $this->poolNumber); }
 
   public function setup() {
-    //$rs = $this->sqlTable->load(LOAD . PAYMENT_TITLE, array());
     if ($this->list_flag == true) {
       $rs = $this->sqlTable->load('loadCurrentEvents', array());
     } else {
