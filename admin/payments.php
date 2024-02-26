@@ -1,6 +1,7 @@
 <?php
 include('../preload.php');
 
+$bus_unit = $_GET['bu'];
 include(INCLUDES. 'squares_payments.php');
 
 $rows = $payment->loadPayments();
@@ -10,7 +11,7 @@ include(HTML . 'return_menu.php');
 ?>
 
 <div class="container">
-  <h2 id="ctr">Payments for <?php echo $payment->getEventTitle(); ?> (<?php echo BUS_UNIT; ?>)</h2>
+  <h2 id="ctr">Payments for <?php echo $payment->getEventTitle(); ?> (<?php echo $bus_unit; ?>)</h2>
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover">
     <tr>
@@ -33,8 +34,8 @@ foreach ($rows As $row) {
   $ownSquares = $payment->getOwnSquares($row['PersonID']);
   $totalDollars += $row['Total'];
   $bu_link = '&bu=' . $_GET['bu'];
-  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
-  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
+  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&bu=' . $row['BusinessUnit'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
+  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&bu=' . $row['BusinessUnit'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
   $delete_link .= '&sq=' . $ownSquares;
 ?>
     <tr>

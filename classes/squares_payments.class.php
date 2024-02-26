@@ -12,6 +12,7 @@ class SquaresPayments {
   private $eventTitle;
   private $nickName;
   private $list_flag;
+  private $bus_unit;
 
   private function checkPage() {
     switch (PAGE_NAME) {
@@ -31,9 +32,11 @@ class SquaresPayments {
 
   public function __destruct() { unset($this->sqlTable); }
 
+  public function getBusinessUnit() { return $this->bus_unit; }
   public function getYearPick() { return $this->yearPick; }
   public function getEventType() { return $this->eventType; }
   public function getPoolNumber() { return $this->poolNumber; }
+  public function setBusinessUnit($bu) { $this->bus_unit = $bu; }
   public function setYearPick($yearPick) { $this->yearPick = $yearPick; }
   public function setEventType($eventType) { $this->eventType = $eventType; }
   public function setPoolNumber($poolNumber) { $this->poolNumber = $poolNumber; }
@@ -48,7 +51,8 @@ class SquaresPayments {
     if ($this->list_flag == true) {
       $rs = $this->sqlTable->load('loadCurrentEvents', array());
     } else {
-      $rs = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
+      $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
+      $rs = $this->sqlTable->load('getCurrentEvents', $parm);
     }
 
     $this->eventTitle = "Payments";
@@ -61,7 +65,8 @@ class SquaresPayments {
   }
 
   public function getInfo() {
-    $parm = array(BUS_UNIT, $_GET['id']);
+    // $parm = array(BUS_UNIT, $_GET['id']);
+    $parm = array($_GET['bu'], $_GET['id']);
     $rows = $this->sqlTable->load('loadParticipants', $parm);
 
     foreach ($rows As $row) {
@@ -73,7 +78,8 @@ class SquaresPayments {
 
   public function getOwnSquares($personID) {
     $tempSquares = '';
-    $parm = array(BUS_UNIT, $personID);
+    //$parm = array(BUS_UNIT, $personID);
+    $parm = array($this->bus_unit, $personID);
     $rs = $this->sqlTable->load('loadPeoplePicks', $parm);
 
     foreach ($rs As $r) {
@@ -87,12 +93,13 @@ class SquaresPayments {
 
   public function loadPayments() {
     $this->totalSquares = 0;
-    $parm = array($this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     return $this->sqlTable->load('loadPayments', $parm);
   }
 
   public function loadNames() {
-    $parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
+    //$parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
+    $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     return $this->sqlTable->load('loadNames', $parm);
   }
 }

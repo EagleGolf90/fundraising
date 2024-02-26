@@ -1,9 +1,13 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares.class.php');
-$squares = new Squares();
+$bus_unit = $_GET['bu'];
+$yearPlayed = $_GET['yr'];
+$eventType = $_GET['event'];
+$poolNumber = $_GET['pool'];
+include(INCLUDES . 'squares.php');
 $squares->setNames($_GET['id']);
+
 $first_name = $squares->getFirstName();
 $last_name = $squares->getLastName();
 $nick_name = $squares->getNickName();
@@ -22,11 +26,8 @@ include(HTML . 'beginHTML.php');
     <div class="row g-7 text-center">
       <div class="col-md-7 col-lg-8">
         <form class="areaForm" action="update_squares.php" method="post">
-          <input type="text" name="bu" value="<?php echo BUS_UNIT; ?>" hidden>
+          <?php include(INCLUDES . 'input_hidden.php'); ?>
           <input type="text" name="id" value="<?php echo $_GET['id']; ?>" hidden>
-          <input type="text" name="yearPick" value="<?php echo $_GET['yr']; ?>" hidden>
-          <input type="text" name="eventType" value="<?php echo $_GET['event']; ?>" hidden>
-          <input type="text" name="poolNumber" value="<?php echo $_GET['pool']; ?>" hidden>
           <input type="text" name="cost" value="<?php echo $squares->getCost(); ?>" hidden>
           <input type="text" name="saved_squares" value="<?php echo $saved_squares; ?>" hidden>
 

@@ -188,7 +188,9 @@ class Squares {
     if ($this->list_flag == true) {
       $rows = $this->sqlTable->load('loadCurrentEvents', array());
     } else  {
-      $rows = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
+      // $rows = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
+      $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
+      $rows = $this->sqlTable->load('getCurrentEvents', $parm);
     }
 
     foreach ($rows As $row) {
