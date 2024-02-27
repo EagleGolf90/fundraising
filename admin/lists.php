@@ -6,7 +6,6 @@ $program_name = $_GET['name'];
 $bus_unit = $_GET['bu'];
 include(INCLUDES . 'squares.php');
 
-
 $rows = $squares->listSquares();
 
 include(HTML . 'beginHTML.php');
@@ -15,7 +14,7 @@ include(HTML . 'beginHTML.php');
 <div class="container">
   <table class="table">
   <tr>
-    <td class="text-center"><h1><?php echo $squares->getBusinessUnitTitle(); ?></h1></td>
+    <td class="text-center"><h1><?php echo $squares->getBusinessTitle(); ?></h1></td>
   </tr>
 <?php foreach ($rows as $row) {
   $link = '<h2><a href="' . $program_name . '.php?bu=' . strtolower($row['BusinessUnit']) . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '">';

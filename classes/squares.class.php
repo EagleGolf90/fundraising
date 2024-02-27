@@ -60,6 +60,7 @@ class Squares {
   private $front_picture = 'N';
   private $picture_file = '';
   private $bus_unit = '';
+  private $business_title = '';
 
   private function checkPage() {
     switch (PAGE_NAME) {
@@ -188,7 +189,6 @@ class Squares {
     if ($this->list_flag == true) {
       $rows = $this->sqlTable->load('loadCurrentEvents', array());
     } else  {
-      // $rows = $this->sqlTable->load('getCurrentEvents', $this->returnArguments());
       $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
       $rows = $this->sqlTable->load('getCurrentEvents', $parm);
     }
@@ -215,6 +215,12 @@ class Squares {
       $this->picture_file = $row['picture_file'];
     }
     $this->getMainEmailAddress();
+    $this->loadBusinessTitle();
+  }
+
+  private function loadBusinessTitle() {
+    $rows = $this->sqlTable->load('loadBusinessTitle', array($this->bus_unit));
+    foreach ($rows as $row) $this->business_title = $row['business_title'];
   }
 
   public function setBoxes($boxes) {
@@ -226,6 +232,8 @@ class Squares {
   public function setYearPick($yr) { $this->yearPick = $yr; }
   public function setEventType($type) { $this->eventType = $type; }
   public function setPoolNumber($pool) { $this->poolNumber = $pool; }
+
+  public function getBusinessTitle() { return $this->business_title; }
 
   public function extractBoxesSelected() {
     for ($x = 0; $x < count($this->boxes); $x++) {

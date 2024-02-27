@@ -9,9 +9,9 @@ include('../preload.php');
 $sqlTable = new SQLTable();
 
 $busUnit = strtoupper($_POST['bu']);
-$yearPick = $_POST['yearPick'];
-$eventType = $_POST['eventType'];
-$poolNumber = $_POST['poolNumber'];
+$yearPick = $_POST['YearPick'];
+$eventType = $_POST['EventType'];
+$poolNumber = $_POST['PoolNumber'];
 $personID = $_POST['id'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
@@ -49,7 +49,8 @@ if ($qty == 0) {
 }
 
 /* Redirect to Payments page */
-$main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($busUnit);
+$queryString = '?bu=' . strtolower($busUnit) . '&yr=' . $yearPick . '&event=' . $eventType . '&pool=' . $poolNumber;
+$main_url = 'https://kdga.org/fundraising/admin/payments.php' . $queryString;
 $location = "Location: " . $main_url;
 header($location);
 exit;
