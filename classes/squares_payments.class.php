@@ -65,7 +65,6 @@ class SquaresPayments {
   }
 
   public function getInfo() {
-    // $parm = array(BUS_UNIT, $_GET['id']);
     $parm = array($_GET['bu'], $_GET['id']);
     $rows = $this->sqlTable->load('loadParticipants', $parm);
 
@@ -78,7 +77,6 @@ class SquaresPayments {
 
   public function getOwnSquares($personID) {
     $tempSquares = '';
-    //$parm = array(BUS_UNIT, $personID);
     $parm = array($this->bus_unit, $personID);
     $rs = $this->sqlTable->load('loadPeoplePicks', $parm);
 
@@ -98,7 +96,6 @@ class SquaresPayments {
   }
 
   public function loadNames() {
-    //$parm = array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNumber);
     $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
     return $this->sqlTable->load('loadNames', $parm);
   }
