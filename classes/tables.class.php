@@ -33,6 +33,9 @@ class SQLTable extends DB {
   public function execute($name, $parm) {
     $sql = $this->getStatement($name, $parm);
     if (DEBUG_FLAG == true) echo '...Statement (' . $name . '): ' . $sql . '<br/>';
+    if ($_SERVER['REMOTE_ADDR'] == '74.137.36.186') {
+      if ($this->checkSQLNames($name)) $this->addSQLToLogFile($sql, $parm);
+    }
     return DB::execute($sql);
   }
 
@@ -41,6 +44,29 @@ class SQLTable extends DB {
     $tempDescr = '';
     foreach ($rows as $row) $tempDescr = $row['LongName'];
     return $tempDescr;
+  }
+
+  private function checkSQLNames($name) {
+    $flag = false;
+    switch ($name) {
+      case 'insertParticipants':
+      case 'insertPeoplePicks':
+      case 'insertPayments':
+      case 'updateEndEmails':
+      case 'testInsert':
+        $flag = true;
+        break;
+    }
+    return $flag;
+  }
+
+  private function addSQLToLogFile($sql, $parm) {
+    $filename = LOGS_DIR . date('Y') . '/' . strtolower(BUS_UNIT) . '_' . date('Y-m-d') . '.log';
+    $myfile = fopen($filename, "a") or die("Unable to open file!");
+    fwrite($myfile, "Date/Time: " . date("Y-m-d h:i:sa") . "\n");
+    fwrite($myfile, 'ID: ' . $parm[0] . "\n");
+    fwrite($myfile, $sql . "\n");
+    fclose($myfile);
   }
 }
 ?>
