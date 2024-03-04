@@ -53,7 +53,6 @@ class SQLTable extends DB {
       case 'insertPeoplePicks':
       case 'insertPayments':
       case 'updateEndEmails':
-      case 'testInsert':
         $flag = true;
         break;
     }
