@@ -33,9 +33,7 @@ class SQLTable extends DB {
   public function execute($name, $parm) {
     $sql = $this->getStatement($name, $parm);
     if (DEBUG_FLAG == true) echo '...Statement (' . $name . '): ' . $sql . '<br/>';
-    if ($_SERVER['REMOTE_ADDR'] == '74.137.36.186') {
-      if ($this->checkSQLNames($name)) $this->addSQLToLogFile($sql, $parm);
-    }
+    if ($this->checkSQLNames($name)) $this->addSQLToLogFile($sql, $parm);
     return DB::execute($sql);
   }
 
