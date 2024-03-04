@@ -5,12 +5,6 @@ include(HTML . 'beginHTML.php');
 
 $boxes = comma_separated_to_array($_POST['BoxNumber']);
 
-// include(CLASSES . 'squares.class.php');
-// $squares = new Squares();
-// $squares->setBusinessUnit($_POST['bu']);
-// $squares->setYearPick($_POST['YearPick']);
-// $squares->setEventType($_POST['EventType']);
-// $squares->setPoolNumber($_POST['PoolNumber']);
 $bus_unit = $_POST['bu'];
 $yearPlayed = $_POST['YearPick'];
 $eventType = $_POST['EventType'];
