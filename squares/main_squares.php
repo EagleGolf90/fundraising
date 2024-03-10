@@ -8,10 +8,17 @@
 include('../preload.php');
 
 $current_flag = false;
-$bus_unit = $_POST['bu'];
-$yearPlayed = $_POST['YearPick'];
-$eventType = $_POST['EventType'];
-$poolNumber = $_POST['PoolNumber'];
+if (isset($_POST)) {
+  $bus_unit = $_POST['bu'];
+  $yearPlayed = $_POST['YearPick'];
+  $eventType = $_POST['EventType'];
+  $poolNumber = $_POST['PoolNumber'];
+} else {
+  $bus_unit = $_GET['bu'];
+  $yearPlayed = $_GET['yr'];
+  $eventType = $_GET['event'];
+  $poolNumber = $_GET['pool'];  
+}
 include(INCLUDES . 'squares.php');
 
 include(HTML . 'beginHTML.php');
