@@ -43,7 +43,9 @@ if ($squares->getShowNames() == 'N') {
   
     include(HTML . 'endHTML.php');
   } else {
-    $main_url = 'https://kdga.org/fundraising/squares/main_squares.php?bu=' . strtolower($_GET['bu']);
+    // $main_url = 'https://kdga.org/fundraising/squares/main_squares.php?bu=' . strtolower($_GET['bu']);
+    $queryString = '?bu=' . strtolower($bus_unit) . '&yr=' . $yearPlayed . '&event=' . $eventType . '&pool=' . $poolNumber;
+    $main_url = 'https://kdga.org/fundraising/squares/main_squares.php' . $queryString;
     $location = "Location: " . $main_url;
     header($location);
     exit;	
