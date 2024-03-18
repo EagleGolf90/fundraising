@@ -4,9 +4,9 @@ include('../preload.php');
 $sqlTable = new SQLTable();
 
 $busUnit = $_POST['bu'];
-$yearPick = $_POST['yearPick'];
-$eventType = $_POST['eventType'];
-$poolNumber = $_POST['poolNumber'];
+$yearPick = $_POST['YearPick'];
+$eventType = $_POST['EventType'];
+$poolNumber = $_POST['PoolNumber'];
 $quarter = $_POST['quarter'];
 
 for ($x = 0; $x < 10; $x++) {
