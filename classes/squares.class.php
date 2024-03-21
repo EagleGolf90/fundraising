@@ -228,7 +228,7 @@ class Squares {
     $this->extractBoxesSelected();
   }
 
-  public function setBusinessUnit($bu) { $this->bus_unit = $bu; }
+  public function setBusinessUnit($bu) { $this->bus_unit = strtoupper($bu); }
   public function setYearPick($yr) { $this->yearPick = $yr; }
   public function setEventType($type) { $this->eventType = $type; }
   public function setPoolNumber($pool) { $this->poolNumber = $pool; }
@@ -642,7 +642,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   public function getSquares() {
-    $parm = array($_GET['bu'], $_GET['id'], $_GET['yr'], $_GET['event'], $_GET['pool']);
+    $parm = array(strtoupper($_GET['bu']), $_GET['id'], $_GET['yr'], $_GET['event'], $_GET['pool']);
     $rows = $this->sqlTable->load('getSquares', $parm);
     $this->saved = '';
     foreach ($rows as $row) {
@@ -657,7 +657,11 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     foreach ($rows as $row) {
       $this->first_name = $row['FirstName'];
       $this->last_name = $row['LastName'];
-      $this->nick_name = $row['FullName'];
+      if (empty($row['FullName'])) {
+        $this->nick_name = $row['FullName'];
+      } else {
+        $this->nick_name = $row['NickName'];
+      }
     }
   }
 

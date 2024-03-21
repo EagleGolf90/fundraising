@@ -1,7 +1,7 @@
 <?php
 include('../preload.php');
 
-$bus_unit = $_GET['bu'];
+$bu = $_GET['bu'];
 $yearPlayed = $_GET['yr'];
 $eventType = $_GET['event'];
 $poolNumber = $_GET['pool'];

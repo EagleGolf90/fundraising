@@ -1,7 +1,7 @@
 <?php
 include('../preload.php');
 
-$bus_unit = $_GET['bu'];
+$bus_unit = strtoupper($_GET['bu']);
 include(INCLUDES. 'squares_payments.php');
 
 $rows = $payment->loadPayments();
@@ -34,8 +34,8 @@ foreach ($rows As $row) {
   $ownSquares = $payment->getOwnSquares($row['PersonID']);
   $totalDollars += $row['Total'];
   $bu_link = '&bu=' . $_GET['bu'];
-  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&bu=' . $row['BusinessUnit'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
-  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&bu=' . $row['BusinessUnit'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
+  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
   $delete_link .= '&sq=' . $ownSquares;
 ?>
     <tr>
