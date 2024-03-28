@@ -15,13 +15,14 @@ $poolNumber = $_POST['PoolNumber'];
 $personID = $_POST['id'];
 $firstName = $_POST['firstName'];
 $lastName = $_POST['lastName'];
+$nickName = $_POST['nickName'];
 $cost = $_POST['cost'];
 $arr = $_POST['squares'];
 $qty = 0;
 $arr2 = comma_separated_to_array($_POST['saved_squares']);
 
 /* Update First and Last Names */
-$parm = array($personID, $firstName, $lastName, $_POST['nickName']);
+$parm = array($personID, $firstName, $lastName, $nickName);
 $ret = $sqlTable->execute('updateNames', $parm);
 
 /* Update or Delete Squares */
