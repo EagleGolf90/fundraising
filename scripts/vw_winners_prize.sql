@@ -7,5 +7,4 @@ select pp.BusinessUnit, pp.YearPick, pp.EventType, pp.PoolNbr, pp.PersonID, sgw.
 				inner join participants p on pp.BusinessUnit = p.BusinessUnit and pp.PersonID = p.PersonID
                 inner join winners_prize wp on wp.BusinessUnit = sgw.BusinessUnit and wp.YearPick = sgw.YearPick and wp.EventType = sgw.EventType and wp.PoolNbr = sgw.PoolNbr
 					and wp.QuarterRound = sgw.Quarter
- order by Rounds, SquareNbr
-;
+ order by Rounds, SquareNbr;

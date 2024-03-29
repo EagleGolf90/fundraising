@@ -9,5 +9,4 @@ select pp.PersonID, pp.BusinessUnit, pp.YearPick, pp.EventType, pp.PoolNbr, s.Sq
                  and la.Square = s.LeftGrid and la.Grid = 'LA'
 		  inner join squaregriddraw ta
            on ta.BusinessUnit = pp.BusinessUnit and ta.YearPick = pp.YearPick and ta.EventType = pp.EventType and ta.PoolNbr = pp.PoolNbr
-                 and ta.Square = s.TopGrid and ta.Grid = 'TA'
-;
+                 and ta.Square = s.TopGrid and ta.Grid = 'TA';
