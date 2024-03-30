@@ -23,5 +23,10 @@ class Square_Winners {
     $parm = $this->getParameters($round);
     return $this->sqlTable->load('loadWinnersPrize', $parm);
   }
+
+  public function listSquareWinners() {
+    $parm = $this->getParameters(0);
+    return $this->sqlTable->load('listSquareWinners', $parm);
+  }
 }
 ?>

@@ -14,17 +14,26 @@ include(HTML . 'return_menu.php');
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover">
     <tr>
-      <td style="width:200px;" id="headerTitle"><b>Full Name</b></td>
-      <td style="width:75px;" id="headerTitle"><b></b></td>
+      <td style="width:75px;" id="headerTitle"><b>Rounds</b></td>
+      <td style="width:100px;" id="headerTitle"><b>Winning Team</b></td>
+      <td style="width:75px;" id="headerTitle"><b>Score</b></td>
+      <td style="width:100px;" id="headerTitle"><b>Losing Team</b></td>
+      <td style="width:75px;" id="headerTitle"><b>Score</b></td>
+      <td style="width:100px;" id="headerTitle"><b>Name</b></td>
+      <td style="width:75px;" id="headerTitle"><b>Cost</b></td>
     </tr>
 <?php
-$round = 0;
-$rows = $winner->loadWinners($round);
+$rows = $winner->listSquareWinners();
 foreach ($rows As $row) {
 ?>
     <tr>
+      <td><b><?php echo $row['Rounds']; ?></b></td>
+      <td><b><?php echo $row['WinningTeam']; ?></b></td>
+      <td><b><?php echo $row['TopScore']; ?></b></td>
+      <td><b><?php echo $row['LosingTeam']; ?></b></td>
+      <td><b><?php echo $row['LeftScore']; ?></b></td>
       <td><b><?php echo $row['NickName']; ?></b></td>
-      <td><b><?php echo $row['Total']; ?></b></td>
+      <td><b><?php echo $row['Cost']; ?></b></td>
     </tr>
 <?php
 }
