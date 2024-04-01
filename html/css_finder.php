@@ -30,6 +30,9 @@ switch ($sub_folder) {
   case 'admin/list_winners.php':
     include(HTML . 'head_setup.php');
     break;
+  case 'admin/final_scores.php':
+    include(HTML . 'head_final.php');
+    break;
   case 'admin/setup_squares_new.php':
     include(HTML . 'head_tabs.php');
     break;  

@@ -13,3 +13,11 @@ select max(sqlid) from sql_statements;
 insert into sql_statements values (78, 'listSquareWinners', 'select * from vw_winners_prize where BusinessUnit = \':a1\' and YearPick = :b1 and EventType = :c1 and PoolNbr = :d1');
 
 -- build vw_winners_prize on each organization
+
+select * from sql_statements where sqlname = 'getRounds';
+select max(sqlid) from sql_statements;
+insert into sql_statements values (79, 'getRounds', 'select * from winners_prize where BusinessUnit = \':a1\' and YearPick = :b1 and EventType = :c1 and PoolNbr = :d1 order by QuarterRound');
+
+select * from sql_statements where sqlname = 'getColleges';
+select max(sqlid) from sql_statements;
+insert into sql_statements values (80, 'getColleges', 'select * from colleges order by Team');
