@@ -15,6 +15,15 @@ function getNumberOfGames($rounds) {
   }
 }
 
+function removeItems() {
+  $('#game option').each(function (index, option) {
+    if(index != 0)
+    {
+        $(this).remove();
+    }
+  });
+}
+
 $(document).ready(function() {
   $('#clearAll').click(function() {
     startAllOver();
@@ -39,11 +48,13 @@ $(document).ready(function() {
 
   $('#round').change(function() {
     var numberOfGames = this.getNumberOfGames($('#round').val());
+    this.removeItems();
+    var options = document.forms['areaForm']['game'].options;
     for ($x = 1; $x <= 32; $x++) {
       if ($x <= numberOfGames) {
-        $('#game').attr('disabled', false);
+        options[$x].disabled = false;
       } else {
-        $('#game').attr('disabled', true);
+        options[$x].disabled = true;
       }
     }
   });
