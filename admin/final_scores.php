@@ -1,6 +1,10 @@
 <?php
 include('../preload.php');
 
+$bus_unit = strtoupper($_GET['bu']);
+$yearPlayed = $_GET['yr'];
+$eventType = $_GET['event'];
+$poolNumber = $_GET['pool'];
 include(CLASSES . 'squares_winners.php');
 $winner = new Square_Winners();
 
@@ -19,13 +23,13 @@ include(HTML . 'return_menu.php');
 
     <div class="row g-7 text-center">
       <div class="col-md-7 col-lg-8">
-        <form class="areaForm">
+        <form name="areaForm" class="areaForm" action="update_ncaa_team.php" method="post">
           <?php include(INCLUDES . 'input_hidden.php'); ?>
 
           <div class="row g-3">
-            <div class="col-3"><label for="round" class="form-label">Round:</label></div>
+            <div class="col-3"><label for="rounds" class="form-label">Round:</label></div>
             <div class="col-6">
-              <select class="form-select" id="round" name="round" tabindex="0" required>
+              <select class="form-select" id="rounds" name="rounds" tabindex="0" required>
                 <option value="">Choose...</option>
 <?php foreach ($rows_round as $round) { ?>
                 <option value="<?php echo $round['QuarterRound']; ?>"><?php echo $round['Description']; ?></option>
@@ -68,7 +72,7 @@ include(HTML . 'return_menu.php');
             </div>
             <div class="col-3"><input type="number" required min="10" max="150" class="form-control" tabindex="2" id="losingScore" name="losingScore"></div>
 
-            <div class="col-6"><button class="w-100 btn btn-primary btn-lg" tabindex="20" id="submitForm" type="button">Submit</button></div>
+            <div class="col-6"><button class="w-100 btn btn-primary btn-lg" tabindex="20" id="submitForm" type="submit">Submit</button></div>
             <div class="col-6"><button class="w-100 btn btn-primary btn-lg" tabindex="21" id="clearAll" type="button">Clear All</button></div>
           </div>
         </form>
