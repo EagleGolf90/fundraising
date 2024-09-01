@@ -20,7 +20,6 @@ class Squares {
   private $listPick;
   private $businessUnit;
   private $cost = 0;
-  private $maxSeqNo;
   private $fundDescription;
   private $amount;
   private $giveAmount;
@@ -32,7 +31,6 @@ class Squares {
   private $selectBoxes;
   private $openForPublic;
   private $showNames;
-  private $idLabel;
   private $saved;
   private $deadline;
   private $instructionCheck;
@@ -49,7 +47,6 @@ class Squares {
   private $personID;
   private $mainEmailAddress;
   private $mass_emails = '';
-  private $sub_instructions = '';
   private $diamond_touch = '';
   private $four_corners = '';
   private $FAB = '';
@@ -109,17 +106,21 @@ class Squares {
   public function loadSquares() {
     if (DEBUG_FLAG) echo 'In loadSquares before getCurrentEvent()<br/>';
 
-    $this->getCurrentEvent();
-    $this->getData();
-    $this->loadPageTitle();
-    if ($this->openForPublic == true) {
-      $this->displayTeams();
-      $this->teamSquares();
-      $this->populatePicks();
-      $this->getTexts();
-      $this->getFooterTexts();
-      $this->loadLabels();
-      $this->loadBusinessUnitTitle();
+    if ($this->getCurrentEvent()) {
+      $this->getData();
+      $this->loadPageTitle();
+      if ($this->openForPublic == true) {
+        $this->displayTeams();
+        $this->teamSquares();
+        $this->populatePicks();
+        $this->getTexts();
+        $this->getFooterTexts();
+        $this->loadLabels();
+        $this->loadBusinessUnitTitle();
+      }
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -193,6 +194,7 @@ class Squares {
       $rows = $this->sqlTable->load('getCurrentEvents', $parm);
     }
 
+    $flag = false;
     foreach ($rows As $row) {
       $this->openForPublic = true;
       $this->businessUnit = $row['BusinessUnit'];
@@ -213,9 +215,13 @@ class Squares {
       $this->label_name = $row['label_name'];
       $this->front_picture = $row['front_picture'];
       $this->picture_file = $row['picture_file'];
+      $flag = true;
     }
-    $this->getMainEmailAddress();
-    $this->loadBusinessTitle();
+    if ($flag == true) {
+      $this->getMainEmailAddress();
+      $this->loadBusinessTitle();
+    }
+    return $flag;
   }
 
   private function loadBusinessTitle() {
@@ -582,11 +588,12 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function insertPayments() {
-    $this->getCurrentEvent();
-    $qty = sizeof($this->boxesSelected);
-    $total = ($qty * $this->cost);
-    $parm = array($this->bus_unit, $this->yearPick, $this->personID, $this->eventType, $this->poolNumber, $qty, $this->cost, $total, 'N', date('Y-m-d'));
-    $ret = $this->sqlTable->execute('insertPayments', $parm);
+    if ($this->getCurrentEvent()) {
+      $qty = sizeof($this->boxesSelected);
+      $total = ($qty * $this->cost);
+      $parm = array($this->bus_unit, $this->yearPick, $this->personID, $this->eventType, $this->poolNumber, $qty, $this->cost, $total, 'N', date('Y-m-d'));
+      $ret = $this->sqlTable->execute('insertPayments', $parm);
+    }
   }
 
   private function excludedSquares() {
