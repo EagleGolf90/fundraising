@@ -75,7 +75,7 @@ class Squares {
     $this->openForPublic = false;
     if (DEBUG_FLAG) echo 'In Squares constructor<br/>';
     $this->resetVariables();
-    //$this->loadSquares();
+    $this->loadSquares();
   }
 
   public function __destruct() {
@@ -106,7 +106,9 @@ class Squares {
   public function loadSquares() {
     if (DEBUG_FLAG) echo 'In loadSquares before getCurrentEvent()<br/>';
 
-    if ($this->getCurrentEvent()) {
+    $squares_flag = $this->getCurrentEvent();
+
+    if ($squares_flag == true) {
       $this->getData();
       $this->loadPageTitle();
       if ($this->openForPublic == true) {
@@ -118,10 +120,9 @@ class Squares {
         $this->loadLabels();
         $this->loadBusinessUnitTitle();
       }
-      return true;
-    } else {
-      return false;
     }
+
+    return $squares_flag;
   }
 
   private function loadBusinessUnitTitle() {
