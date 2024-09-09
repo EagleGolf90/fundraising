@@ -75,7 +75,7 @@ class Squares {
     $this->openForPublic = false;
     if (DEBUG_FLAG) echo 'In Squares constructor<br/>';
     $this->resetVariables();
-    $this->loadSquares();
+    //$this->loadSquares();
   }
 
   public function __destruct() {
@@ -187,7 +187,8 @@ class Squares {
   public function getPageTitle() { return $this->page_title; }
 
   private function getCurrentEvent() {
-    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
+    if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>';
+    if (DEBUG_FLAG) echo '$list_flag in getCurrentEvent: ' . ($this->list_flag ? 'Yes' : 'No') . '<br/>';
     if ($this->list_flag == true) {
       $rows = $this->sqlTable->load('loadCurrentEvents', array());
     } else  {
@@ -235,10 +236,22 @@ class Squares {
     $this->extractBoxesSelected();
   }
 
-  public function setBusinessUnit($bu) { $this->bus_unit = strtoupper($bu); }
-  public function setYearPick($yr) { $this->yearPick = $yr; }
-  public function setEventType($type) { $this->eventType = $type; }
-  public function setPoolNumber($pool) { $this->poolNumber = $pool; }
+  public function setBusinessUnit($bu) {
+    if (DEBUG_FLAG) echo 'Bus_Unit: ' . $bu . '<br/>';
+    $this->bus_unit = strtoupper($bu);
+  }
+  public function setYearPick($yr) {
+    if (DEBUG_FLAG) echo 'Year: ' . $yr . '<br/>';
+    $this->yearPick = $yr;
+  }
+  public function setEventType($type) {
+    if (DEBUG_FLAG) echo 'EventType: ' . $type . '<br/>';
+    $this->eventType = $type;
+  }
+  public function setPoolNumber($pool) {
+    if (DEBUG_FLAG) echo 'Pool Number: ' . $pool . '<br/>';
+    $this->poolNumber = $pool;
+  }
 
   public function getBusinessTitle() { return $this->business_title; }
 
