@@ -1,8 +1,9 @@
 <?php
 include('../preload.php');
 
-include(CLASSES . 'squares_payments.class.php');
-$payment = new SquaresPayments();
+$bus_unit = strtoupper($_GET['bu']);
+include(INCLUDES. 'squares_payments.php');
+
 $rows = $payment->loadPayments();
 
 include(HTML . 'beginHTML.php');
@@ -10,7 +11,7 @@ include(HTML . 'return_menu.php');
 ?>
 
 <div class="container">
-  <h2 id="ctr">Payments for <?php echo $payment->getEventTitle(); ?> (<?php echo BUS_UNIT; ?>)</h2>
+  <h2 id="ctr">Payments for <?php echo $payment->getEventTitle(); ?> (<?php echo $bus_unit; ?>)</h2>
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover">
     <tr>
@@ -33,14 +34,14 @@ foreach ($rows As $row) {
   $ownSquares = $payment->getOwnSquares($row['PersonID']);
   $totalDollars += $row['Total'];
   $bu_link = '&bu=' . $_GET['bu'];
-  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
-  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . $bu_link;
+  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
   $delete_link .= '&sq=' . $ownSquares;
 ?>
     <tr>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $edit_link; ?>">Edit</a></b></td>
       <td><b><a class="btn btn-danger btn-block active" role="button" href="<?php echo $delete_link; ?>">Delete</a></b></td>
-      <td><b><?php echo $row['FirstName'] . " " . $row['LastName']; ?></b></td>
+      <td><b><?php echo $row['NickName']; ?></b></td>
       <td><b><?php echo $ownSquares; ?></b></td>
       <td><b>$<?php echo $row['Total']; ?></b></td>
 <?php
@@ -51,7 +52,7 @@ foreach ($rows As $row) {
         $totalUnPaids += $row['Total'];
         $totalPeopleUnPaids += 1;
       }
-      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&event=' . $row['EventType'] . '&paid=' . $row['Paid'] . $bu_link;
+      $receive_pay_link = 'receivePay.php?id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'] . '&paid=' . $row['Paid'] . $bu_link;
 ?>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $receive_pay_link; ?>"><?php echo ($row['Paid'] == 'Y') ? 'Paid' : 'UnPaid'; ?></a></b></td>
     </tr>

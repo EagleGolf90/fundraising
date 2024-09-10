@@ -21,20 +21,23 @@ class MainContact {
   private $mainContactLastName = '';
   private $mainEmailAddress = '';
   private $mainCashApp = '';
+  private $zelle = '';
   private $emailContent = '';
   private $sql;
   private $address_flag;
   private $deadline = '';
+  private $cashApp_flag = 'N';
+  private $zelle_flag = 'N';
+  private $cashApp_picture = '';
 
-  public function __construct() {
+  public function __construct($yearPick, $eventType, $poolNumber) {
     $this->sqlTable = new SQLTable();
     $this->sql = new SQL();
+    $this->yearPick = $yearPick;
+    $this->eventType = $eventType;
+    $this->poolNumber = $poolNumber;
     $this->setup();
   }
-
-  public function setYearPick($yr) { $this->yearPick = $yr; }
-  public function setPoolNumber($nbr) { $this->poolNbr = $nbr; }
-  public function setEventType($type) { $this->eventType = $type; }
 
   public function getContactName() { return $this->contactName; }
   public function getContactAddress() { return $this->contactAddress; }
@@ -46,18 +49,26 @@ class MainContact {
   public function getContactCashApp() { return $this->cashApp; }
   public function getMainContactInfo() { return $this->mainContactFirstName . ' (' . $this->mainEmailAddress . ')'; }
   public function getMainCashApp() { return $this->mainCashApp; }
+  public function getMainZelle() { return $this->zelle; }
+  public function getCashAppFlag() { return $this->cashApp_flag; }
+  public function getZelleFlag() { return $this->zelle_flag; }
   public function getMainContactEmail() { return $this->mainEmailAddress; }
   public function getEmailContent() { return $this->emailContent; }
   public function getDeadline() { return $this->deadline; }
 
   private function setup() {
-    $parm = array(BUS_UNIT);
-    $rows = $this->sqlTable->load('loadSetup', $parm);
+    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT, $this->yearPick, $this->eventType, $this->poolNbr));
     $this->mainContactFirstName = '';
     foreach ($rows as $row) {
+      $this->yearPick = $row['YearPicked'];
+      $this->eventType = $row['EventType'];
+      $this->poolNbr = $row['PoolNumber'];
       $this->mainContactFirstName = $row['MainFirstName'];
       $this->mainEmailAddress = $row['MainEmailAddress'];
       $this->mainCashApp = $row['MainCashApp'];
+      $this->zelle = $row['ZelleContact'];
+      $this->cashApp_flag = $row['CashApp'];
+      $this->zelle_flag = $row['Zelle'];
     }
   }
 
@@ -69,17 +80,18 @@ class MainContact {
     } else {
       $line = 'Contact this text number ' . $this->contactPhone . ' if you have any questions.';
     }
-    if ($printCashApp == true) $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp;
+    if ($this->cashApp_flag == 'Y') $line .= '<br/>Pay through "CashApp" at ' . $this->cashApp . ', Picture: <img src="' . SQUARES_URL . 'images/' . $this->cashApp_picture . '" class="picture_logo">';
+    if ($this->zelle_flag == 'Y') $line .= '<br/>Pay through "Zelle" at ' . $this->zelle;
     return $line;
   }
 
   private function replaceContents($content) {
-    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone);
+    $parm = array($_POST['BoxNumber'], $this->printContactInfo('N'), $this->mainCashApp, $this->mainContactFirstName, $this->deadline, $this->contactPhone, $_POST['nickName'], $this->zelle);
     $this->emailContent = $this->sql->replaceParameters($content, $parm);
   }
 
   public function getMainContact() {
-    $parm = array($this->yearPick, $this->eventType, $this->poolNbr);
+    $parm = array($this->yearPick, $this->poolNbr, $this->eventType);
     $rs = $this->sqlTable->load('getMainContacts', $parm);
 
     foreach ($rs as $r) {
@@ -93,7 +105,9 @@ class MainContact {
       $this->phoneTypeDesc = $r['PhoneDesc'];
       $this->cashApp = $r['CashApp'];
       $this->deadline = $r['Deadline'];
-      $this->replaceContents($r['EmailContent']);
+      $this->cashApp_picture = $r['CashAppPicture'];
+      $content = $r['EmailContent'];
+      $this->replaceContents($content);
     }
   }
 }

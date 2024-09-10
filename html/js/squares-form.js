@@ -13,18 +13,18 @@ $(document).ready(function() {
 
   $('#submitForm').click(function() {
     var quarter = $('#quarter :selected').text();
-    let formData = $('.areaForm').serialize();
+    var formData = $('.areaForm').serialize();
 
     $.ajax({
         method: "POST",
-        url: 'add_draw_squares.php',
+        url: 'https://kdga.org/fundraising/squares/add_draw_squares.php',
         data: formData,
         success: function(response) {
-          startAllOver();
           alert(quarter + ' updated successful');
+          startAllOver();
         },
         error: function(xhr, status, error) {
-          alert('Failed');
+          alert('Failed, Status: ' + status);
         }
     });
   });

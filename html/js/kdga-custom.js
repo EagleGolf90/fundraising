@@ -5,6 +5,10 @@
  * Description...: This is to execute the handles and behaviors attached to the couple of elements.
  */
 $(document).ready(function() {
+    $("#hide_top_area").click(function() {
+      alert('Hide Top Area function');
+    });
+
     $(".available").click(function() {
         if ($(this).hasClass("selected")) {
           $(this).removeClass("selected");
@@ -17,16 +21,6 @@ $(document).ready(function() {
           if (boxSelected !== "") boxSelected = boxSelected + ",";
           boxSelected = boxSelected + $(this).text();
         });
-        $("#boxSelected").html(boxSelected);
-    });
-
-    $("#submitForm").click(function() {
-      var str = $("#boxSelected").text();
-      var bu = $('#bu').text().toLowerCase();
-      if ($.trim(str) === "") {
-        alert("You have not select any squares. Please try again.");
-      } else {
-        document.location.href = "requestSquare.php?box=" + $.trim(str) + "&bu=" + bu;
-      }
+        $("#boxSelected").val(boxSelected);
     });
 });

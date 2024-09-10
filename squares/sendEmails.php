@@ -35,7 +35,12 @@ if ($send_email->getReadyForEmail() == 'Y') {
       if ($oldEmailAddress != '') {
         echo $previousFullName . ' - ' . $strSquares . '<br/>';
         $send_email->setToEmailAddress($row['EmailAddress']);
-        $send_email->send();
+        $ret = $send_email->send();
+        if ($ret == true) {
+          echo "<h3 style='color: green;'>Thank you for contacting us!</h3>";
+        } else {
+          echo "<h3 style='color: red;'>Oops, something went wrong. Please try again later</h3>";
+        }
         $strSquares = '';
       }
     }
@@ -50,8 +55,13 @@ if ($send_email->getReadyForEmail() == 'Y') {
   if ($send_flag == false) {
     echo $previousFullName . ' - ' . $strSquares . '<br/>';
     $send_email->setToEmailAddress($oldEmailAddress);
-    $send_email->send();
-  }
+    $ret = $send_email->send();
+    if ($ret == true) {
+      echo "<h3 style='color: green;'>Thank you for contacting us!</h3>";
+    } else {
+      echo "<h3 style='color: red;'>Oops, something went wrong. Please try again later</h3>";
+    }
+}
 
   echo '<hr>';
 

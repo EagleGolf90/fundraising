@@ -31,9 +31,10 @@ th, td {
   vertical-align: middle;
 }
 
-td {
+th, td {
   width: 30px;
   height: 30px;
+  font-size: 16px;
 }
 
 .edit_row {
@@ -54,18 +55,18 @@ h1, h2, .ctr {
 .taken, .takenTitle {
   background-color: #996699;
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .available, .availableTitle {
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .pending, .pendingTitle {
   background-color: #33FF00;
   font-size: 16pt;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 #ctr {
@@ -85,7 +86,8 @@ h1, h2, .ctr {
   color: white;
   width: 30px;
   height: 30px;
-  border-radius: 5px;
+  border-radius: 10px;
+  /*border-radius: 5px;*/
 }
 
 /*****************************************************************************************/
@@ -238,7 +240,10 @@ h1, h2, .ctr {
   cursor: pointer;
 }
 
-.table { font-size: 10px; }
+.table {
+  /*font-size: 10px;*/
+  font-size: 14px;
+}
 ul.instruction { list-style-type: none; }
 ul.subInstruction { list-style-type: disc; }
 .subContainer { font-size: 24px; font-family: 'Times New Roman', Times, serif, Arial, Helvetica, sans-serif; }
@@ -256,3 +261,5 @@ ul.subInstruction { list-style-type: disc; }
 .instruction { font-size: 20px; font-weight: bold; }
 .support { font-weight: bolder; color: red; }
 .return-menu { height: 50px; background-color: rgba(0, 0, 0, 0.13); }
+.footer_instruction { font-size: 14px; font-weight: bold; }
+.roundTitle { font-size: 18px; font-weight: bold; background-color: cadetblue !important; }

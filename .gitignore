@@ -1,2 +1,12 @@
 includes/config.php
 files/*
+specs/*
+squares/backup/*
+classes/*.backup
+testing/*
+admin/backup/*
+squares_v2/backup/*
+data/backup/*
+logs/*
+squares/oldversion/*
+images/saved/*

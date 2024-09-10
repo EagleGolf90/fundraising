@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     $.ajax({
         method: "POST",
-        url: 'update_teams.php',
+        url: 'https://kdga.org/fundraising/admin/update_teams.php',
         data: formData,
         success: function(response) {
           startAllOver();
