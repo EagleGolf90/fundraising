@@ -1,5 +1,6 @@
 <?php
 $target = 'target' . $section_number;
+$target_label = 'target' . $section_number . '_label';
 $index = intval($section_number) - 1;
 $square_winner = 'square_winner' . $section_number;
 $diamond_winner = 'diamond_winner' . $section_number;
@@ -7,7 +8,7 @@ $reverse_winner = 'reverse_winner' . $section_number;
 $event_label = $labels[$index];
 ?>
             <div class="col-2 <?php echo $target; ?>">
-              <label for="<?php echo $square_winner; ?>" class="form-label target1_label"><?php echo $event_label; ?></label>
+              <label for="<?php echo $square_winner; ?>" class="form-label <?php echo $target_label; ?>"><?php echo $event_label; ?></label>
             </div>
             <div class="col-3 <?php echo $target; ?>">
               <div class="input-group">
