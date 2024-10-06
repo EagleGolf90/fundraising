@@ -17,17 +17,17 @@ $(document).ready(function() {
   /* NFL and NBA use same labels */
   function nfl_nba() {
     var labels = [ 'First Quarter', 'Second Quarter', 'Third Quarter', 'Final Score', 'Reverse Winner' ];
-    for (var a = 0; a < labels.length; a++) show_hide_element('.target' + a, labels[a]);
+    for (var a = 0; a < labels.length; a++) show_hide_element('.target' + (a+1), labels[a]);
   }
 
   function ncaa() {
     var labels = [ 'First Half', 'Second Half', 'Final Score', '', '' ];
-    for (var b = 0; b < labels.length; b++) show_hide_element('.target' + b, labels[b]);
+    for (var b = 0; b < labels.length; b++) show_hide_element('.target' + (b+1), labels[b]);
   }
 
   function mlb() {
     var labels = [ 'First Inning', 'Third Inning', 'Sixth Inning', 'Final Score', '' ];
-    for (var c = 0; c < labels.length; c++) show_hide_element('.target' + c, labels[c]);
+    for (var c = 0; c < labels.length; c++) show_hide_element('.target' + (c+1), labels[c]);
   }
 
   function display_events(value_selected) {

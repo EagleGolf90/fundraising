@@ -6,6 +6,7 @@ switch ($sub_folder) {
   case 'squares/main_squares.php':
   case 'squares/main_squares_new.php':
   case 'squares/requestSquare.php':
+  case 'squares/sendSquare.php':
   case 'admin/payments.php':
   case 'admin/edit_squares.php':
   case 'admin/delete_row.php':

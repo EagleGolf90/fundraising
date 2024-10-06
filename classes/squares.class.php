@@ -63,9 +63,9 @@ class Squares {
     switch (PAGE_NAME) {
       case 'index.php':
       case 'lists.php':
-          return true;
+          return 'Yes';
       default:
-          return false;
+          return 'No';
     }
   }
 
@@ -75,7 +75,7 @@ class Squares {
     $this->openForPublic = false;
     if (DEBUG_FLAG) echo 'In Squares constructor<br/>';
     $this->resetVariables();
-    $this->loadSquares();
+    //$this->loadSquares();
   }
 
   public function __destruct() {
@@ -104,11 +104,12 @@ class Squares {
   }
 
   public function loadSquares() {
+    $this->list_flag = $this->checkPage();
     if (DEBUG_FLAG) echo 'In loadSquares before getCurrentEvent()<br/>';
 
     $squares_flag = $this->getCurrentEvent();
 
-    if ($squares_flag == true) {
+    if ($squares_flag == 'Yes') {
       $this->getData();
       $this->loadPageTitle();
       if ($this->openForPublic == true) {
@@ -188,7 +189,7 @@ class Squares {
 
   private function getCurrentEvent() {
     if (DEBUG_FLAG) echo 'In getCurrentEvent()<br/>SQLName: loadCurrentEvents<br/>';
-    if ($this->list_flag == true) {
+    if ($this->list_flag == 'Yes') {
       $rows = $this->sqlTable->load('loadCurrentEvents', array());
     } else  {
       $parm = array($this->bus_unit, $this->yearPick, $this->eventType, $this->poolNumber);
@@ -216,13 +217,13 @@ class Squares {
       $this->label_name = $row['label_name'];
       $this->front_picture = $row['front_picture'];
       $this->picture_file = $row['picture_file'];
-      $flag = true;
+      $flag = 'Yes';
     }
-    if ($flag == true) {
+    if ($flag == 'Yes') {
       $this->getMainEmailAddress();
       $this->loadBusinessTitle();
     }
-    return $flag;
+    return $flag == 'Yes';
   }
 
   private function loadBusinessTitle() {

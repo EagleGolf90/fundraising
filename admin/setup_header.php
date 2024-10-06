@@ -15,6 +15,8 @@
                 <option value="2">NCAA March Madness - Final Four Championship Game</option>
                 <option value="3">World Series - Last Final Game</option>
                 <option value="4">NBA Championship Game</option>
+                <option value="6">March Madness Men's NCAA Tournament - 6 Levels</option>
+                <option value="7">March Madness Women's NCAA Tournament - 6 Levels</option>
               </select>
             </div>
 
