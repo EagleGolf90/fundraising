@@ -17,6 +17,7 @@ switch ($sub_folder) {
   case 'admin/send_form.php':
   case 'admin/settings.php':
   case 'squares/index_form.php':
+  case 'testing/test3.php':
     include(HTML . 'head_squares.php');
     break;
   case 'menus/index.php':
