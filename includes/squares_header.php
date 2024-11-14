@@ -1,4 +1,12 @@
 <?php
+    function PrintLine($type, $value) {
+      if ($type = 1) {
+        echo '<td class="blank"></td>' . "\n";
+      } else {
+        echo '<td class="blank">' . $value . '</td>' . "\n";
+      }
+    }
+
     /* Print 100 Squares */
     $rowBreak = 4;
     $tRow = 30;
@@ -11,10 +19,11 @@
         echo '<td class="blank" id="' . $rowTags[$y-1] . '">' . $rowTitle[$y-1] . '</td>' . "\n";
       } else {
         echo '<td rowspan="11"><h2 class="rotate title">' . $afcTeamName . '</h2></td>' . "\n";
-        echo '<td class="blank">' . $rowTitle[3] . '</td>' . "\n";
-        echo '<td class="blank">' . $rowTitle[2] . '</td>' . "\n";
-        echo '<td class="blank">' . $rowTitle[1] . '</td>' . "\n";
-        echo '<td class="blank">' . $rowTitle[0] . '</td>' . "\n";
+        // echo '<td class="blank">' . $rowTitle[3] . '</td>' . "\n";
+        // echo '<td class="blank">' . $rowTitle[2] . '</td>' . "\n";
+        // echo '<td class="blank">' . $rowTitle[1] . '</td>' . "\n";
+        // echo '<td class="blank">' . $rowTitle[0] . '</td>' . "\n";
+        for ($b = 3; $b >= 0; $b++) PrintLine(2, $rowTitle[$b]);
       }
       for ($x = 1; $x <= 10; $x++) {
         echo '<td class="tblock" id="' . $id_topTag . '">';
@@ -24,10 +33,11 @@
 
     for ($row_count = 1; $row_count <= $xRows; $row_count++)
     {
-      echo '<td class="blank"></td>' . "\n";
-      echo '<td class="blank"></td>' . "\n";
-      echo '<td class="blank"></td>' . "\n";
-      echo '<td class="blank"></td>' . "\n";
+      // echo '<td class="blank"></td>' . "\n";
+      // echo '<td class="blank"></td>' . "\n";
+      // echo '<td class="blank"></td>' . "\n";
+      // echo '<td class="blank"></td>' . "\n";
+      for ($b = 1; $b <= 4; $b++) PrintLine(1, '');
 
       for ($column_count = 1; $column_count <= $yRows; $column_count++)
       {
