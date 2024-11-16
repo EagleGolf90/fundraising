@@ -14,3 +14,7 @@
     </tr>
     <?php include(INCLUDES . 'squares_header.php'); ?>
     </table>
+
+    <table class="table table-bordered table-hover" width="200px" cellspacing="1" cellpadding="1">
+    <?php include(INCLUDES . 'squares_footer.php'); ?>
+    </table>
