@@ -84,6 +84,11 @@ class Squares {
     // else
     //   echo 'We don\'t have parameters.<br/>';
 
+    if ($this->list_flag == 'Yes')
+    {
+      
+    }
+
     return $squares_flag;
   }
 

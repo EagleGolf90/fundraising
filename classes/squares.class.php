@@ -367,7 +367,7 @@ class Squares {
       default:
 ?>
       <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-<?php   for ($x = 3; $x >= 0; $x--) { ?>
+<?php for ($x = 3; $x >= 0; $x--) { ?>
       <td class='blank' id='fourth'>
         <?php echo $this->labels[$x]; ?>
       </td>
@@ -451,12 +451,18 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function printLeftArea($rowNumber) {
-    for ($quarter = 4; $quarter > 0; $quarter--) {
-      for ($a = 0; $a < sizeof($this->leftSquares); $a++) {
-        if ($this->leftSquares[$a][0] == $quarter && $this->leftSquares[$a][1] == $rowNumber) {
-          $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$a][2] : '') . '</b>';
-          $id = 'la_' . ($rowNumber+1) . '_' . $quarter;
-          $this->printBoxArea($id, 'sblock', $squareBox);
+    if ($this->eventType >= 6) {
+      $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$a][2] : '') . '</b>';
+      $id = 'la_' . ($rowNumber+1) . '_1';
+      $this->printBoxArea($id, 'sblock', $squareBox);
+    } else {
+      for ($quarter = 4; $quarter > 0; $quarter--) {
+        for ($a = 0; $a < sizeof($this->leftSquares); $a++) {
+          if ($this->leftSquares[$a][0] == $quarter && $this->leftSquares[$a][1] == $rowNumber) {
+            $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$a][2] : '') . '</b>';
+            $id = 'la_' . ($rowNumber+1) . '_' . $quarter;
+            $this->printBoxArea($id, 'sblock', $squareBox);
+          }
         }
       }
     }
@@ -564,7 +570,9 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function insertParticipant() {
-    $parm = array($this->bus_unit, $this->personID, $_POST['firstName'], $_POST['lastName'], $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], $_POST['nickName']);
+    $firstName = $_POST['firstName'] == '' ? ' ' : $_POST['firstName'];
+    $lastName = $_POST['lastName'] == '' ? ' ' : $_POST['lastName'];
+    $parm = array($this->bus_unit, $this->personID, $firstName, $lastName, $_POST['email'], $_SERVER['HTTP_USER_AGENT'], $_SERVER['REMOTE_ADDR'], $_POST['nickName']);
     $ret = $this->sqlTable->execute('insertParticipants', $parm);
   }
 
