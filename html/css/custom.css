@@ -76,6 +76,7 @@ h1, h2, .ctr {
 
 .sblock {
   background-color: #FF0000;
+  /* background-color: #FF0000; */
   color: white;
   width: 30px;
   height: 30px;
@@ -83,7 +84,8 @@ h1, h2, .ctr {
 }
 
 .tblock {
-  background-color: #00008B;
+  /* background-color: #00008B; */
+  background-color: #046A38;
   color: white;
   width: 30px;
   height: 30px;

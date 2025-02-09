@@ -3,6 +3,7 @@ error_reporting(E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_WA
 
 define('MODEL', ROOT_PATH . 'model' . DS);
 define('ADMIN', ROOT_PATH . 'admin' . DS);
+define('RECORDS', ROOT_PATH . 'records' . DS);
 
 define('URL', 'https:' . DS . DS . 'kdga.org' . DS);
 

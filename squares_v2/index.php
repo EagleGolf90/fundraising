@@ -1,9 +1,10 @@
 <?php
 include('../preload.php');
+
 include(CLASSES . 'squares_v2.class.php');
 $squares = new Squares();
 
-$box_area = array("1st", "2nd", "3rd", "Final");
+$box_area = $squares->GetBoxAreas();
 
 include(HTML . 'beginHTML_v2.php');
 ?>
@@ -13,6 +14,8 @@ include(HTML . 'beginHTML_v2.php');
   <?php
   // Square Title
   include('square_info.php');
+
+  echo '*' . $squares->GetTotalSquares() . '*<br/>';
 
   // 100 square boxes
   include('square_boxes.php');
