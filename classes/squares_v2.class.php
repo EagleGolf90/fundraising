@@ -4,7 +4,7 @@
  * Author........: Brian Timberlake
  * Date Created..: September 9, 2019
  */
-//include(INCLUDES . 'constants.php');
+include(RECORDS . 'CurrentEvent.php');
 
 class Squares {
   private $sqlTable;
@@ -12,26 +12,28 @@ class Squares {
   private $yearPick;
   private $eventType;
   private $poolNumber;
-  private $openForPublic;
   private $topSquares;
   private $leftSquares;
+  // private $businessUnit;
+  // private $eventTitle;
+  // private $cost;
+  // private $fundDescription;
+  // private $amount;
+  // private $giveAmount;
+  // private $keepAmount;
+  // private $formulaType;
+  // private $showNames;
+  // private $deadline;
+  // private $instructionCheck;
+  // private $label_name;
+  // private $front_picture;
+  // private $picture_file;
+  // private $totalSquares;
   private $list_flag;
-  private $businessUnit;
-  private $eventTitle;
-  private $cost;
-  private $fundDescription;
-  private $amount;
-  private $giveAmount;
-  private $keepAmount;
-  private $formulaType;
-  private $showNames;
-  private $deadline;
-  private $instructionCheck;
-  private $label_name;
-  private $front_picture;
-  private $picture_file;
-  private $totalSquares;
+  private $openForPublic;
   private $which_query_parameter;
+  private $pageNumber;
+  private $event;
 
   private function CheckParameters() {
     $this->which_query_parameter = 'none';
@@ -63,14 +65,21 @@ class Squares {
   private function ResetVariables() {
     $this->topSquares = array();
     $this->leftSquares = array();
+    $this->event = new CurrentEvent();
+    $this->pageNumber = "1";
   }
 
+  public function SetPageNumber($pageNo) { $this->pageNumber = $pageNo; }
   public function SetBusinessUnit($bu) { $this->bus_unit = $bu; }
   public function SetYearPick($yr) { $this->yearPick = $yr; }
   public function SetEventType($type) { $this->eventType = $type; }
   public function SetPoolNumber($pool) { $this->poolNumber = $pool; }
 
-  public function GetTotalSquares() { return $this->totalSquares; }
+  public function GetBoxAreas() { return array("1st", "2nd", "3rd", "Final"); }
+  // public function GetTotalSquares() { return $this->totalSquares; }
+  public function GetTotalSquares() { return $this->event->getTotalSquares(); }
+
+  public function GetPageNo() { return $this->pageNumber; }
 
   public function CheckQueryParameters() { return $this->which_query_parameter; }
 
@@ -83,6 +92,11 @@ class Squares {
     //   echo 'We have parameters.<br/>';
     // else
     //   echo 'We don\'t have parameters.<br/>';
+
+    if ($this->list_flag == 'Yes')
+    {
+      
+    }
 
     return $squares_flag;
   }
@@ -101,25 +115,26 @@ class Squares {
     $flag = false;
     foreach ($rows As $row) {
       $this->openForPublic = true;
-      $this->businessUnit = $row['BusinessUnit'];
-      $this->yearPick = $row['YearPick'];
-      $this->eventType = $row['EventType'];
-      $this->poolNumber = $row['PoolNbr'];
-      $this->eventTitle = $row['Description'];
-      $this->cost = $row['Cost'];
-      $this->fundDescription = $row['FundDesc'];
-      $this->amount = $row['Amount'];
-      $total = $this->cost * 100;
-      $this->giveAmount = ($total * ($row['GivePercent']/100));
-      $this->keepAmount = ($total * ($row['KeepPercent']/100));
-      $this->formulaType = $row['Formula'];
-      $this->showNames = $row['ShowNames'];
-      $this->deadline = $row['Deadline'];
-      $this->instructionCheck = $row['full_instruction'];
-      $this->label_name = $row['label_name'];
-      $this->front_picture = $row['front_picture'];
-      $this->picture_file = $row['picture_file'];
-      $this->totalSquares = $row['NumberOfSquares'];
+      // $this->businessUnit = $row['BusinessUnit'];
+      // $this->yearPick = $row['YearPick'];
+      // $this->eventType = $row['EventType'];
+      // $this->poolNumber = $row['PoolNbr'];
+      // $this->eventTitle = $row['Description'];
+      // $this->cost = $row['Cost'];
+      // $this->fundDescription = $row['FundDesc'];
+      // $this->amount = $row['Amount'];
+      // $total = $this->cost * 100;
+      // $this->giveAmount = ($total * ($row['GivePercent']/100));
+      // $this->keepAmount = ($total * ($row['KeepPercent']/100));
+      // $this->formulaType = $row['Formula'];
+      // $this->showNames = $row['ShowNames'];
+      // $this->deadline = $row['Deadline'];
+      // $this->instructionCheck = $row['full_instruction'];
+      // $this->label_name = $row['label_name'];
+      // $this->front_picture = $row['front_picture'];
+      // $this->picture_file = $row['picture_file'];
+      // $this->totalSquares = $row['NumberOfSquares'];
+      $this->event->load($row);
       $flag = 'Yes';
     }
     if ($flag == 'Yes') {
