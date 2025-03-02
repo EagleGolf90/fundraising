@@ -135,5 +135,14 @@ class Squares {
   public function GetMyPicked() {
     return array();
   }
+
+  public function GetNFCTeamName() {
+    return 'Green Bay Packers';
+  }
+
+  public function GetAFCTeamName() {
+    return 'Baltimore Ravens';
+  }
+  
 }
 ?>
