@@ -12,7 +12,7 @@
     $tRow = 30;
     $sRow = 4;
     for ($y = 4; $y > 0; $y--) {
-      echo '<tr>';
+      echo '<tr>' . "\n";
       if ($tags[$y-1] != '') {
         echo '<td></td>' . "\n";
         echo '<td class="blank ' . strtolower($tags[$y-1]) . ' Title" colspan="3">' . $tags[$y-1] . '</td>' . "\n";
@@ -22,7 +22,7 @@
         for ($b = 3; $b >= 0; $b--) PrintLine(2, $rowTitle[$b]);
       }
       for ($x = 1; $x <= 10; $x++) {
-        echo '<td class="tblock" id="' . $id_topTag . '">';
+        echo '<td class="tblock" id="' . $id_topTag . '">' . "\n";
       }
       echo '</tr>' . "\n";
     }
