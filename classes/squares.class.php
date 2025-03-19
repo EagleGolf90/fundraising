@@ -360,8 +360,7 @@ class Squares {
       case 6:
       case 7:
 ?>
-      <td rowspan='11'><h2 class='rotate title'>Losing</h2></td>
-      <td class='blank' id='first'></td>
+      <td rowspan='11'><h2 class='rotate title'>Losing</h2></td><td></td>
 <?php
         break;
       default:
@@ -452,7 +451,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
 
   private function printLeftArea($rowNumber) {
     if ($this->eventType >= 6) {
-      $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$a][2] : '') . '</b>';
+      $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$rowNumber][2] : '') . '</b>';
       $id = 'la_' . ($rowNumber+1) . '_1';
       $this->printBoxArea($id, 'sblock', $squareBox);
     } else {
