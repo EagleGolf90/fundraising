@@ -36,7 +36,7 @@ class SquaresPayments {
   public function getYearPick() { return $this->yearPick; }
   public function getEventType() { return $this->eventType; }
   public function getPoolNumber() { return $this->poolNumber; }
-  public function setBusinessUnit($bu) { $this->bus_unit = $bu; }
+  public function setBusinessUnit($bu) { $this->bus_unit = strtoupper($bu); }
   public function setYearPick($yearPick) { $this->yearPick = $yearPick; }
   public function setEventType($eventType) { $this->eventType = $eventType; }
   public function setPoolNumber($poolNumber) { $this->poolNumber = $poolNumber; }
