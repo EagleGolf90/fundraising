@@ -14,12 +14,12 @@ if ($zelle_flag == 'Y') {
 ?>
   <hr>
   <div class="row">
-    <div class="col-md-12 size18">
+    <div class="col-md-12 size18 text-center">
       Contact this text number <?php echo $main_contact->getContactPhone(); ?> if you have any questions.<br/>
       <span class="size25">>>>></span> 
       <b>Deadline: <?php echo $squares->getDeadline(); ?>.</b> Pay through "<?php echo $payment_label; ?>" at 
       <b><?php echo $payment_app; ?></b> <span class="size25"><<<<</span>
       <br/><br/>
-      <center><b>Thank you for helping us to achieve our goal with this fundraising.</b></center>
+      <b>Thank you for helping us to achieve our goal with this fundraising.</b>
     </div>
   </div>

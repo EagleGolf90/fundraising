@@ -346,31 +346,22 @@ class Squares {
   }
 
   private function printCellTopBox($id, $value) {
-?>
-    <td class='tblock' id='<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $value : ''; ?></b></td>
-<?php
+    echo '<td class="tblock" id=' . $id . '><b>' . ($this->showNames == 'Y' ? $value : '') . '</b></td>' . "\n";
   }
 
   public function printNFLLeftBox() {
-?>
-    <tr>
-<?php
+    echo '<tr>';
     switch ($this->eventType) {
       case 5:
       case 6:
       case 7:
-?>
-      <td rowspan='11'><h2 class='rotate title'>Losing</h2></td><td></td>
-<?php
+        echo '<td rowspan="11"><h2 class="rotate title">Losing</h2></td><td></td>';
         break;
       default:
-?>
-      <td rowspan='11'><h2 class='rotate title'><?php echo $this->showNames == 'Y' ? $this->leftTeam : ''; ?></h2></td>
-<?php for ($x = 3; $x >= 0; $x--) { ?>
-      <td class='blank' id='fourth'>
-        <?php echo $this->labels[$x]; ?>
-      </td>
-<?php   }
+        echo '<td rowspan="11"><h2 class="rotate title">' . ($this->showNames == 'Y' ? $this->leftTeam : '') . '</h2></td>';
+        for ($x = 3; $x >= 0; $x--) {
+          echo '<td class="blank" id="fourth">' . $this->labels[$x] . '</td>';
+        }
         break;
     }
 
@@ -379,21 +370,15 @@ class Squares {
       $id = 'ta' + ($a+1);
       echo $this->PrintCellTopBox($id, $this->topSquares[$a][2]);
     }
-?>
-    </tr>
-<?php
+    echo '</tr>' . "\n";
   }
 
   private function printNFLTopBox() {
-?>
-    <tr><td></td><td colspan='14'><h2 class='title'><?php echo $this->showNames == 'Y' ? $this->topTeam : ''; ?></h2></td></tr>
-<?php
+    echo '<tr><td></td><td colspan="14"><h2 class="title">' . ($this->showNames == 'Y' ? $this->topTeam : '') . '</h2></td></tr>' . "\n";
   }
 
   private function printWinningTop() {
-?>
-    <tr><td></td><td colspan='14'><h2 class='title'>Winning</h2></td></tr>
-<?php
+    echo '<tr><td></td><td colspan="14"><h2 class="title">Winning</h2></td></tr>' . "\n";
   }
 
   private function sectionLabel($quarter) {
@@ -416,27 +401,17 @@ class Squares {
 
   private function printEachQuarter($quarter) {
     $sectionLabel = $this->sectionLabel($quarter);
-?>
-    <tr>
-      <td></td>
-      <td colspan='3' class='blank <?php echo strtolower($sectionLabel) . 'Title'; ?>'><?php echo $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : ''); ?></td>
-      <td class='blank' id='<?php
-      echo $this->id_labels[$quarter-1];
-      ?>'>
-        <?php echo $this->labels[$quarter-1]; ?>
-      </td>
-<?php
-for ($x = 0; $x < sizeof($this->topSquares); $x++) {
-  if ($quarter == $this->topSquares[$x][0]) {
-    $id = $quarter . '_' . ($x+1);
-?>
-      <td class='tblock' id='ta_<?php echo $id; ?>'><b><?php echo $this->showNames == 'Y' ? $this->topSquares[$x][2] : ''; ?></b></td>
-<?php
-  }
-}
-?>
-    </tr>
-<?php
+    echo '<tr><td></td>';
+    echo '<td colspan="3" class="blank ' . strtolower($sectionLabel) . 'Title' . '">' . $sectionLabel . ($sectionLabel == 'Select' ? 'ed' : '') . '</td>';
+    echo '<td class="blank" id="' . $this->id_labels[$quarter-1] . '">';
+    echo $this->labels[$quarter-1] . '</td>';
+    for ($x = 0; $x < sizeof($this->topSquares); $x++) {
+      if ($quarter == $this->topSquares[$x][0]) {
+        $id = $quarter . '_' . ($x+1);
+        echo '<td class="tblock" id="ta_' . $id . '"><b>' . ($this->showNames == 'Y' ? $this->topSquares[$x][2] : '') . '</b></td>';
+      }
+    }
+    echo '</tr>' . "\n";
   }
 
   private function printTopFourQuarters() {
@@ -444,13 +419,11 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
   }
 
   private function printBoxArea($id, $className, $value) {
-?>
-    <td class='<?php echo $className; ?>' id='<?php echo $id; ?>'><?php echo $value; ?></td>
-<?php
+    echo '<td class="' . $className . '" id="' . $id . '">' . $value . '</td>';
   }
 
   private function printLeftArea($rowNumber) {
-    if ($this->eventType >= 6) {
+    if ($this->eventType >= 5 && $this->eventType <= 7) {
       $squareBox = '<b>' . ($this->showNames == 'Y' ? $this->leftSquares[$rowNumber][2] : '') . '</b>';
       $id = 'la_' . ($rowNumber+1) . '_1';
       $this->printBoxArea($id, 'sblock', $squareBox);
@@ -488,9 +461,7 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
     $n = 0;
     $z = 0;
     for ($y = 0; $y < 10; $y++) {
-?>
-      <tr>
-<?php
+      echo '<tr>';
       for ($x = 1; $x <= 10; $x++) {
         if ($x == 1) $this->printLeftArea($y);
         $first = $x == 10 ? $y + 1 : $y;
@@ -500,35 +471,22 @@ for ($x = 0; $x < sizeof($this->topSquares); $x++) {
         $this->printBoxArea($attributeBoxNumber, $className, $this->getBoxNumber($z+1));
         $z += 1;
       }
-?>
-      </tr>
-<?php
+      echo '</tr>' . "\n";
     }
   }
 
   public function printPrizesInfo() {
-?>
-    <tr>
-      <td class="ctr instruction" colspan="3">&nbsp;</td>
-      <td class="ctr instruction" colspan="8">
-        <?php echo $this->instructions_footer; ?>
-      </td>
-      <td class="ctr instruction" colspan="4">&nbsp;</td>
-    </tr>
-<?php
+    echo '<tr><td class="ctr instruction" colspan="3">&nbsp;</td>';
+    echo '<td class="ctr instruction" colspan="8">';
+    echo $this->instructions_footer;
+    echo '</td><td class="ctr instruction" colspan="4">&nbsp;</td></tr>' . "\n";
   }
 
   private function printInstructionButton() {
-?>
-    <tr>
-      <td class="ctr" colspan="15"><button type="submit" id="submitForm" class="btn btn-primary btn-lg">Ready to buy Squares</button><br/></td>
-    </tr>
-    <tr>
-      <td class="ctr event" colspan="15">
-        <h4><a href="<?php echo SQUARES_URL . strtolower(SQUARES) . DS . '?bu=' . strtolower($this->bus_unit); ?>">Back to Instructions</a></h4>
-      </td>
-    </tr>
-<?php
+    echo '<tr><td class="ctr" colspan="15"><button type="submit" id="submitForm" class="btn btn-primary btn-lg">Ready to buy Squares</button><br/></td>';
+    echo '</tr><tr><td class="ctr event" colspan="15">';
+    echo '<h4><a href="' . SQUARES_URL . strtolower(SQUARES) . DS . '?bu=' . strtolower($this->bus_unit) . '">Back to Instructions</a></h4>';
+    echo '</td></tr>' . "\n";
   }
 
   public function printSquares() {
