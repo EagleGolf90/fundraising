@@ -91,7 +91,7 @@ class MainContact {
   }
 
   public function getMainContact() {
-    $parm = array($this->yearPick, $this->poolNbr, $this->eventType);
+    $parm = array($this->yearPick, $this->eventType, $this->poolNbr);
     $rs = $this->sqlTable->load('getMainContacts', $parm);
 
     foreach ($rs as $r) {

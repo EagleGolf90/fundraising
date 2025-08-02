@@ -13,9 +13,15 @@ class Email {
   private $subject;
   private $fileAttached;
   private $readyForEmail;
+  private $yearPlayed;
+  private $eventType;
+  private $poolNumber;
 
-  public function __construct() {
+  public function __construct($yr, $eventType, $poolNumber) {
     $this->sqlTable = new SQLTable();
+    $this->yearPlayed = $yr;
+    $this->eventType = $eventType;
+    $this->poolNumber = $poolNumber;
     $this->setup();
   }
 
@@ -34,7 +40,7 @@ class Email {
   public function getReadyForEmail() { return $this->readyForEmail; }
 
   private function setup() {
-    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT));
+    $rows = $this->sqlTable->load('loadSetup', array(BUS_UNIT, $this->yearPlayed, $this->eventType, $this->poolNumber));
     $this->readyForEmail = 'N';
     foreach ($rows as $row) $this->readyForEmail = $row['ReadyForEmail'];
   }
