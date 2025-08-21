@@ -22,15 +22,7 @@ include(HTML . 'return_menu.php');
     </tr>
 <?php foreach ($rows As $row) { ?>
     <tr>
-      <td>
-        <?php
-        if (empty($row['FirstName'])) {
-          echo $row['NickName'];
-        } else {
-          echo $row['FirstName'] . ' ' . $row['LastName'];
-        }
-        ?>
-      </td>
+      <td><?php echo $row['NickName']; ?></td>
       <td><?php echo $row['EmailAddress']; ?></td>
     </tr>
 <?php } ?>
