@@ -6,6 +6,7 @@ $squares->setBusinessUnit($bus_unit);
 $squares->setYearPick($yearPlayed);
 $squares->setEventType($eventType);
 $squares->setPoolNumber($poolNumber);
+
 if ($squares->loadSquares()) {
   $fullInstructionFlag = $squares->checkFullInstructions();
 } else {

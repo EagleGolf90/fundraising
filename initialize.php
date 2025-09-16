@@ -23,6 +23,8 @@ define('CLASSES', ROOT_PATH . 'classes' . DS);
 define('HTML', ROOT_PATH . 'html' . DS);
 define('MENUS', ROOT_PATH . 'menus' . DS);
 define('LOGS_DIR', ROOT_PATH . 'logs'. DS);
+define('SERVICES', ROOT_PATH . 'services' . DS);
+define('CONCRETE_PATH', SERVICES . 'concrete' . DS);
 
 define('INCLUDES', ROOT_PATH . 'includes' . DS);
 include(INCLUDES . 'load.php');
