@@ -8,8 +8,6 @@ $poolNumber = $_GET['pool'];
 include(INCLUDES . 'squares.php');
 $squares->setNames($_GET['id']);
 
-$first_name = $squares->getFirstName();
-$last_name = $squares->getLastName();
 $nick_name = $squares->getNickName();
 $square_boxes = $squares->getSquares();
 $saved_squares = $squares->getSavedSquares();

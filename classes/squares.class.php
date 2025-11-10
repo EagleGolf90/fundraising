@@ -631,7 +631,7 @@ class Squares {
     foreach ($rows as $row) {
       $this->first_name = $row['FirstName'];
       $this->last_name = $row['LastName'];
-      if (empty($row['FullName'])) {
+      if (!empty($row['FullName'])) {
         $this->nick_name = $row['FullName'];
       } else {
         $this->nick_name = $row['NickName'];
