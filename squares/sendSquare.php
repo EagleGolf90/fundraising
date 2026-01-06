@@ -35,16 +35,20 @@ if ($squares->howManyBoxesExcluded() > 0) {
 <?php
 }
 
+$email_content = $main_contact->getEmailContent();
+$ownSquares = $squares->getBoxSelected();
+$email_body = str_replace(':a1', $ownSquares, $email_content);
+
 include(INCLUDES . 'emails.php');
 $send_email->setName($main_contact->getMainContactEmail());
 $send_email->setFromEmailAddress($main_contact->getContactName());
 $send_email->setToEmailAddress($_POST['email']);
-$send_email->setContent($main_contact->getEmailContent());
+$send_email->setContent($email_body);
 $send_email->setSubject(BUS_UNIT . ' Squares');
 $send_email->setFileAttached('');
 ?>
     <div class="text-center">
-<?php $send_email->send(); ?>
+      <?php $send_email->send(); ?>
       <h3><a href="index.php?bu=<?php echo strtolower($_POST['bu']); ?>"><button type="button" class="btn btn-primary btn-lg">Back to Squares</button></a></h3>
     </div>
   </div>

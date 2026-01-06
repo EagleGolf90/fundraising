@@ -8,6 +8,8 @@ $rows = $payment->loadPayments();
 
 include(HTML . 'beginHTML.php');
 include(HTML . 'return_menu.php');
+
+$ipAddress = '74.137.36.186';
 ?>
 
 <div class="container">
@@ -15,7 +17,11 @@ include(HTML . 'return_menu.php');
   <div class="table-responsive-sm">
     <table class="table table-bordered table-hover">
     <tr>
+<?php if ($_SERVER['REMOTE_ADDR'] == $ipAddress) { ?>
+      <td id="headerTitle" colspan="3"></td>
+<?php } else { ?>
       <td id="headerTitle" colspan="2"></td>
+<?php } ?>
       <td id="headerTitle"><b>Full Name</b></td>
       <td id="headerTitle"><b>Square#</b></td>
       <td id="headerTitle"><b>Total Cost</b></td>
@@ -34,13 +40,19 @@ foreach ($rows As $row) {
   $ownSquares = $payment->getOwnSquares($row['PersonID']);
   $totalDollars += $row['Total'];
   $bu_link = '&bu=' . $_GET['bu'];
-  $edit_link = 'edit_squares.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
-  $delete_link = 'delete_row.php?id=' . $row['PersonID'] . $bu_link . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+  $any_link = $bu_link . '&id=' . $row['PersonID'] . '&yr=' . $row['YearPick'] . '&event=' . $row['EventType'] . '&pool=' . $row['PoolNbr'];
+
+  $edit_link = 'edit_squares.php?' . $any_link;
+  $delete_link = 'delete_row.php?' . $any_link;
+  $resend_link = 'resend_email.php?' . $any_link;
   $delete_link .= '&sq=' . $ownSquares;
 ?>
     <tr>
       <td><b><a class="btn btn-primary btn-block active" role="button" href="<?php echo $edit_link; ?>">Edit</a></b></td>
       <td><b><a class="btn btn-danger btn-block active" role="button" href="<?php echo $delete_link; ?>">Delete</a></b></td>
+<?php if ($_SERVER['REMOTE_ADDR'] == $ipAddress) { ?>
+      <td><b><a class="btn btn-info btn-block active" role="button" href="<?php echo $resend_link; ?>">Resend</a></b></td>
+<?php } else { echo '<td></td>'; } ?>
       <td><b><?php echo $row['FullName']; ?></b></td>
       <td><b><?php echo $ownSquares; ?></b></td>
       <td><b>$<?php echo $row['Total']; ?></b></td>

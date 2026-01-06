@@ -1,6 +1,12 @@
 <?php
 include('../preload.php');
 
+$id = $_GET['id'];
+$bu = $_GET['bu'];
+$yr = $_GET['yr'];
+$event = $_GET['event'];
+$pool = $_GET['pool'];
+
 include(CLASSES . 'squares.class.php');
 $squares = new Squares();
 
@@ -14,12 +20,7 @@ $email_content = $_POST['email_body'] . "<br/><br/>";
 $send_email->setContent($email_content);
 
 include(HTML . 'beginHTML.php');
-?>
 
-<div class="container">
-  <h3>Send Final Squares to Participants<br/><hr>
-
-<?php
 if ($send_email->getReadyForEmail() == 'Y') {
   $rows = $squares->loadPopulatePicks();
 
@@ -73,7 +74,8 @@ if ($send_email->getReadyForEmail() == 'Y') {
 
 $send_email = null;
 $main_contact = null;
-?>
-</div>
 
-<?php include(HTML . 'endHTML.php'); ?>
+include(HTML . 'endHTML.php');
+
+echo 'Sent to ' . $emailAddress . ' successfully.';
+?>

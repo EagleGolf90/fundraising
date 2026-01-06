@@ -17,13 +17,13 @@ if ($_POST['confirm'] == 'yes') {
 
     $parm = array($busUnit, $yearPick, $eventType, $poolNumber, $personID, $arr[$y]);
     $ret = $sqlTable->execute('deleteSquaresPayment', $parm);
-
-    $parm = array($busUnit, $personID);
-    $ret = $sqlTable->execute('deleteSquaresParticipant', $parm);
   }
+
+  $parm = array($busUnit, $personID);
+  $ret = $sqlTable->execute('deleteSquaresParticipant', $parm);
 }
 
-$main_url = 'https://kdga.org/fundraising/admin/payments.php?bu=' . strtolower($_POST['bu']);
+$main_url = 'https://kdga.org/fundraising/admin/lists.php?name=payments&bu=' . $_POST['bu'];
 $location = "Location: " . $main_url;
 header($location);
 exit;

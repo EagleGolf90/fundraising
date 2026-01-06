@@ -6,14 +6,14 @@ $fullName = '';
 $sqlTable = new SQLTable();
 $rows = $sqlTable->load('loadParticipants', array(BUS_UNIT, $_GET['id']));
 foreach ($rows as $row) {
-  // $fullName = $row['FirstName'] . ' ' . $row['LastName'];
-  // $fullName = $row['NickName'];
   if (empty($row['NickName'])) {
     $fullName = $row['FirstName'] . ' ' . $row['LastName'];
   } else {
     $fullName = $row['NickName'];
   }
 }
+
+$return_link = 'lists.php?name=payments&bu=' . strtolower($_GET['bu']);
 ?>
 
 <div class="container">
@@ -37,7 +37,7 @@ foreach ($rows as $row) {
     </form>
   </div>
 
-  <div class="text-center"><a href="payments.php?bu=<?php echo $_GET['bu']; ?>">Go back to Payments</a></div>
+  <div class="text-center"><a href="<?php echo $return_link; ?>">Go back to Payments</a></div>
 </div>
 
 <?php include(HTML . 'endHTML.php'); ?>
