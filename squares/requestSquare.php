@@ -2,6 +2,7 @@
 include('../preload.php');
 
 $current_flag = false;
+$bus_unit = strtolower($_GET['bu']);
 $yearPlayed = $_GET['YearPick'];
 $eventType = $_GET['EventType'];
 $poolNumber = $_GET['PoolNumber'];
