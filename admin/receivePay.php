@@ -27,7 +27,11 @@ $payment->getInfo();
         <label><input type="checkbox" name="paid" class="paid" <?php if ($_GET['paid'] == 'Y') { echo 'checked'; }?>> Did you receive money?</label>
       </div>
 
-      <?php include(INCLUDES . 'payment_type.php'); ?>
+      <?php
+      if (strtolower($_GET['bu']) == 'idga') {
+        include(INCLUDES . 'payment_type.php');
+      }
+      ?>
       <!-- Form Sections: End -->
 
       <br/>
