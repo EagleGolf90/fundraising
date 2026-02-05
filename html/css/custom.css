@@ -1,3 +1,10 @@
+:root {
+  --topbackground-color: #1aac49;
+  --sidebackground-color: #0e93d2;
+  --taken-color: #996699;
+  --pending-color: #33FF00;
+}
+
 body {
   margin-top: 5px;
 }
@@ -49,25 +56,21 @@ h1, h2, .ctr {
   transform:rotate(90deg);
   white-space:nowrap;
   width:30px;
-  /* margin-top: 200px; */
   margin-top: 100px;
 }
 
 .taken, .takenTitle {
-  background-color: #996699;
+  background-color: var(--taken-color);
   font-size: 16pt;
-  /*font-weight: bold;*/
 }
 
 .available, .availableTitle {
   font-size: 16pt;
-  /*font-weight: bold;*/
 }
 
 .pending, .pendingTitle {
-  background-color: #33FF00;
+  background-color: var(--pending-color);
   font-size: 16pt;
-  /*font-weight: bold;*/
 }
 
 #ctr {
@@ -75,8 +78,7 @@ h1, h2, .ctr {
 }
 
 .sblock {
-  background-color: #FF0000;
-  /* background-color: #FF0000; */
+  background-color: var(--topbackground-color);
   color: white;
   width: 30px;
   height: 30px;
@@ -84,13 +86,11 @@ h1, h2, .ctr {
 }
 
 .tblock {
-  /* background-color: #00008B; */
-  background-color: #046A38;
+  background-color: var(--sidebackground-color);
   color: white;
   width: 30px;
   height: 30px;
   border-radius: 10px;
-  /*border-radius: 5px;*/
 }
 
 /*****************************************************************************************/
