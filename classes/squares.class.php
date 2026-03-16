@@ -443,7 +443,7 @@ class Squares {
   private function getClassName($index) {
     if ($this->listPick[$index][0] == ' ') {
       if ($this->listPick[$index][2] == 'Y') {
-        $class = $this->showNames == 'Y' ? 'available' : 'taken';
+        $class = $this->showNames == 'Y' ? 'final' : 'taken';
       } else {
         $class = 'pending';
       }

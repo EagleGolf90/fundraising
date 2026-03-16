@@ -55,7 +55,7 @@ h1, h2, .ctr {
 .rotate {
   transform:rotate(90deg);
   white-space:nowrap;
-  width:30px;
+  width:10px;
   margin-top: 100px;
 }
 
@@ -64,7 +64,18 @@ h1, h2, .ctr {
   font-size: 16pt;
 }
 
+.taken,
+.tblock {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+}
+
 .available, .availableTitle {
+  font-size: 16pt;
+}
+
+.final, .finalTitle {
   font-size: 16pt;
 }
 
@@ -82,15 +93,15 @@ h1, h2, .ctr {
   color: white;
   width: 30px;
   height: 30px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 
 .tblock {
   background-color: var(--sidebackground-color);
   color: white;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  font-size: 16pt;
+  border-radius: 0;
+  height: 50px;
 }
 
 /*****************************************************************************************/
